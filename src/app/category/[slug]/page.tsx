@@ -7,28 +7,11 @@ import Link from 'next/link'
 
 export const dynamic = 'force-dynamic'
 
-type Props = {
-  params: { slug: string }
-}
+type Props = Promise<{ slug: string }>
 
-// ✅ dynamic metadata สำหรับ SEO
-// export async function generateMetadata({ params }: Props): Promise<Metadata> {
-//   const category = await getCategoryDetail(params.slug)
-//   if (!category) return { title: 'ไม่พบหมวดหมู่ | Playground' }
 
-//   return {
-//     title: `${category.name} | Playground`,
-//     description: category.description,
-//     openGraph: {
-//       title: `${category.name} | Playground`,
-//       description: category.description,
-//       url: `https://playground.chidahp.com/category/${category.slug}`,
-//     },
-//   }
-// }
-
-export default async function CategoryPage({ params }: Props) {
-  const { slug } = params
+export default async function CategoryPage(params: { params: Props }) {
+  const { slug } = await params.params
   const categoryDetail = await getCategoryDetail(slug)
 
   if (!categoryDetail) return notFound()
