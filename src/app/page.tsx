@@ -1,20 +1,56 @@
-export default function Home() {
+export default async function HomePage() {
+  const posts = [
+    {
+      title: 'ไปญี่ปุ่นด้วยเงิน 7,000 บาท',
+      slug: 'japan-on-budget',
+      excerpt: 'ถ้าไม่ไป ก็ไม่รู้ว่าจริง ๆ แล้วเราประหยัดได้แค่ไหน',
+      category: 'Sandbox Living',
+      image: '/mock/japan.jpg',
+    },
+    {
+      title: 'ชีวิตในออฟฟิศที่ไม่มีเส้นชัย',
+      slug: 'office-loop',
+      excerpt: 'งานเยอะ เงินน้อย แต่ยังต้องหายใจต่อไป...',
+      category: 'Broke but Breathing',
+      image: '/mock/office.jpg',
+    },
+  ]
+
+  const latestPosts = [
+    'ชีวิตติดหนี้แต่ใจยังสู้',
+    'เมื่อการเดินทางไม่ใช่แค่เที่ยว',
+    'รักคือการฝึกใจหรือฝึกทน?',
+  ]
   return (
-    <div className="grid grid-rows-[auto_1fr_auto] min-h-screen px-8 sm:px-20 py-16 sm:py-32 gap-8 bg-black text-white font-[family-name:var(--font-geist-sans)]">
-      <header className="text-center">
-        <h1 className="text-4xl sm:text-6xl font-bold tracking-wide">🗞️ Playground by Chidahp</h1>
-        <p className="text-lg sm:text-xl mt-4 text-gray-400">พื้นที่ข่าวสารสุดจัด ฟีลบอร์ดข่าวใต้หอ แต่เท่กว่า!</p>
-      </header>
+    <main className="bg-white text-black font-sans">
+      {/* CONTENT GRID + SIDEBAR */}
+      <div className="max-w-6xl mx-auto px-4 py-12 grid grid-cols-1 md:grid-cols-3 gap-8">
+        {/* LEFT: Post Grid */}
+        <div className="md:col-span-2 grid grid-cols-1 sm:grid-cols-2 gap-6">
+          {posts.map((post) => (
+            <div key={post.slug} className="bg-white border shadow hover:shadow-lg transition">
+              <img src={post.image} alt={post.title} className="w-full h-48 object-cover" />
+              <div className="p-4">
+                <span className="text-xs uppercase text-yellow-500 font-semibold">{post.category}</span>
+                <h2 className="text-lg font-bold mt-2">{post.title}</h2>
+                <p className="text-sm text-gray-600">{post.excerpt}</p>
+              </div>
+            </div>
+          ))}
+        </div>
 
-      <main className="flex flex-col items-center justify-center text-center">
-        <div className="text-2xl sm:text-3xl font-semibold">🛠 Coming Soon</div>
-        <p className="mt-4 max-w-xl text-gray-300">อีกไม่นานเกินรอ สำนักข่าวสายขี้แซะประจำจักรวาลจะเปิดให้โลกได้เห็นความจริง... และความบ้ง</p>
-        <p className="mt-4 italic text-sm text-gray-500">*จงเตรียมตัวรับความปัง...หรือความพัง?*</p>
-      </main>
-
-      <footer className="text-center text-sm text-gray-500">
-        &copy; 2025 Chidahp. All rights reserved.
-      </footer>
-    </div>
-  );
+        {/* RIGHT: Sidebar */}
+        <div className="space-y-6">
+          <h3 className="text-xl font-bold border-b pb-2">Latest</h3>
+          <ul className="space-y-3">
+            {latestPosts.map((title, idx) => (
+              <li key={idx} className="text-sm hover:text-yellow-500 cursor-pointer">
+                • {title}
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
+    </main>
+  )
 }

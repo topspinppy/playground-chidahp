@@ -24,3 +24,34 @@ body {
   color: var(--foreground);
   font-family: var(--font-kanit);
 }
+
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.8s ease-out forwards;
+}
+
+.animate-fade-in-delay {
+  animation: fade-in-up 1s ease-out forwards;
+  animation-delay: 0.5s;
+}
+
+.animate-fade-in-delay2 {
+  animation: fade-in-up 1s ease-out forwards;
+  animation-delay: 0.8s;
+}
+
+.animate-fade-in-delay3 {
+  animation: fade-in-up 1s ease-out forwards;
+  animation-delay: 1s;
+}

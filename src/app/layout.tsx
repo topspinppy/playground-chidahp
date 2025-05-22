@@ -1,7 +1,10 @@
 import type { Metadata } from "next";
 import { Kanit } from "next/font/google"; // <-- เพิ่มตรงนี้
 import "./globals.css";
-
+import Header from "./components/header";
+import { getCategories } from "@/lib/api";
+import Menu from "./components/menu";
+import Footer from "./components/footer";
 const kanit = Kanit({
   variable: "--font-kanit", // <-- ตั้งชื่อ custom property
   subsets: ["thai", "latin"], // <-- ถ้าต้องรองรับภาษาไทยด้วย
@@ -25,17 +28,22 @@ export const metadata: Metadata = {
 };
 
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const categories = await getCategories();
+
   return (
     <html lang="en">
       <body
         className={`${kanit.variable} antialiased`}
       >
+        <Header />
+        <Menu categories={categories} />
         {children}
+        <Footer />
       </body>
     </html>
   );
