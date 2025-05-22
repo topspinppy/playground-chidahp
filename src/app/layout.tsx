@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
-import { Kanit } from "next/font/google"; // <-- เพิ่มตรงนี้
+import { Noto_Sans_Thai } from "next/font/google"; // <-- เพิ่มตรงนี้
 import "./globals.css";
 import Header from "./components/header";
 import { getCategories } from "@/lib/api";
 import Menu from "./components/menu";
 import Footer from "./components/footer";
-const kanit = Kanit({
-  variable: "--font-kanit", // <-- ตั้งชื่อ custom property
+const noto_sans_thai = Noto_Sans_Thai({
+  variable: "--font-noto-sans-thai", // <-- ตั้งชื่อ custom property
   subsets: ["thai", "latin"], // <-- ถ้าต้องรองรับภาษาไทยด้วย
   weight: ["300", "400", "500", "700"], // <-- กำหนดน้ำหนักที่ต้องใช้
 });
@@ -37,7 +37,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${kanit.variable} antialiased`}
+        className={`${noto_sans_thai.variable} antialiased`}
       >
         <Header />
         <Menu categories={categories} />
