@@ -1,6 +1,8 @@
+import { Category } from '@/types/types';
 import Link from 'next/link';
 
-export default function Footer() {
+export default function Footer({ categories }: { categories: Category[] }) {
+
   return (
     <footer className="bg-black text-yellow-200 text-sm pt-12 pb-6 border-t border-yellow-800" >
       <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-4 gap-8">
@@ -9,11 +11,9 @@ export default function Footer() {
         <div>
           <h4 className="text-yellow-400 font-bold mb-3">หมวดหมู่</h4>
           <ul className="space-y-1 text-yellow-300 text-sm">
-            <li><Link href="/category/sandbox-living">Sandbox Living</Link></li>
-            <li><Link href="/category/runaway-route">Runaway Route</Link></li>
-            <li><Link href="/category/broke-but-breathing">Broke but Breathing</Link></li>
-            <li><Link href="/category/flip-frame">Flip Frame</Link></li>
-            <li><Link href="/category/unsaid-club">Unsaid Club</Link></li>
+            {categories.map((category) => (
+              <li key={category.id}><Link href={`/category/${category.slug}`}>{category.name}</Link></li>
+            ))}
           </ul>
         </div>
 

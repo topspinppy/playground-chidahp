@@ -28,11 +28,11 @@ export default async function CategoryPage(params: { params: Props }) {
           Category
         </div>
 
-        <h1 className="text-4xl font-black text-yellow-300 mt-2">
+        <h1 className="text-4xl font-black text-yellow-600 mt-2">
           {categoryDetail.name}
         </h1>
 
-        <p className="text-yellow-500 max-w-2xl mt-3 text-base leading-relaxed">
+        <p className="text-yellow-800 max-w-2xl mt-3 text-base leading-relaxed">
           {categoryDetail.description}
         </p>
 

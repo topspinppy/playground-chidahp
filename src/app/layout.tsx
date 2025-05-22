@@ -34,7 +34,6 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const categories = await getCategories();
-
   return (
     <html lang="en">
       <body
@@ -43,7 +42,7 @@ export default async function RootLayout({
         <Header />
         <Menu categories={categories} />
         {children}
-        <Footer />
+        <Footer categories={categories} />
       </body>
     </html>
   );
