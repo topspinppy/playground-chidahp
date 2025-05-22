@@ -3,14 +3,14 @@
 import { getPageBySlug } from '@/lib/api';
 import { notFound } from 'next/navigation'
 
+
 export const dynamic = 'force-dynamic'
 
-type Props = {
-  params: { slug: string }
-}
+type Props = Promise<{ slug: string }>
 
-export default async function ContentPage({ params }: Props) {
-  const page = await getPageBySlug(params.slug);
+export default async function ContentPage(params: { params: Props }) {
+  const { slug } = await params.params
+  const page = await getPageBySlug(slug);
 
   if (!page) return notFound()
 
