@@ -34,6 +34,7 @@ export default async function CategoryPage({ params }: Props) {
 
   if (!categoryDetail) return notFound()
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const posts: any[] = []
 
   return (

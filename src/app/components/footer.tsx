@@ -1,4 +1,4 @@
-
+import Link from 'next/link';
 
 export default function Footer() {
   return (
@@ -9,11 +9,11 @@ export default function Footer() {
         <div>
           <h4 className="text-yellow-400 font-bold mb-3">หมวดหมู่</h4>
           <ul className="space-y-1 text-yellow-300 text-sm">
-            <li><a href="/category/sandbox-living">Sandbox Living</a></li>
-            <li><a href="/category/runaway-route">Runaway Route</a></li>
-            <li><a href="/category/broke-but-breathing">Broke but Breathing</a></li>
-            <li><a href="/category/flip-frame">Flip Frame</a></li>
-            <li><a href="/category/unsaid-club">Unsaid Club</a></li>
+            <li><Link href="/category/sandbox-living">Sandbox Living</Link></li>
+            <li><Link href="/category/runaway-route">Runaway Route</Link></li>
+            <li><Link href="/category/broke-but-breathing">Broke but Breathing</Link></li>
+            <li><Link href="/category/flip-frame">Flip Frame</Link></li>
+            <li><Link href="/category/unsaid-club">Unsaid Club</Link></li>
           </ul>
         </div>
 
@@ -21,9 +21,9 @@ export default function Footer() {
         <div>
           <h4 className="text-yellow-400 font-bold mb-3">เกี่ยวกับ</h4>
           <ul className="space-y-1 text-yellow-300 text-sm">
-            <li><a href="#">เกี่ยวกับ Playground</a></li>
-            <li><a href="#">ติดต่อทีมงาน</a></li>
-            <li><a href="#">Privacy Policy</a></li>
+            <li><Link href="#">เกี่ยวกับ Playground</Link></li>
+            <li><Link href="#">ติดต่อทีมงาน</Link></li>
+            <li><Link href="#">Privacy Policy</Link></li>
           </ul>
         </div>
 
@@ -31,8 +31,8 @@ export default function Footer() {
         <div>
           <h4 className="text-yellow-400 font-bold mb-3">เขียนกับเรา</h4>
           <ul className="space-y-1 text-yellow-300 text-sm">
-            <li><a href="mailto:hello@chidahp.com">hello@chidahp.com</a></li>
-            <li><a href="#">ร่วมเป็นนักเขียน</a></li>
+            <li><Link href="mailto:hello@chidahp.com">hello@chidahp.com</Link></li>
+            <li><Link href="#">ร่วมเป็นนักเขียน</Link></li>
           </ul>
         </div>
 
@@ -40,8 +40,8 @@ export default function Footer() {
         <div>
           <h4 className="text-yellow-400 font-bold mb-3">ติดตามชี้ดาบ</h4>
           <div className="flex gap-4 text-yellow-300">
-            <a href="https://www.instagram.com/chidahp" target="_blank">IG</a>
-            <a href="https://chidahp.com" target="_blank">Website</a>
+            <Link href="https://www.instagram.com/chidahp" target="_blank">IG</Link>
+            <Link href="https://chidahp.com" target="_blank">Website</Link>
           </div>
         </div>
       </div>
