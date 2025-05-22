@@ -5,3 +5,10 @@ export interface Category {
   description: string
   count: number
 }
+
+
+export interface Page {
+  title: string
+  content: string
+  slug: string
+}
