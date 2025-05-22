@@ -3,9 +3,8 @@
 import { getCategoryDetail } from '@/lib/api'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
-import { Metadata } from 'next'
+// import { Metadata } from 'next'
 
-// ✅ ให้ Next.js รู้ว่า route นี้ dynamic
 export const dynamic = 'force-dynamic'
 
 type Props = {
@@ -13,20 +12,20 @@ type Props = {
 }
 
 // ✅ dynamic metadata สำหรับ SEO
-export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const category = await getCategoryDetail(params.slug)
-  if (!category) return { title: 'ไม่พบหมวดหมู่ | Playground' }
+// export async function generateMetadata({ params }: Props): Promise<Metadata> {
+//   const category = await getCategoryDetail(params.slug)
+//   if (!category) return { title: 'ไม่พบหมวดหมู่ | Playground' }
 
-  return {
-    title: `${category.name} | Playground`,
-    description: category.description,
-    openGraph: {
-      title: `${category.name} | Playground`,
-      description: category.description,
-      url: `https://playground.chidahp.com/category/${category.slug}`,
-    },
-  }
-}
+//   return {
+//     title: `${category.name} | Playground`,
+//     description: category.description,
+//     openGraph: {
+//       title: `${category.name} | Playground`,
+//       description: category.description,
+//       url: `https://playground.chidahp.com/category/${category.slug}`,
+//     },
+//   }
+// }
 
 export default async function CategoryPage({ params }: Props) {
   const { slug } = params
