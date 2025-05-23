@@ -50,7 +50,7 @@ export interface Node2 {
   name: string
   slug: string
   avatar: Avatar
-  description: any
+  description: string;
 }
 
 export interface Avatar {
