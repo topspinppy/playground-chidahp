@@ -5,13 +5,15 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
 
-type RouteParams = {
+type RouteParams = Promise<{
   slug: string;
   postSlug: string;
-};
+}>
 
-export async function generateMetadata({ params }: { params: RouteParams }): Promise<Metadata> {
-  const post = await getSinglePost(params.postSlug, params.slug);
+export async function generateMetadata(params: { params: RouteParams }): Promise<Metadata> {
+  const { slug, postSlug } = await params.params;
+
+  const post = await getSinglePost(postSlug, slug);
 
   if (!post) return {};
 
@@ -41,8 +43,8 @@ export async function generateMetadata({ params }: { params: RouteParams }): Pro
   };
 }
 
-export default async function CategoryContentPage({ params }: { params: RouteParams }) {
-  const { slug, postSlug } = params;
+export default async function CategoryContentPage(params: { params: RouteParams }) {
+  const { slug, postSlug } = await params.params;
   const post = await getSinglePost(postSlug, slug);
   if (!post) return notFound();
 
