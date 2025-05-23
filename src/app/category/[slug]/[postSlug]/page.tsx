@@ -3,37 +3,69 @@ import { Node } from "@/types/types";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { Metadata } from "next";
 
-type Props = Promise<{
-  slug: string;        // category slug
-  postSlug: string;    // post slug
-}>
+type RouteParams = {
+  slug: string;
+  postSlug: string;
+};
 
-export default async function CategoryContentPage(params: { params: Props }) {
-  const { slug, postSlug } = await params.params;
+export async function generateMetadata({ params }: { params: RouteParams }): Promise<Metadata> {
+  const post = await getSinglePost(params.postSlug, params.slug);
+
+  if (!post) return {};
+
+  return {
+    title: post.title,
+    description: post.excerpt || post.title,
+    openGraph: {
+      title: post.title,
+      description: post.excerpt || post.title,
+      type: "article",
+      url: `https://playground.chidahp.com/category/${params.slug}/${params.postSlug}`,
+      images: [
+        {
+          url: post.featuredImage?.node?.sourceUrl || "https://playground.chidahp.com/og-default.jpg",
+          width: 1200,
+          height: 630,
+          alt: post.title,
+        },
+      ],
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: post.title,
+      description: post.excerpt || post.title,
+      images: [post.featuredImage?.node?.sourceUrl || "https://playground.chidahp.com/og-default.jpg"],
+    },
+  };
+}
+
+export default async function CategoryContentPage({ params }: { params: RouteParams }) {
+  const { slug, postSlug } = params;
   const post = await getSinglePost(postSlug, slug);
   if (!post) return notFound();
 
-  // ตรวจสอบว่าโพสต์อยู่ในหมวดหมู่ที่ระบุ
   const belongsToCategory = post.categories.nodes.some(
     (cat: Node) => cat.slug === slug
   );
-
   if (!belongsToCategory) return notFound();
 
   return (
     <main className="max-w-3xl mx-auto px-4 py-12">
       {/* หมวดหมู่ */}
       <div className="mb-4">
-        {post.categories.nodes.filter((cat: Node) => cat.slug !== 'featured-post').map((cat: Node) => (
-          <Link
-            key={cat.slug}
-            href={`/category/${cat.slug}`}
-            className="text-xs uppercase font-bold text-yellow-500 bg-yellow-800 px-2 py-1 rounded mr-2"
-          >
-            {cat.name}
-          </Link>
-        ))}
+        {post.categories.nodes
+          .filter((cat: Node) => cat.slug !== "featured-post")
+          .map((cat: Node) => (
+            <Link
+              key={cat.slug}
+              href={`/category/${cat.slug}`}
+              className="text-xs uppercase font-bold text-yellow-500 bg-yellow-800 px-2 py-1 rounded mr-2"
+            >
+              {cat.name}
+            </Link>
+          ))}
       </div>
 
       {/* หัวเรื่อง */}
