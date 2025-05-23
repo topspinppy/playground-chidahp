@@ -4,15 +4,13 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
-type Props = {
-  params: {
+type Props = Promise<{
     slug: string;        // category slug
     postSlug: string;    // post slug
-  };
-};
+  }>
 
-export default async function CategoryContentPage({ params }: Props) {
-  const { slug, postSlug } = params;
+export default async function CategoryContentPage(params: { params: Props }) {
+  const { slug, postSlug } = await params.params;
   const post = await getSinglePost(postSlug, slug);
   if (!post) return notFound();
 
