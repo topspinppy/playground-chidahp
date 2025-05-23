@@ -24,7 +24,7 @@ export async function generateMetadata(params: { params: RouteParams }): Promise
       title: post.title,
       description: post.excerpt || post.title,
       type: "article",
-      url: `https://playground.chidahp.com/category/${params.slug}/${params.postSlug}`,
+      url: `https://playground.chidahp.com/category/${slug}/${postSlug}`,
       images: [
         {
           url: post.featuredImage?.node?.sourceUrl || "https://playground.chidahp.com/og-default.jpg",
