@@ -1,5 +1,5 @@
 import { graphqlClient } from './graphql-client'
-import { GET_ALL_CATEGORIES, GET_CATEGORY_BY_SLUG, GET_FEATURED_POST, GET_LATEST_POSTS, GET_PAGE_BY_SLUG, GET_SINGLE_POST } from './queries'
+import { GET_ALL_CATEGORIES, GET_CATEGORY_BY_SLUG, GET_FEATURED_POST, GET_LATEST_POSTS, GET_PAGE_BY_SLUG, GET_POSTS_BY_CATEGORY, GET_SINGLE_POST } from './queries'
 import { Category, Page, Post } from '../types/types'
 
 export async function getCategories() {
@@ -43,5 +43,11 @@ export async function getFeaturedPost() {
 
 export async function getLatestPosts() {
   const data = await graphqlClient.request<{ posts: { nodes: Post[] } }>(GET_LATEST_POSTS)
+  return data.posts.nodes
+}
+
+export async function getPostsByCategory(category: string) {
+  const variables = { slug: category }
+  const data = await graphqlClient.request<{ posts: { nodes: Post[] } }>(GET_POSTS_BY_CATEGORY, variables)
   return data.posts.nodes
 }

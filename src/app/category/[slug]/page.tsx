@@ -1,9 +1,8 @@
 // src/app/category/[slug]/page.tsx
 
-import { getCategoryDetail } from '@/lib/api'
+import { BlogCard } from '@/app/components/front/BlogCard'
+import { getCategoryDetail, getPostsByCategory } from '@/lib/api'
 import { notFound } from 'next/navigation'
-import Link from 'next/link'
-// import { Metadata } from 'next'
 
 export const dynamic = 'force-dynamic'
 
@@ -12,12 +11,10 @@ type Props = Promise<{ slug: string }>
 
 export default async function CategoryPage(params: { params: Props }) {
   const { slug } = await params.params
+  const posts = await getPostsByCategory(slug)
   const categoryDetail = await getCategoryDetail(slug)
 
   if (!categoryDetail) return notFound()
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const posts: any[] = []
 
   return (
     <main className="max-w-6xl mx-auto px-4 py-10">
@@ -39,31 +36,20 @@ export default async function CategoryPage(params: { params: Props }) {
         <hr className="border-t border-yellow-800 mt-6" />
       </section>
 
-      {/* POSTS */}
       {posts.length === 0 ? (
-        <p className="text-gray-500 italic">ยังไม่มีบทความในหมวดนี้</p>
+        <p className="text-center text-yellow-800 italic bg-yellow-50 border border-yellow-200 rounded-xl px-6 py-4 shadow-sm">
+          หมวดหมู่นี้ยังไม่มีบทความในขณะนี้<br className="hidden sm:inline" />
+          ไว้กลับมาเยี่ยมเราอีกครั้งเร็ว ๆ นี้นะครับ 🌼
+        </p>
       ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
+        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
           {posts.map((post) => (
-            <Link key={post.slug} href={`/post/${post.slug}`} className="group">
-              <div className="border border-yellow-200 hover:border-yellow-400 rounded-lg overflow-hidden shadow-sm hover:shadow-lg transition">
-                <div className="aspect-[4/3] bg-yellow-100 flex items-center justify-center text-gray-500 text-xs">
-                  (รูปภาพ)
-                </div>
-                <div className="p-4">
-                  <h2 className="font-semibold text-yellow-300 group-hover:text-yellow-400 line-clamp-2">
-                    {post.title}
-                  </h2>
-                  <p
-                    className="text-sm text-gray-500 mt-1 line-clamp-3"
-                    dangerouslySetInnerHTML={{ __html: post.excerpt }}
-                  />
-                </div>
-              </div>
-            </Link>
+            <BlogCard key={post.slug} post={post} />
           ))}
         </div>
       )}
+
+
     </main>
   )
 }

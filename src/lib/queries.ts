@@ -137,3 +137,39 @@ export const GET_LATEST_POSTS = gql`
     }
   }
 `
+
+export const GET_POSTS_BY_CATEGORY = gql`
+  query GetPostsByCategorySlug($slug: String!) {
+    posts(where: { categoryName: $slug }, first: 10) {
+      nodes {
+        id
+        title
+        slug
+        excerpt
+        date
+        featuredImage {
+          node {
+            sourceUrl
+            altText
+          }
+        }
+        author {
+          node {
+            name
+            slug
+            avatar {
+              url
+            }
+            description
+          }
+        }
+        categories {
+          nodes {
+            name
+            slug
+          }
+        }
+      }
+    }
+  }
+`

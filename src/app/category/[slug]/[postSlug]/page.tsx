@@ -1,13 +1,13 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { getSinglePost } from "@/lib/api";
+import { Node } from "@/types/types";
 import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 
 type Props = Promise<{
-    slug: string;        // category slug
-    postSlug: string;    // post slug
-  }>
+  slug: string;        // category slug
+  postSlug: string;    // post slug
+}>
 
 export default async function CategoryContentPage(params: { params: Props }) {
   const { slug, postSlug } = await params.params;
@@ -16,7 +16,7 @@ export default async function CategoryContentPage(params: { params: Props }) {
 
   // ตรวจสอบว่าโพสต์อยู่ในหมวดหมู่ที่ระบุ
   const belongsToCategory = post.categories.nodes.some(
-    (cat: any) => cat.slug === slug
+    (cat: Node) => cat.slug === slug
   );
 
   if (!belongsToCategory) return notFound();
@@ -25,7 +25,7 @@ export default async function CategoryContentPage(params: { params: Props }) {
     <main className="max-w-3xl mx-auto px-4 py-12">
       {/* หมวดหมู่ */}
       <div className="mb-4">
-        {post.categories.nodes.map((cat: any) => (
+        {post.categories.nodes.filter((cat: Node) => cat.slug !== 'featured-post').map((cat: Node) => (
           <Link
             key={cat.slug}
             href={`/category/${cat.slug}`}
@@ -68,7 +68,7 @@ export default async function CategoryContentPage(params: { params: Props }) {
 
       {/* Bio ผู้เขียน */}
       {post.author?.node && (
-        <section className="mt-16  p-6 rounded-lg border border-yellow-800">
+        <section className="mt-16 p-6 rounded-lg border border-yellow-800">
           <div className="flex items-start gap-4">
             {post.author.node.avatar?.url && (
               <Image
