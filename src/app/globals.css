@@ -19,7 +19,10 @@ body {
   font-family: var(--font-noto-sans-thai);
 }
 
-
+.wp-content :where(*) {
+  all: revert;
+  font-family: var(--font-noto-sans-thai);
+}
 @keyframes fade-in-up {
   from {
     opacity: 0;

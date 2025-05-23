@@ -1,10 +1,10 @@
 import { graphqlClient } from './graphql-client'
-import { GET_ALL_CATEGORIES, GET_CATEGORY_BY_SLUG, GET_PAGE_BY_SLUG } from './queries'
-import { Category, Page } from '../types/types'
+import { GET_ALL_CATEGORIES, GET_CATEGORY_BY_SLUG, GET_FEATURED_POST, GET_LATEST_POSTS, GET_PAGE_BY_SLUG, GET_SINGLE_POST } from './queries'
+import { Category, Page, Post } from '../types/types'
 
 export async function getCategories() {
   const data = await graphqlClient.request<{ categories: { nodes: Category[] } }>(GET_ALL_CATEGORIES);
-  const filtered = data.categories.nodes.filter(cat => cat.slug !== 'uncategorized')
+  const filtered = data.categories.nodes.filter(cat => cat.slug !== 'uncategorized' && cat.slug !== 'featured-post')
 
   return filtered;
 }
@@ -25,4 +25,23 @@ export async function getPageBySlug(slug: string): Promise<Page> {
     variables
   )
   return data.page
+}
+
+export async function getSinglePost(slug: string, categorySlug: string) {
+  const variables = { slug, categorySlug }
+  const data = await graphqlClient.request<{ post: Post }>(
+    GET_SINGLE_POST,
+    variables
+  )
+  return data.post
+}
+
+export async function getFeaturedPost() {
+  const data = await graphqlClient.request<{ posts: { nodes: Post[] } }>(GET_FEATURED_POST)
+  return data.posts.nodes[0]
+}
+
+export async function getLatestPosts() {
+  const data = await graphqlClient.request<{ posts: { nodes: Post[] } }>(GET_LATEST_POSTS)
+  return data.posts.nodes
 }

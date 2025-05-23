@@ -21,9 +21,9 @@ export default function Footer({ categories }: { categories: Category[] }) {
         <div>
           <h4 className="text-yellow-400 font-bold mb-3">เกี่ยวกับ</h4>
           <ul className="space-y-1 text-yellow-300 text-sm">
-            <li><Link href="#">เกี่ยวกับ Playground</Link></li>
+            <li><Link href="/page/about">เกี่ยวกับ Playground</Link></li>
             <li><Link href="#">ติดต่อทีมงาน</Link></li>
-            <li><Link href="#">Privacy Policy</Link></li>
+            <li><Link href="/page/privacy-policy">Privacy Policy</Link></li>
           </ul>
         </div>
 

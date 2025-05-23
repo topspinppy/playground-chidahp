@@ -22,9 +22,7 @@ export default async function ContentPage(params: { params: Props }) {
       </h1>
 
       {/* CONTENT */}
-      <div
-        dangerouslySetInnerHTML={{ __html: page.content }}
-      />
+      <div className="wp-content" dangerouslySetInnerHTML={{ __html: page.content }} />
     </main>
   )
 }
