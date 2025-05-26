@@ -173,3 +173,40 @@ export const GET_POSTS_BY_CATEGORY = gql`
     }
   }
 `
+
+
+export const GET_POSTS_BY_TAG = gql`
+  query GetPostsByTag($slug: String!) {
+    tags(where: { slug: [$slug] }) {
+      nodes {
+        name
+        slug
+        posts {
+          nodes {
+            id
+            title
+            slug
+            excerpt
+            date
+            categories {
+              nodes {
+                slug
+              }
+            }
+            featuredImage {
+              node {
+                sourceUrl
+                altText
+              }
+            }
+            author {
+              node {
+                name
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+`

@@ -10,6 +10,10 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "api.playground.chidahp.com"
       },
+      {
+        protocol: "https",
+        hostname: "secure.gravatar.com"
+      }
     ],
   }
 };

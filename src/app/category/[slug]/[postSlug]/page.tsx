@@ -71,7 +71,7 @@ export default async function CategoryContentPage(params: { params: RouteParams 
       </div>
 
       {/* หัวเรื่อง */}
-      <h1 className="text-4xl font-black text-yellow-300 mb-2">
+      <h1 className="text-4xl font-black text-yellow-600 mb-2">
         {post.title}
       </h1>
 
@@ -96,8 +96,9 @@ export default async function CategoryContentPage(params: { params: RouteParams 
 
       {/* เนื้อหา */}
       <article
+        aria-label={post.title}
         className="prose prose-invert prose-yellow max-w-none leading-relaxed"
-        dangerouslySetInnerHTML={{ __html: post.content }}
+        dangerouslySetInnerHTML={{ __html: post.content || '<p>ไม่มีเนื้อหาครับ</p>' }}
       />
 
       {/* Bio ผู้เขียน */}
