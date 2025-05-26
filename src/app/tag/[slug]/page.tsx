@@ -18,7 +18,7 @@ export default async function TagPage({
       <h1 className="text-3xl font-bold text-yellow-400 mb-6">
         บทความแท็ก: {`#${decodedSlug}`}
       </h1>
-      {data[0].posts.nodes.length === 0 ? (
+      {data.posts.nodes.length === 0 ? (
         <div className="text-center py-20 text-yellow-600">
           <p className="text-sm italic mb-4">
             🧐 แท็กนี้ยังไม่มีบทความในตอนนี้
@@ -33,7 +33,7 @@ export default async function TagPage({
 
       ) : (
         <div className="grid gap-6 grid-cols-1 md:grid-cols-2">
-          {data[0].posts.nodes.map((post: Post) => {
+          {data.posts.nodes.map((post: Post) => {
             return (
               <BlogCard key={post.slug} post={post} />
             );

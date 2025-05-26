@@ -55,5 +55,5 @@ export async function getPostsByCategory(category: string) {
 export async function getPostsByTag(tag: string) {
   const variables = { slug: tag }
   const data = await graphqlClient.request<{ name: string, posts: { nodes: Post[] }, slug: string }>(GET_POSTS_BY_TAG, variables)
-  return data.tags.nodes;
+  return data
 }
