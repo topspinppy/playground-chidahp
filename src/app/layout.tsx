@@ -1,14 +1,21 @@
 import type { Metadata } from "next";
-import { Noto_Sans_Thai } from "next/font/google"; // <-- เพิ่มตรงนี้
 import "./globals.css";
 import Header from "./components/header";
 import { getCategories } from "@/lib/api";
 import Menu from "./components/menu";
 import Footer from "./components/footer";
+import { Noto_Sans_Thai, Poppins } from "next/font/google";
+
 const noto_sans_thai = Noto_Sans_Thai({
-  variable: "--font-noto-sans-thai", // <-- ตั้งชื่อ custom property
-  subsets: ["thai", "latin"], // <-- ถ้าต้องรองรับภาษาไทยด้วย
-  weight: ["300", "400", "500", "700"], // <-- กำหนดน้ำหนักที่ต้องใช้
+  variable: "--font-noto-sans-thai",
+  subsets: ["thai", "latin"],
+  weight: ["300", "400", "500", "700"],
+});
+
+const poppins = Poppins({
+  variable: "--font-logo",
+  subsets: ["latin"],
+  weight: ["400", "600", "700"],
 });
 
 export const metadata: Metadata = {
@@ -36,9 +43,7 @@ export default async function RootLayout({
   const categories = await getCategories();
   return (
     <html lang="en">
-      <body
-        className={`${noto_sans_thai.variable} antialiased`}
-      >
+      <body className={`${noto_sans_thai.variable} ${poppins.variable} antialiased`}>
         <Header />
         <Menu categories={categories} />
         {children}

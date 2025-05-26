@@ -16,6 +16,10 @@ module.exports = {
             'ul > li::marker': { color: theme('colors.yellow.500') },
           },
         },
+        fontFamily: {
+          logo: ['var(--font-logo)'],
+          thai: ['var(--font-noto-sans-thai)'], // optional
+        },
       }),
     },
   },
