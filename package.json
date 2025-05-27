@@ -11,6 +11,7 @@
   "dependencies": {
     "graphql-request": "^7.1.2",
     "next": "15.3.2",
+    "nextjs-google-analytics": "^2.3.7",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-share": "^5.2.2"

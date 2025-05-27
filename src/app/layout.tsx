@@ -5,6 +5,7 @@ import { getCategories } from "@/lib/api";
 import Menu from "./components/menu";
 import Footer from "./components/footer";
 import { Noto_Sans_Thai, Poppins } from "next/font/google";
+import { GoogleAnalytics } from "nextjs-google-analytics";
 
 const noto_sans_thai = Noto_Sans_Thai({
   variable: "--font-noto-sans-thai",
@@ -24,6 +25,10 @@ export const metadata: Metadata = {
   keywords: ["Chidahp", "Playground", "สำนักข่าว", "ชี้ดาบ", "ข่าวสายกวน", "coming soon", "สำนักพิมพ์"],
   authors: [{ name: "นักเรียนชูโล่", url: "https://www.chidahp.com/" }],
   creator: "นักเรียนชูโล่",
+  robots: {
+    index: true,
+    follow: true,
+  },
   openGraph: {
     title: "Playground by Chidahp",
     description: "พื้นที่ข่าวสารและแรงบันดาลใจจากสำนักพิมพ์ชี้ดาบ",
@@ -32,6 +37,9 @@ export const metadata: Metadata = {
     type: "website",
     locale: "th_TH",
   },
+  other: {
+    'google-site-verification': 'SIUv3M2q5tyg08t9hOXAvldUH5cdXz3HMCuS5Rq3WV8',
+  }
 };
 
 
@@ -44,6 +52,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <meta name="google-site-verification" content="SIUv3M2q5tyg08t9hOXAvldUH5cdXz3HMCuS5Rq3WV8" />
+      <GoogleAnalytics trackPageViews gaMeasurementId="G-Y62V5NNDTT" />
       <body className={`${noto_sans_thai.variable} ${poppins.variable} antialiased`}>
         <Header />
         <Menu categories={categories} />
