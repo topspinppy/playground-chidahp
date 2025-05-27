@@ -20,7 +20,7 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "Playground by Chidahp | สนามเด็กเล่นชูโล่",
+  title: "Playground by Chidahp | สนามเด็กเล่นโรงเรียนชูโล่",
   description: "Playground คือสนามเด็กเล่นของความคิดสร้างสรรค์ ข่าวสาร เรื่องเล่า และโปรเจกต์กวนประสาทจากจักรวาลชี้ดาบ — เพราะข่าวไม่จำเป็นต้องจริง แต่ต้องเท่!",  
   keywords: [
     "Playground",
