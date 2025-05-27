@@ -233,3 +233,16 @@ export const GET_ALL_POSTS = gql`
     }
   }
 `
+
+
+export const GET_ALL_TAGS = gql`
+  query GetAllTags {
+    tags(first: 10000) {
+      nodes {
+        name
+        slug
+        count
+      }
+    }
+  }
+`

@@ -73,3 +73,22 @@ export type PostSummary = {
     }[]
   }
 }
+
+export interface ITagHelper {
+  data: ITagHelperData
+}
+
+export interface ITagHelperData {
+  tags: Tags
+}
+
+export interface ITagHelperTags {
+  nodes: ITagHelperNode[]
+}
+
+export interface ITagHelperNode {
+  name: string
+  slug: string
+  count?: number
+}
+
