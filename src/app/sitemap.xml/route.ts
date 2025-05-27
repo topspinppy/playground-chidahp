@@ -1,5 +1,5 @@
 // src/app/sitemap.xml/route.ts
-import { getAllPosts, get, getAllTags } from '@/lib/api' // ดึงข้อมูล post จาก GraphQL / WordPress
+import { getAllPosts, getAllTags } from '@/lib/api' // ดึงข้อมูล post จาก GraphQL / WordPress
 import { NextResponse } from 'next/server'
 
 export const dynamic = 'force-dynamic'
