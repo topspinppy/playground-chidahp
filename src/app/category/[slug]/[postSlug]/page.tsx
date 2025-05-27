@@ -101,6 +101,27 @@ export default async function CategoryContentPage(params: { params: RouteParams 
         dangerouslySetInnerHTML={{ __html: post.content || '<p>ไม่มีเนื้อหาครับ</p>' }}
       />
 
+      {/* แท็กของบทความ */}
+      {post.tags?.nodes?.length > 0 && (
+        <div className="mt-12">
+          <h4 className="text-sm font-semibold text-yellow-600 mb-2">
+            TAGS
+          </h4>
+          <ul className="flex flex-wrap gap-2">
+            {post.tags.nodes.map((tag: Node) => (
+              <Link
+                key={tag.slug}
+                href={`/tag/${tag.slug}`}
+                className="bg-yellow-700 hover:bg-yellow-600 text-yellow-100 text-xs font-medium px-3 py-1 rounded-full transition"
+              >
+                #{tag.name}
+              </Link>
+            ))}
+          </ul>
+        </div>
+      )}
+
+
       {/* Bio ผู้เขียน */}
       {post.author?.node && (
         <section className="mt-16 p-6 rounded-lg border border-yellow-800">

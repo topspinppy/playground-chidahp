@@ -30,7 +30,12 @@ export interface Post {
     }
   }
   categories: Categories
+  tags: Tags
   author: Author
+}
+
+interface Tags {
+  nodes: Node[]
 }
 
 export interface Categories {

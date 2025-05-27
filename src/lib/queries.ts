@@ -57,6 +57,12 @@ export const GET_SINGLE_POST = gql`
           slug
         }
       }
+      tags {
+        nodes {
+          name
+          slug
+        }
+      }
       author {
         node {
           name
