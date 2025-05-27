@@ -2,6 +2,9 @@
 import { getAllPosts } from '@/lib/api' // ดึงข้อมูล post จาก GraphQL / WordPress
 import { NextResponse } from 'next/server'
 
+export const dynamic = 'force-dynamic'
+
+
 export async function GET() {
   const siteUrl = 'https://playground.chidahp.com'
   const posts = await getAllPosts()

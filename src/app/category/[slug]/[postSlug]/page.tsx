@@ -7,6 +7,8 @@ import { Metadata } from "next";
 import Tag from "@/app/components/front/Tag";
 import ShareButtons from "@/app/components/front/SharedButton";
 
+export const dynamic = 'force-dynamic'
+
 type RouteParams = Promise<{
   slug: string;
   postSlug: string;
