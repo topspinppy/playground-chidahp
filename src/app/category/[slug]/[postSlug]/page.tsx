@@ -4,6 +4,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Metadata } from "next";
+import Tag from "@/app/components/front/Tag";
+import ShareButtons from "@/app/components/front/SharedButton";
 
 type RouteParams = Promise<{
   slug: string;
@@ -101,31 +103,18 @@ export default async function CategoryContentPage(params: { params: RouteParams 
 
       {/* เนื้อหา */}
       <article
-        aria-label={post.title}
-        className="prose prose-invert prose-yellow max-w-none leading-relaxed"
-        dangerouslySetInnerHTML={{ __html: post.content || '<p>ไม่มีเนื้อหาครับ</p>' }}
+        className="
+          prose prose-invert prose-yellow max-w-none leading-relaxed
+          [&_iframe]:w-full
+          [&_iframe]:aspect-video
+          [&_iframe]:max-w-full
+          [&_iframe]:mx-auto
+        "
+        dangerouslySetInnerHTML={{ __html: post.content }}
       />
 
       {/* แท็กของบทความ */}
-      {post.tags?.nodes?.length > 0 && (
-        <div className="mt-12">
-          <h4 className="text-sm font-semibold text-yellow-600 mb-2">
-            TAGS
-          </h4>
-          <ul className="flex flex-wrap gap-2">
-            {post.tags.nodes.map((tag: Node) => (
-              <Link
-                key={tag.slug}
-                href={`/tag/${tag.slug}`}
-                className="bg-yellow-700 hover:bg-yellow-600 text-yellow-100 text-xs font-medium px-3 py-1 rounded-full transition"
-              >
-                #{tag.name}
-              </Link>
-            ))}
-          </ul>
-        </div>
-      )}
-
+      <Tag nodes={post.tags.nodes} />
 
       {/* Bio ผู้เขียน */}
       {post.author?.node && (
@@ -153,6 +142,8 @@ export default async function CategoryContentPage(params: { params: RouteParams 
           </div>
         </section>
       )}
+
+      <ShareButtons url={`https://playground.chidahp.com/category/${slug}/${postSlug}`} title={post.title} />
     </main>
   );
 }
