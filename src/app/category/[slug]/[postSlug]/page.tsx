@@ -31,7 +31,7 @@ export async function generateMetadata(params: { params: RouteParams }): Promise
       url: `https://playground.chidahp.com/category/${slug}/${postSlug}`,
       images: [
         {
-          url: post.featuredImage?.node?.sourceUrl || "https://playground.chidahp.com/og-default.jpg",
+          url: post.featuredImage?.node?.sourceUrl || `https://playground.chidahp.com/api/og?title=${post.title}&author=${post.author?.node?.name ?? 'นักเรียนชูโล่'}`,
           width: 1200,
           height: 630,
           alt: post.title,
@@ -42,7 +42,7 @@ export async function generateMetadata(params: { params: RouteParams }): Promise
       card: "summary_large_image",
       title: post.title,
       description: post.excerpt || post.title,
-      images: [post.featuredImage?.node?.sourceUrl || "https://playground.chidahp.com/og-default.jpg"],
+      images: [post.featuredImage?.node?.sourceUrl || `https://playground.chidahp.com/api/og?title=${post.title}&author=${post.author?.node?.name ?? 'นักเรียนชูโล่'}`],
     },
   };
 }
