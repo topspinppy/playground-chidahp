@@ -216,3 +216,20 @@ export const GET_POSTS_BY_TAG = gql`
     }
   }
 `
+
+
+export const GET_ALL_POSTS = gql`
+  query GetAllPosts {
+    posts(first: 10000) {
+      nodes {
+        slug
+        date
+        categories {
+          nodes {
+            slug
+          }
+        }
+      }
+    }
+  }
+`

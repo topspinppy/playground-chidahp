@@ -1,6 +1,6 @@
 import { graphqlClient } from './graphql-client'
-import { GET_ALL_CATEGORIES, GET_CATEGORY_BY_SLUG, GET_FEATURED_POST, GET_LATEST_POSTS, GET_PAGE_BY_SLUG, GET_POSTS_BY_CATEGORY, GET_POSTS_BY_TAG, GET_SINGLE_POST } from './queries'
-import { Category, Page, Post } from '../types/types'
+import { GET_ALL_CATEGORIES, GET_ALL_POSTS, GET_CATEGORY_BY_SLUG, GET_FEATURED_POST, GET_LATEST_POSTS, GET_PAGE_BY_SLUG, GET_POSTS_BY_CATEGORY, GET_POSTS_BY_TAG, GET_SINGLE_POST } from './queries'
+import { Category, Page, Post, PostSummary } from '../types/types'
 
 export async function getCategories() {
   const data = await graphqlClient.request<{ categories: { nodes: Category[] } }>(GET_ALL_CATEGORIES);
@@ -65,4 +65,10 @@ export async function getPostsByTag(tag: string) {
   const variables = { slug: tag }
   const data = await graphqlClient.request<TagData>(GET_POSTS_BY_TAG, variables)
   return data
+}
+
+export async function getAllPosts(): Promise<PostSummary[]> {
+  const data = await graphqlClient.request<{ posts: { nodes: PostSummary[] } }>(GET_ALL_POSTS)
+
+  return data.posts.nodes
 }

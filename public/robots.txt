@@ -1,0 +1,4 @@
+User-agent: *
+Disallow:
+
+Sitemap: https://playground.chidahp.com/sitemap.xml

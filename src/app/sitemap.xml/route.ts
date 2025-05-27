@@ -1,0 +1,40 @@
+// src/app/sitemap.xml/route.ts
+import { getAllPosts } from '@/lib/api' // ดึงข้อมูล post จาก GraphQL / WordPress
+import { NextResponse } from 'next/server'
+
+export async function GET() {
+  const siteUrl = 'https://playground.chidahp.com'
+  const posts = await getAllPosts()
+
+  const routes = posts.map((post) => {
+    return `
+      <url>
+        <loc>${siteUrl}/category/${post.categories.nodes[0]?.slug}/${post.slug}</loc>
+        <lastmod>${new Date(post.date).toISOString()}</lastmod>
+      </url>
+    `
+  }).join('')
+
+  const staticRoutes = `
+    <url>
+      <loc>${siteUrl}</loc>
+      <lastmod>${new Date().toISOString()}</lastmod>
+    </url>
+    <url>
+      <loc>${siteUrl}/tags</loc>
+      <lastmod>${new Date().toISOString()}</lastmod>
+    </url>
+  `
+
+  const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
+  <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    ${staticRoutes}
+    ${routes}
+  </urlset>`
+
+  return new NextResponse(sitemap, {
+    headers: {
+      'Content-Type': 'application/xml',
+    },
+  })
+}

@@ -61,3 +61,15 @@ export interface Node2 {
 export interface Avatar {
   url: string
 }
+
+
+
+export type PostSummary = {
+  slug: string
+  date: string
+  categories: {
+    nodes: {
+      slug: string
+    }[]
+  }
+}
