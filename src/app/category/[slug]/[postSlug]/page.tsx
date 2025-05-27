@@ -16,17 +16,17 @@ export async function generateMetadata(params: { params: RouteParams }): Promise
   const post = await getSinglePost(postSlug, slug);
 
   if (!post) return {};
-
+  const postExcerpt = post.excerpt?.replace(/<[^>]+>/g, '') || '';
   const tags = post.tags?.nodes || [];
   const keywords = tags.map(tag => tag.name).join(', ');
 
   return {
     title: post.title,
-    description: post.excerpt || post.title,
+    description: postExcerpt || post.title,
     keywords,
     openGraph: {
       title: post.title,
-      description: post.excerpt || post.title,
+      description: postExcerpt || post.title,
       type: "article",
       url: `https://playground.chidahp.com/category/${slug}/${postSlug}`,
       images: [
