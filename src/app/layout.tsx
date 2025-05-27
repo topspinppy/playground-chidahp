@@ -43,6 +43,7 @@ export default async function RootLayout({
   const categories = await getCategories();
   return (
     <html lang="en">
+      <meta name="google-site-verification" content="SIUv3M2q5tyg08t9hOXAvldUH5cdXz3HMCuS5Rq3WV8" />
       <body className={`${noto_sans_thai.variable} ${poppins.variable} antialiased`}>
         <Header />
         <Menu categories={categories} />
