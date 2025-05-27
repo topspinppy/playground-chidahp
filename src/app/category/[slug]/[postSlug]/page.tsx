@@ -10,16 +10,20 @@ type RouteParams = Promise<{
   postSlug: string;
 }>
 
+
 export async function generateMetadata(params: { params: RouteParams }): Promise<Metadata> {
   const { slug, postSlug } = await params.params;
-
   const post = await getSinglePost(postSlug, slug);
 
   if (!post) return {};
 
+  const tags = post.tags?.nodes || [];
+  const keywords = tags.map(tag => tag.name).join(', ');
+
   return {
     title: post.title,
     description: post.excerpt || post.title,
+    keywords,
     openGraph: {
       title: post.title,
       description: post.excerpt || post.title,
@@ -42,6 +46,7 @@ export async function generateMetadata(params: { params: RouteParams }): Promise
     },
   };
 }
+
 
 export default async function CategoryContentPage(params: { params: RouteParams }) {
   const { slug, postSlug } = await params.params;
