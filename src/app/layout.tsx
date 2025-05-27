@@ -6,6 +6,7 @@ import Menu from "./components/menu";
 import Footer from "./components/footer";
 import { Noto_Sans_Thai, Poppins } from "next/font/google";
 import GoogleAnalytics from "./components/front/GoogleAnalytics";
+import Head from "next/head";
 
 const noto_sans_thai = Noto_Sans_Thai({
   variable: "--font-noto-sans-thai",
@@ -35,6 +36,7 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "นักเรียนชูโล่", url: "https://www.chidahp.com/" }],
   metadataBase: new URL("https://playground.chidahp.com"),
+
   creator: "นักเรียนชูโล่",
   publisher: "โรงเรียนชูโล่วิทยาคม",
   robots: {
@@ -51,6 +53,7 @@ export const metadata: Metadata = {
   },
   other: {
     'google-site-verification': 'SIUv3M2q5tyg08t9hOXAvldUH5cdXz3HMCuS5Rq3WV8',
+    'stylesheet': 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css'
   }
 };
 

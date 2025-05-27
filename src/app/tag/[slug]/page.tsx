@@ -3,6 +3,8 @@ import { getPostsByTag } from "@/lib/api";
 import { Post } from "@/types/types";
 import Link from "next/link";
 
+export const dynamic = 'force-dynamic'
+
 type Props = Promise<{ slug: string }>
 
 

@@ -1,4 +1,8 @@
 import { Category } from '@/types/types';
+import { CiInstagram } from "react-icons/ci";
+import { FaFacebookSquare, FaLine, FaInstagramSquare } from "react-icons/fa";
+import { FaSquareXTwitter } from "react-icons/fa6";
+
 import Link from 'next/link';
 
 export default function Footer({ categories }: { categories: Category[] }) {
@@ -31,7 +35,7 @@ export default function Footer({ categories }: { categories: Category[] }) {
               <Link href="/page/about" title="เกี่ยวกับ Playground">เกี่ยวกับ Playground</Link>
             </li>
             <li>
-              <Link href="#" title="ติดต่อทีมงาน">ติดต่อทีมงาน</Link>
+              <Link href="/page/contact" title="ติดต่อทีมงาน">ติดต่อทีมงาน</Link>
             </li>
             <li>
               <Link href="/page/privacy-policy" title="นโยบายความเป็นส่วนตัว">Privacy Policy</Link>
@@ -48,34 +52,50 @@ export default function Footer({ categories }: { categories: Category[] }) {
                 href="mailto:hello@chidahp.com"
                 title="ส่งอีเมลถึงเรา"
               >
-                hello@chidahp.com
+                chidahp@gmail.com
               </a>
             </li>
             <li>
-              <Link href="#" title="ร่วมเป็นนักเขียนกับเรา">ร่วมเป็นนักเขียน</Link>
+              <Link href="/page/write-with-us" title="ร่วมเป็นนักเขียนกับเรา">ร่วมเป็นนักเขียน</Link>
             </li>
           </ul>
         </nav>
 
         {/* Social */}
         <nav aria-label="ช่องทางติดตามชี้ดาบ">
-          <h4 className="text-yellow-400 font-bold mb-3">ติดตามชี้ดาบ</h4>
-          <div className="flex gap-4 text-yellow-300">
+          <h4 className="text-yellow-400 font-bold mb-3">ติดตามชี้ดาบ x ชูโล่</h4>
+          <div className="flex gap-4 text-yellow-300 text-2xl">
             <a
               href="https://www.instagram.com/chidahp"
               target="_blank"
               rel="noopener noreferrer"
               title="ไปยัง Instagram ของชี้ดาบ"
             >
-              IG
+              <FaInstagramSquare />
             </a>
             <a
-              href="https://chidahp.com"
+              href="https://www.facebook.com/CHIDAHP"
               target="_blank"
               rel="noopener noreferrer"
-              title="ไปยังเว็บไซต์หลักของชี้ดาบ"
+              title="ไปยัง Facebook ของชี้ดาบ"
             >
-              Website
+              <FaFacebookSquare />
+            </a>
+            <a
+              href="https://link.chidahp.com/moOmpm"
+              target="_blank"
+              rel="noopener noreferrer"
+              title=""
+            >
+              <FaLine />
+            </a>
+            <a
+              href="https://x.com/chidahp"
+              target="_blank"
+              rel="noopener noreferrer"
+              title=""
+            >
+              <FaSquareXTwitter />
             </a>
           </div>
         </nav>
