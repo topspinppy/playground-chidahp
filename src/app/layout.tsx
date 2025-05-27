@@ -20,11 +20,23 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "Playground by Chidahp",
-  description: "เตรียมพบกับพื้นที่ทดลองแนวคิด ข่าวสาร ความคิดสร้างสรรค์ และโปรเจกต์ใหม่จากจักรวาลชี้ดาบ ที่จะทำให้คุณรู้ว่า ข่าวไม่จำเป็นต้องจริง แต่ต้องเท่!",
-  keywords: ["Chidahp", "Playground", "สำนักข่าว", "ชี้ดาบ", "ข่าวสายกวน", "coming soon", "สำนักพิมพ์"],
+  title: "Playground by Chidahp | สนามเด็กเล่นชูโล่",
+  description: "Playground คือสนามเด็กเล่นของความคิดสร้างสรรค์ ข่าวสาร เรื่องเล่า และโปรเจกต์กวนประสาทจากจักรวาลชี้ดาบ — เพราะข่าวไม่จำเป็นต้องจริง แต่ต้องเท่!",  
+  keywords: [
+    "Playground",
+    "Chidahp",
+    "ข่าวกวน",
+    "สำนักข่าวชี้ดาบ",
+    "ชี้ดาบ",
+    "เนื้อหาสร้างสรรค์",
+    "บทความ",
+    "โรงเรียนชูโล่",
+    "โรงเรียนชูโล่วิทยาคม"
+  ],
   authors: [{ name: "นักเรียนชูโล่", url: "https://www.chidahp.com/" }],
+  metadataBase: new URL("https://playground.chidahp.com"),
   creator: "นักเรียนชูโล่",
+  publisher: "โรงเรียนชูโล่วิทยาคม",
   robots: {
     index: true,
     follow: true,

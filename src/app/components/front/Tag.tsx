@@ -18,7 +18,7 @@ export default function Tag(props: { nodes: Node[] }) {
                 href={`/tag/${tag.slug}`}
                 className="bg-yellow-700 hover:bg-yellow-600 text-yellow-100 text-xs font-medium px-3 py-1 rounded-full transition"
               >
-                {tag.name}
+                #{tag.name}
               </Link>
             ))}
           </ul>
