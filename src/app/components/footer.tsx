@@ -1,5 +1,4 @@
 import { Category } from '@/types/types';
-import { CiInstagram } from "react-icons/ci";
 import { FaFacebookSquare, FaLine, FaInstagramSquare } from "react-icons/fa";
 import { FaSquareXTwitter } from "react-icons/fa6";
 

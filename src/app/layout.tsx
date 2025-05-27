@@ -6,7 +6,6 @@ import Menu from "./components/menu";
 import Footer from "./components/footer";
 import { Noto_Sans_Thai, Poppins } from "next/font/google";
 import GoogleAnalytics from "./components/front/GoogleAnalytics";
-import Head from "next/head";
 
 const noto_sans_thai = Noto_Sans_Thai({
   variable: "--font-noto-sans-thai",
