@@ -42,6 +42,9 @@ export async function generateMetadata(params: { params: Props }): Promise<Metad
       description: page.content,
       images: [`https://playground.chidahp.com/api/og?title=${page.title}&author=นักเรียนชูโล่`],
     },
+    alternates: {
+      canonical: `https://playground.chidahp.com/page/${slug}`,
+    },
   }
 }
 

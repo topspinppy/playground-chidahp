@@ -7,6 +7,46 @@ export const dynamic = 'force-dynamic'
 
 type Props = Promise<{ slug: string }>
 
+export async function generateMetadata({
+  params,
+}: { params: Props }) {
+  const { slug } = await params;
+  const decodedSlug = decodeURIComponent(slug);
+  const data = await getPostsByTag(decodedSlug);
+
+  if (!data) return {
+    title: 'ไม่พบหน้าเพจ | Playground By Chidahp',
+  }
+
+
+  return {
+    title: `${data.tags.nodes[0]?.name} | Playground By Chidahp`,
+    description: `บทความที่มีแท็ก ${data.tags.nodes[0]?.name}`,
+    openGraph: {
+      title: `${data.tags.nodes[0]?.name} | Playground By Chidahp`,
+      description: `บทความที่มีแท็ก ${data.tags.nodes[0]?.name}`,
+      url: `https://playground.chidahp.com/tag/${slug}`,
+      type: 'article',
+      images: [
+        {
+          url: `https://playground.chidahp.com/api/og?title=บทความที่มีแท็ก - ${data.tags.nodes[0]?.name}&author=นักเรียนชูโล่`,
+          width: 1200,
+          height: 630,
+          alt: data.tags.nodes[0]?.name,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${data.tags.nodes[0]?.name} | Playground By Chidahp`,
+      description: `บทความที่มีแท็ก ${data.tags.nodes[0]?.name}`,
+      images: [`https://playground.chidahp.com/api/og?title=บทความที่มีแท็ก - ${data.tags.nodes[0]?.name}&author=นักเรียนชูโล่`],
+    },
+    alternates: {
+      canonical: `https://playground.chidahp.com/tag/${slug}`,
+    },
+  }
+}
 
 export default async function TagPage({
   params,
