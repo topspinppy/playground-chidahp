@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import 'https://api.playground.chidahp.com/wp-includes/css/dist/block-library/style.min.css';
 import "./globals.css";
 import Header from "./components/header";
 import { getCategories } from "@/lib/api";
@@ -7,6 +6,7 @@ import Menu from "./components/menu";
 import Footer from "./components/footer";
 import { Noto_Sans_Thai, Poppins } from "next/font/google";
 import GoogleAnalytics from "./components/front/GoogleAnalytics";
+import Head from "./Head";
 
 const noto_sans_thai = Noto_Sans_Thai({
   variable: "--font-noto-sans-thai",
@@ -68,6 +68,7 @@ export default async function RootLayout({
   const categories = await getCategories();
   return (
     <html lang="en">
+      <Head />
       <GoogleAnalytics />
       <body className={`${noto_sans_thai.variable} ${poppins.variable} antialiased`}>
         <Header />
