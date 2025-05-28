@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     "เนื้อหาสร้างสรรค์",
     "บทความ",
     "โรงเรียนชูโล่",
-    "โรงเรียนชูโล่วิทยาคม"
+    "โรงเรียนชูโล่วิทยาคม",
   ],
   authors: [{ name: "นักเรียนชูโล่", url: "https://www.chidahp.com/" }],
   metadataBase: new URL("https://playground.chidahp.com"),

@@ -5,6 +5,41 @@ import { notFound } from 'next/navigation'
 
 
 export const dynamic = 'force-dynamic'
+import type { Metadata } from 'next'
+
+export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+  const page = await getPageBySlug(params.slug)
+
+  if (!page) return {
+    title: 'ไม่พบหน้าเพจ | Chidahp',
+  }
+
+
+  return {
+    title: `${page.title} | Chidahp`,
+    description: page.content,
+    openGraph: {
+      title: `${page.title} | Chidahp`,
+      description: page.content,
+      url: `https://playground.chidahp.com/page/${params.slug}`,
+      type: 'article',
+      images: [
+        {
+          url: `https://playground.chidahp.com/api/og?title=${page.title}&author=นักเรียนชูโล่`,
+          width: 1200,
+          height: 630,
+          alt: page.title,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: `${page.title} | Chidahp`,
+      description: page.content,
+      images: [`https://playground.chidahp.com/api/og?title=${page.title}&author=นักเรียนชูโล่`],
+    },
+  }
+}
 
 type Props = Promise<{ slug: string }>
 

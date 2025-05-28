@@ -1,5 +1,5 @@
 // src/app/sitemap.xml/route.ts
-import { getAllPosts, getAllTags } from '@/lib/api' // ดึงข้อมูล post จาก GraphQL / WordPress
+import { getAllCategories, getAllPages, getAllPosts, getAllTags } from '@/lib/api' // ดึงข้อมูล post จาก GraphQL / WordPress
 import { NextResponse } from 'next/server'
 
 export const dynamic = 'force-dynamic'
@@ -9,6 +9,26 @@ export async function GET() {
   const siteUrl = 'https://playground.chidahp.com'
   const posts = await getAllPosts()
   const data = await getAllTags()
+  const categories = await getAllCategories()
+  const pages = await getAllPages()
+
+  const pagesRoute = pages.map((page) => {
+    return `
+      <url>
+        <loc>${siteUrl}/page/${page.slug}</loc>
+        <lastmod>${new Date().toISOString()}</lastmod>
+      </url>
+    `
+  }).join('')
+
+  const categoryRoutes = categories.map((category) => {
+    return `
+      <url>
+        <loc>${siteUrl}/category/${category.slug}</loc>
+        <lastmod>${new Date().toISOString()}</lastmod>
+      </url>
+    `
+  }).join('')
 
   const tags = data.tags.nodes.map((tag) => {
     return `
@@ -44,7 +64,9 @@ export async function GET() {
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>
   <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     ${tags}
+    ${pagesRoute}
     ${staticRoutes}
+    ${categoryRoutes}
     ${routes}
   </urlset>`
 

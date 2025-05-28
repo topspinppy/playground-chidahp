@@ -1,5 +1,5 @@
 import { graphqlClient } from './graphql-client'
-import { GET_ALL_CATEGORIES, GET_ALL_POSTS, GET_ALL_TAGS, GET_CATEGORY_BY_SLUG, GET_FEATURED_POST, GET_LATEST_POSTS, GET_PAGE_BY_SLUG, GET_POSTS_BY_CATEGORY, GET_POSTS_BY_TAG, GET_SINGLE_POST } from './queries'
+import { GET_ALL_CATEGORIES, GET_ALL_PAGES, GET_ALL_POSTS, GET_ALL_TAGS, GET_CATEGORY_BY_SLUG, GET_FEATURED_POST, GET_LATEST_POSTS, GET_PAGE_BY_SLUG, GET_POSTS_BY_CATEGORY, GET_POSTS_BY_TAG, GET_SINGLE_POST } from './queries'
 import { Category, ITagHelperData, Page, Post, PostSummary } from '../types/types'
 
 export async function getCategories() {
@@ -75,4 +75,14 @@ export async function getAllPosts(): Promise<PostSummary[]> {
 export async function getAllTags(): Promise<ITagHelperData> {
   const data = await graphqlClient.request<ITagHelperData>(GET_ALL_TAGS)
   return data
+}
+
+export async function getAllCategories(): Promise<Category[]> {
+  const data = await graphqlClient.request<{ categories: { nodes: Category[] } }>(GET_ALL_CATEGORIES)
+  return data.categories.nodes
+}
+
+export async function getAllPages(): Promise<Page[]> {
+  const data = await graphqlClient.request<{ pages: { nodes: Page[] } }>(GET_ALL_PAGES)
+  return data.pages.nodes
 }

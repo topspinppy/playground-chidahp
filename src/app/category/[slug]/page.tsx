@@ -2,11 +2,46 @@
 
 import { BlogCard } from '@/app/components/front/BlogCard'
 import { getCategoryDetail, getPostsByCategory } from '@/lib/api'
+import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
+
+
+type Props = Promise<{ slug: string }>
 
 export const dynamic = 'force-dynamic'
 
-type Props = Promise<{ slug: string }>
+export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
+  const category = await getCategoryDetail(params.slug)
+
+  if (!category) return {
+    title: 'ไม่พบหมวดหมู่ | Playground by Chidahp',
+  }
+
+  return {
+    title: `${category.name} | Playground by Chidahp`,
+    description: category.description || `รวมบทความในหมวดหมู่ ${category.name}`,
+    openGraph: {
+      title: `${category.name} | Chidahp`,
+      description: category.description || '',
+      url: `https://playground.chidahp.com/category/${params.slug}`,
+      type: 'website',
+      images: [
+        {
+          url: `https://playground.chidahp.com/api/og?title=รวมบทความในหมวดหมู่ - ${category.name}&author=นักเรียนชูโล่`,
+          width: 1200,
+          height: 630,
+          alt: category.name,
+        },
+      ],
+    },
+    twitter: {
+      card: 'summary',
+      title: `${category.name} | Chidahp`,
+      description: category.description || '',
+      images: [`https://playground.chidahp.com/api/og?title=รวมบทความในหมวดหมู่ - ${category.name}&author=นักเรียนชูโล่`],
+    },
+  }
+}
 
 
 export default async function CategoryPage(params: { params: Props }) {

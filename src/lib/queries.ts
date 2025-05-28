@@ -246,3 +246,14 @@ export const GET_ALL_TAGS = gql`
     }
   }
 `
+
+export const GET_ALL_PAGES = gql`
+  query GetAllPages {
+    pages(first: 10000) {
+      nodes {
+        slug
+        title
+      }
+    }
+  }
+`
