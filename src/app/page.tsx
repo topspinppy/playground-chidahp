@@ -10,12 +10,8 @@ export default async function HomePage() {
   const latestPosts = await getLatestPosts();
 
   return (
-    <main className="max-w-6xl mx-auto px-4 py-10 space-y-16">
-
-      {/* 1. Featured Post */}
-      <section>
-        <FeaturedPost featuredPost={featuredPost} latestPosts={latestPosts} />
-      </section>
+    <main className="max-w-6xl mx-auto px-4 py-10 space-y-16 mb-0">
+      <FeaturedPost featuredPost={featuredPost} latestPosts={latestPosts} />
       <RoadTo100K />
     </main>
   );

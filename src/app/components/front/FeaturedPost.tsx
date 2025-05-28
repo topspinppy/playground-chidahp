@@ -4,7 +4,7 @@ import Image from "next/image"
 export default function FeaturedPost({ featuredPost, latestPosts }: { featuredPost: Post, latestPosts: Post[] }) {
   const slugFeaturedCategory = featuredPost?.categories.nodes.reverse()[0]?.slug ?? '-'
   return (
-    <main className="max-w-6xl mx-auto px-4 py-12 grid grid-cols-1 md:grid-cols-3 gap-10 bg-white">
+    <main className="max-w-6xl mx-auto px-4 py-12 grid grid-cols-1 md:grid-cols-3 gap-10 bg-white mb-0">
       {/* FEATURED POST */}
       <div className="md:col-span-2">
         {featuredPost ? (
