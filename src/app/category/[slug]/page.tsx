@@ -37,9 +37,12 @@ export async function generateMetadata(params: { params: Props }): Promise<Metad
     },
     twitter: {
       card: 'summary',
-      title: `${category.name} | Chidahp`,
+      title: `${category.name} | Playground by Chidahp`,
       description: category.description || '',
       images: [`https://playground.chidahp.com/api/og?title=รวมบทความในหมวดหมู่ - ${category.name}&author=นักเรียนชูโล่`],
+    },
+    alternates: {
+      canonical: `https://playground.chidahp.com/category/${slug}`,
     },
   }
 }

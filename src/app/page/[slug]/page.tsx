@@ -15,15 +15,15 @@ export async function generateMetadata(params: { params: Props }): Promise<Metad
   const page = await getPageBySlug(slug)
 
   if (!page) return {
-    title: 'ไม่พบหน้าเพจ | Chidahp',
+    title: 'ไม่พบหน้าเพจ | Playground By Chidahp',
   }
 
 
   return {
-    title: `${page.title} | Chidahp`,
+    title: `${page.title} | Playground By Chidahp`,
     description: page.content,
     openGraph: {
-      title: `${page.title} | Chidahp`,
+      title: `${page.title} | Playground By Chidahp`,
       description: page.content,
       url: `https://playground.chidahp.com/page/${slug}`,
       type: 'article',
@@ -38,7 +38,7 @@ export async function generateMetadata(params: { params: Props }): Promise<Metad
     },
     twitter: {
       card: 'summary_large_image',
-      title: `${page.title} | Chidahp`,
+      title: `${page.title} | Playground By Chidahp`,
       description: page.content,
       images: [`https://playground.chidahp.com/api/og?title=${page.title}&author=นักเรียนชูโล่`],
     },

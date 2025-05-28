@@ -48,6 +48,9 @@ export async function generateMetadata(params: { params: RouteParams }): Promise
       description: post.excerpt || post.title,
       images: [post.featuredImage?.node?.sourceUrl || `https://playground.chidahp.com/api/og?title=${post.title}&author=${post.author?.node?.name ?? 'นักเรียนชูโล่'}`],
     },
+    alternates: {
+      canonical: `https://playground.chidahp.com/category/${slug}/${postSlug}`,
+    },
   };
 }
 
