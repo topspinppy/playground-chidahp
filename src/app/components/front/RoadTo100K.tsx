@@ -56,8 +56,6 @@ function RoadTo100K() {
         🔔 Subscribe ให้ชี้ดาบเลย!
       </a>
     </section>
-
-
   );
 }
 
