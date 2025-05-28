@@ -29,7 +29,7 @@ function RoadTo100K() {
       {/* Info */}
       <div>
         <h3 className="text-lg sm:text-xl font-bold">
-          🛤️ Road to <span className="text-black">100k</span> Subscribers
+          🛤️ Road to <span className="text-black">100k</span> Subscribers ส่งชี้ดาบไปเป็น Youtuber
         </h3>
         <p className="text-sm text-white/90 italic">
           เหลืออีก <span className="font-bold text-white">{remaining}</span> คน ถึง 100,000!
