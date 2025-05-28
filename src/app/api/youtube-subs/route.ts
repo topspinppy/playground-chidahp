@@ -11,7 +11,7 @@ export async function GET() {
     const subscribers = Number(data.est_sub ?? 0);
 
     return Response.json({ subscribers });
-  } catch () {
+  } catch {
     return Response.json({ subscribers: 0 });
   }
 }
