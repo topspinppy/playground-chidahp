@@ -2,18 +2,27 @@ import { Post } from "@/types/types"
 import Image from "next/image"
 
 export default function FeaturedPost({ featuredPost, latestPosts }: { featuredPost: Post, latestPosts: Post[] }) {
-  const slugFeaturedCategory = featuredPost.categories.nodes[0]?.slug ?? '-'
+  const slugFeaturedCategory = featuredPost?.categories.nodes.reverse()[0]?.slug ?? '-'
   return (
     <main className="max-w-6xl mx-auto px-4 py-12 grid grid-cols-1 md:grid-cols-3 gap-10 bg-white">
       {/* FEATURED POST */}
       <div className="md:col-span-2">
         {featuredPost ? (
           <a href={`/category/${slugFeaturedCategory}/${featuredPost.slug}`} className="block group">
-            <div className="aspect-[16/9] overflow-hidden rounded-lg shadow">
+            <div className="aspect-[16/9] overflow-hidden rounded-lg shadow relative group">
+              {/* ป้าย Featured Post */}
+              <div className="absolute top-4 left-4 z-10 bg-orange-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow">
+                🚨 บทความแนะนำสุดจี๊ด!	
+              </div>
+
+              {/* รูปภาพพร้อม Hover Zoom */}
               <Image
-                src={featuredPost.featuredImage.node.sourceUrl}
+                src={
+                  featuredPost.featuredImage?.node.sourceUrl ??
+                  `https://playground.chidahp.com/api/og?title=${featuredPost.title}&author=${featuredPost.author?.node?.name ?? 'นักเรียนชูโล่'}`
+                }
                 alt={featuredPost.title}
-                className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                className="w-full h-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
                 width={1000}
                 height={1000}
               />
