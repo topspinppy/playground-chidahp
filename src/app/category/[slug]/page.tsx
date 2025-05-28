@@ -11,7 +11,8 @@ type Props = Promise<{ slug: string }>
 export const dynamic = 'force-dynamic'
 
 export async function generateMetadata(params: { params: Props }): Promise<Metadata> {
-  const category = await getCategoryDetail((await params.params).slug)
+  const slug = (await params.params).slug
+  const category = await getCategoryDetail(slug)
 
   if (!category) return {
     title: 'ไม่พบหมวดหมู่ | Playground by Chidahp',
@@ -23,7 +24,7 @@ export async function generateMetadata(params: { params: Props }): Promise<Metad
     openGraph: {
       title: `${category.name} | Chidahp`,
       description: category.description || '',
-      url: `https://playground.chidahp.com/category/${params.slug}`,
+      url: `https://playground.chidahp.com/category/${slug}`,
       type: 'website',
       images: [
         {
