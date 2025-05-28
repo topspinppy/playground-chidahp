@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import 'https://api.playground.chidahp.com/wp-includes/css/dist/block-library/style.min.css';
 import "./globals.css";
 import Header from "./components/header";
 import { getCategories } from "@/lib/api";
