@@ -2,11 +2,12 @@
 export default function Head() {
   return (
     <>
-      <link
+      <></>
+      {/* <link
         rel="stylesheet"
         href={`https://api.playground.chidahp.com/wp-includes/css/dist/block-library/style.min.css?v=${Date.now()}`}
         precedence="default"
-      />
+      /> */}
     </>
   );
 }

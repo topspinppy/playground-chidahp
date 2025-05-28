@@ -109,7 +109,7 @@ export default async function CategoryContentPage(params: { params: RouteParams 
       {/* เนื้อหา */}
       <article
         className="
-          prose prose-invert prose-yellow max-w-none leading-relaxed
+          wp-content
           [&_iframe]:w-full
           [&_iframe]:aspect-video
           [&_iframe]:max-w-full
