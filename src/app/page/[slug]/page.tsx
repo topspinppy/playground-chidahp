@@ -11,7 +11,8 @@ import type { Metadata } from 'next'
 type Props = Promise<{ slug: string }>
 
 export async function generateMetadata(params: { params: Props }): Promise<Metadata> {
-  const page = await getPageBySlug((await params.params).slug)
+  const slug = (await params.params).slug
+  const page = await getPageBySlug(slug)
 
   if (!page) return {
     title: 'ไม่พบหน้าเพจ | Chidahp',
@@ -24,7 +25,7 @@ export async function generateMetadata(params: { params: Props }): Promise<Metad
     openGraph: {
       title: `${page.title} | Chidahp`,
       description: page.content,
-      url: `https://playground.chidahp.com/page/${params.slug}`,
+      url: `https://playground.chidahp.com/page/${slug}`,
       type: 'article',
       images: [
         {
