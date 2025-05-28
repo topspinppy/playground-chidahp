@@ -1,7 +1,4 @@
 // src/app/page.tsx
-
-import Link from "next/link";
-import RandomPostLink from './components/front/RandomPostLink';
 import FeaturedPost from "./components/front/FeaturedPost";
 import { getFeaturedPost, getLatestPosts } from "@/lib/api";
 
