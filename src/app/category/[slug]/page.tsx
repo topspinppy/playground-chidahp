@@ -10,8 +10,8 @@ type Props = Promise<{ slug: string }>
 
 export const dynamic = 'force-dynamic'
 
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const category = await getCategoryDetail(params.slug)
+export async function generateMetadata(params: { params: Props }): Promise<Metadata> {
+  const category = await getCategoryDetail((await params.params).slug)
 
   if (!category) return {
     title: 'ไม่พบหมวดหมู่ | Playground by Chidahp',

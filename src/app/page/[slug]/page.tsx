@@ -5,10 +5,13 @@ import { notFound } from 'next/navigation'
 
 
 export const dynamic = 'force-dynamic'
+
 import type { Metadata } from 'next'
 
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const page = await getPageBySlug(params.slug)
+type Props = Promise<{ slug: string }>
+
+export async function generateMetadata(params: { params: Props }): Promise<Metadata> {
+  const page = await getPageBySlug((await params.params).slug)
 
   if (!page) return {
     title: 'ไม่พบหน้าเพจ | Chidahp',
@@ -41,7 +44,6 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   }
 }
 
-type Props = Promise<{ slug: string }>
 
 export default async function ContentPage(params: { params: Props }) {
   const { slug } = await params.params
