@@ -1,7 +1,9 @@
+import Head from 'next/head'
+
 // app/head.tsx
-export default function Head() {
+export default function Header() {
   return (
-    <>
+    <Head>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
@@ -31,6 +33,6 @@ export default function Head() {
           })
         }}
       />
-    </>
+    </Head>
   );
 }

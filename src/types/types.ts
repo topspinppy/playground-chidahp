@@ -2,6 +2,12 @@ export interface Category {
   id: string
   name: string
   slug: string
+  parent?: {
+    node: {
+      name: string
+      slug: string
+    }
+  } | null
   description: string
   count: number
 }
@@ -45,6 +51,7 @@ export interface Categories {
 export interface Node {
   name: string
   slug: string
+  parent?: Node[] | null
 }
 
 export interface Author {

@@ -1,5 +1,44 @@
 import { gql } from 'graphql-request'
 
+
+export const GET_MAIN_CATEGORIES = gql`
+  query GetPostsByCategory(
+  $categoryName: String!
+  $first: Int = 10
+  $after: String
+) {
+  posts(
+    where: { categoryName: $categoryName }
+    first: $first
+    after: $after
+  ) {
+    pageInfo {
+      hasNextPage
+      endCursor
+    }
+    edges {
+      node {
+        title
+        slug
+        categories {
+          nodes {
+            name
+            slug
+            parent {
+              node {
+                name
+                slug
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+`
+
 export const GET_ALL_CATEGORIES = gql`
   query GetAllCategories {
     categories(first: 100) {
@@ -7,6 +46,12 @@ export const GET_ALL_CATEGORIES = gql`
         id
         name
         slug
+        parent {
+          node {
+            name
+            slug
+          }
+        }
         description
         count
       }

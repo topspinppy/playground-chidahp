@@ -1,10 +1,22 @@
 import { graphqlClient } from './graphql-client'
-import { GET_ALL_CATEGORIES, GET_ALL_PAGES, GET_ALL_POSTS, GET_ALL_TAGS, GET_CATEGORY_BY_SLUG, GET_FEATURED_POST, GET_LATEST_POSTS, GET_PAGE_BY_SLUG, GET_POSTS_BY_CATEGORY, GET_POSTS_BY_TAG, GET_SINGLE_POST } from './queries'
+import { GET_ALL_CATEGORIES, GET_ALL_PAGES, GET_ALL_POSTS, GET_ALL_TAGS, GET_CATEGORY_BY_SLUG, GET_FEATURED_POST, GET_LATEST_POSTS, GET_MAIN_CATEGORIES, GET_PAGE_BY_SLUG, GET_POSTS_BY_CATEGORY, GET_POSTS_BY_TAG, GET_SINGLE_POST } from './queries'
 import { Category, ITagHelperData, Page, Post, PostSummary } from '../types/types'
+
+
+export async function getMainCategories() {
+  const data = await graphqlClient.request<{ posts: { nodes: Post[] } }>(GET_MAIN_CATEGORIES);
+  const filterMainCategoryOnly = (posts: Post[], categorySlug: string) =>
+    posts.filter(post =>
+      post.categories.nodes.some(cat => cat.slug === categorySlug && !cat.parent)
+    );
+  
+  const onlyMainCategoryPosts = filterMainCategoryOnly(data.posts.nodes, "chidahp-podcast");
+  return onlyMainCategoryPosts;
+}
 
 export async function getCategories() {
   const data = await graphqlClient.request<{ categories: { nodes: Category[] } }>(GET_ALL_CATEGORIES);
-  const filtered = data.categories.nodes.filter(cat => cat.slug !== 'uncategorized' && cat.slug !== 'featured-post')
+  const filtered = data.categories.nodes.filter(cat => cat.slug !== 'uncategorized' && cat.slug !== 'featured-post' && cat.parent === null)
 
   return filtered;
 }
@@ -51,6 +63,8 @@ export async function getPostsByCategory(category: string) {
   const data = await graphqlClient.request<{ posts: { nodes: Post[] } }>(GET_POSTS_BY_CATEGORY, variables)
   return data.posts.nodes
 }
+
+
 
 type TagData = {
   tags: {
