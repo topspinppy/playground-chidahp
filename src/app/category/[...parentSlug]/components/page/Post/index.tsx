@@ -7,22 +7,25 @@ import { Metadata } from "next";
 import Tag from "@/app/components/front/Tag";
 import ShareButtons from "@/app/components/front/SharedButton";
 
-export const dynamic = 'force-dynamic'
+export const dynamic = "force-dynamic";
 
 type RouteParams = Promise<{
-  slug: string;
-  postSlug: string;
-}>
+  parentSlug: string[];
+  third?: boolean;
+}>;
 
+export async function generateMetadata(params: RouteParams): Promise<Metadata> {
+  const { parentSlug, third } = await params;
+  const [slugLv1, slugLv2, slugLv3] = parentSlug;
 
-export async function generateMetadata(params: { params: RouteParams }): Promise<Metadata> {
-  const { slug, postSlug } = await params.params;
-  const post = await getSinglePost(postSlug, slug);
+  const post = third
+    ? await getSinglePost(slugLv3, slugLv2)
+    : await getSinglePost(slugLv2, slugLv1);
 
   if (!post) return {};
-  const postExcerpt = post.excerpt?.replace(/<[^>]+>/g, '') || '';
+  const postExcerpt = post.excerpt?.replace(/<[^>]+>/g, "") || "";
   const tags = post.tags?.nodes || [];
-  const keywords = tags.map(tag => tag.name).join(', ');
+  const keywords = tags.map((tag) => tag.name).join(", ");
 
   return {
     title: post.title,
@@ -32,10 +35,14 @@ export async function generateMetadata(params: { params: RouteParams }): Promise
       title: post.title,
       description: postExcerpt || post.title,
       type: "article",
-      url: `https://playground.chidahp.com/category/${slug}/${postSlug}`,
+      url: `https://playground.chidahp.com/category/${parentSlug.join("/")}`,
       images: [
         {
-          url: post.featuredImage?.node?.sourceUrl || `https://playground.chidahp.com/api/og?title=${post.title}&author=${post.author?.node?.name ?? 'นักเรียนชูโล่'}`,
+          url:
+            post.featuredImage?.node?.sourceUrl ||
+            `https://playground.chidahp.com/api/og?title=${post.title}&author=${
+              post.author?.node?.name ?? "นักเรียนชูโล่"
+            }`,
           width: 1200,
           height: 630,
           alt: post.title,
@@ -46,10 +53,17 @@ export async function generateMetadata(params: { params: RouteParams }): Promise
       card: "summary_large_image",
       title: post.title,
       description: post.excerpt || post.title,
-      images: [post.featuredImage?.node?.sourceUrl || `https://playground.chidahp.com/api/og?title=${post.title}&author=${post.author?.node?.name ?? 'นักเรียนชูโล่'}`],
+      images: [
+        post.featuredImage?.node?.sourceUrl ||
+          `https://playground.chidahp.com/api/og?title=${post.title}&author=${
+            post.author?.node?.name ?? "นักเรียนชูโล่"
+          }`,
+      ],
     },
     alternates: {
-      canonical: `https://playground.chidahp.com/category/${slug}/${postSlug}`,
+      canonical: `https://playground.chidahp.com/category/${parentSlug.join(
+        "/"
+      )}`,
     },
   };
 }
@@ -69,37 +83,44 @@ const wpContentClassName = `
   wp-content
 `;
 
-export default async function CategoryContentPage(params: { params: RouteParams }) {
-  const { slug, postSlug } = await params.params;
-  const post = await getSinglePost(postSlug, slug);
+export default async function Post(params: RouteParams) {
+  const { parentSlug, third } = await params;
+  const [slugLv1, slugLv2, slugLv3] = parentSlug;
+  const post = third
+    ? await getSinglePost(slugLv3, slugLv2)
+    : await getSinglePost(slugLv2, slugLv1);
   if (!post) return notFound();
 
   const belongsToCategory = post.categories.nodes.some(
-    (cat: Node) => cat.slug === slug
+    (cat: Node) => cat.slug === slugLv1
   );
-  if (!belongsToCategory) return notFound();
 
+  if (!belongsToCategory) return notFound();
+  console.log(post.categories.nodes);
   return (
     <main className="max-w-3xl mx-auto px-4 py-12">
       {/* หมวดหมู่ */}
       <div className="mb-4">
         {post.categories.nodes
           .filter((cat: Node) => cat.slug !== "featured-post")
-          .map((cat: Node) => (
-            <Link
-              key={cat.slug}
-              href={`/category/${cat.slug}`}
-              className="text-xs uppercase font-bold text-yellow-500 bg-yellow-800 px-2 py-1 rounded mr-2"
-            >
-              {cat.name}
-            </Link>
-          ))}
+          .map((cat: Node, index: number) => {
+            if (index === 0) {
+              return (
+                <Link
+                  key={cat.slug}
+                  href={`/category/${cat.slug}`}
+                  className="text-xs uppercase font-bold text-yellow-500 bg-yellow-800 px-2 py-1 rounded mr-2"
+                >
+                  {cat.name}
+                </Link>
+              );
+            }
+            return null;
+          })}
       </div>
 
       {/* หัวเรื่อง */}
-      <h1 className="text-4xl font-black text-yellow-600 mb-2">
-        {post.title}
-      </h1>
+      <h1 className="text-4xl font-black text-yellow-600 mb-2">{post.title}</h1>
 
       {/* วันที่ + ผู้เขียน */}
       <div className="text-sm text-yellow-600 mb-6 flex items-center gap-3">
@@ -123,7 +144,7 @@ export default async function CategoryContentPage(params: { params: RouteParams 
       {/* เนื้อหา */}
       <article
         className={`
-          ${slug === 'chidahp-podcast' ? proseClassName : wpContentClassName}
+          ${slugLv1 === "chidahp-podcast" ? proseClassName : wpContentClassName}
           ${articleClassName}
         `}
         dangerouslySetInnerHTML={{ __html: post.content }}
@@ -159,7 +180,10 @@ export default async function CategoryContentPage(params: { params: RouteParams 
         </section>
       )}
 
-      <ShareButtons url={`https://playground.chidahp.com/category/${slug}/${postSlug}`} title={post.title} />
+      <ShareButtons
+        url={`https://playground.chidahp.com/category/${parentSlug.join("/")}`}
+        title={post.title}
+      />
     </main>
   );
 }

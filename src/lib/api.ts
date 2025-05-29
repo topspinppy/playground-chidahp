@@ -21,6 +21,13 @@ export async function getCategories() {
   return filtered;
 }
 
+export async function getCategoriesAll() {
+  const data = await graphqlClient.request<{ categories: { nodes: Category[] } }>(GET_ALL_CATEGORIES);
+  const filtered = data.categories.nodes.filter(cat => cat.slug !== 'uncategorized' && cat.slug !== 'featured-post')
+
+  return filtered;
+}
+
 export async function getCategoryDetail(slug: string): Promise<Category> {
   const variables = { slug }
   const data = await graphqlClient.request<{ category: Category }>(

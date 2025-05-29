@@ -3,10 +3,11 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 export function BlogCard({ post }: { post: Post }) {
-  const categorySlug = post.categories.nodes.filter(category => category.slug !== 'featured-post');
+  const categorySlug = post.categories.nodes.filter(category => category.slug !== 'featured-post').reverse();
+  const finalSlug = categorySlug.map((category) => category.slug);
   return (
     <article className="bg-white rounded-xl overflow-hidden shadow hover:shadow-lg transition">
-      <Link href={`/category/${categorySlug[0].slug}/${post.slug}`}>
+      <Link href={`/category/${finalSlug.join('/')}/${post.slug}`}>
         <Image
           src={post.featuredImage?.node?.sourceUrl ?? '/chidahp.png'}
           alt={post.title}
