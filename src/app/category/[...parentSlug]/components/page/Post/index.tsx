@@ -150,7 +150,7 @@ export default async function Post(params: RouteParams) {
         dangerouslySetInnerHTML={{ __html: post.content }}
       />
 
-      {/* แท็กของบทความ */}
+
       <Tag nodes={post.tags.nodes} />
 
       {/* Bio ผู้เขียน */}
