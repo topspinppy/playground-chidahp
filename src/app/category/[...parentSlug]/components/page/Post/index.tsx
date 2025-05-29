@@ -96,7 +96,7 @@ export default async function Post(params: RouteParams) {
   );
 
   if (!belongsToCategory) return notFound();
-  console.log(post.categories.nodes);
+
   return (
     <main className="max-w-3xl mx-auto px-4 py-12">
       {/* หมวดหมู่ */}
