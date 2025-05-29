@@ -54,6 +54,20 @@ export async function generateMetadata(params: { params: RouteParams }): Promise
   };
 }
 
+const articleClassName = `
+  [&_iframe]:w-full
+  [&_iframe]:aspect-video
+  [&_iframe]:max-w-full
+  [&_iframe]:mx-auto
+`;
+
+const proseClassName = `
+  prose prose-invert prose-yellow max-w-none leading-relaxed
+`;
+
+const wpContentClassName = `
+  wp-content
+`;
 
 export default async function CategoryContentPage(params: { params: RouteParams }) {
   const { slug, postSlug } = await params.params;
@@ -108,13 +122,10 @@ export default async function CategoryContentPage(params: { params: RouteParams 
 
       {/* เนื้อหา */}
       <article
-        className="
-          wp-content
-          [&_iframe]:w-full
-          [&_iframe]:aspect-video
-          [&_iframe]:max-w-full
-          [&_iframe]:mx-auto
-        "
+        className={`
+          ${slug === 'chidahp-podcast' ? proseClassName : wpContentClassName}
+          ${articleClassName}
+        `}
         dangerouslySetInnerHTML={{ __html: post.content }}
       />
 
