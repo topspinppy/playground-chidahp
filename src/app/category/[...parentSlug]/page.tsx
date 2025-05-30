@@ -13,7 +13,7 @@ export default async function Page({ params }: any) {
     .filter((category) => category.parent !== null)
     .map((category) => category.slug);
 
-  const { parentSlug } = params;
+  const { parentSlug } = await params;
   if (!parentSlug || parentSlug.length === 0) return notFound();
 
   const [mainSlug, second] = parentSlug;
