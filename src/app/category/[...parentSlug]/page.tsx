@@ -130,10 +130,12 @@ export async function generateMetadata({ params }: any) {
         },
       }
     } else {
-      const slug = await getCategoryDetail(slugLv2);
+      console.log(slugLv2, 'is not a child category');
+      // If slugLv2 is not a child category, treat it as a post
+      const slug = await getSinglePost(slugLv2, slugLv1);
       return {
-        title: slug.name,
-        description: slug.description.replace(/<[^>]*>/g, ''),
+        title: slug.title ?? '',
+        description: slug.excerpt.replace(/<[^>]*>/g, ''),
         keywords: [
           slug.slug,
           'หมวดหมู่',
@@ -157,8 +159,8 @@ export async function generateMetadata({ params }: any) {
           'เล่าเรื่องชีวิตจริง'
         ].join(', '),
         openGraph: {
-          title: slug.name,
-          description: slug.description.replace(/<[^>]*>/g, ''),
+          title: slug.title,
+          description: slug.excerpt.replace(/<[^>]*>/g, ''),
           type: 'website',
           url: `https://playground.chidahp.com/category/${slugLv1}/${slugLv2}`,
           images: [
@@ -166,14 +168,14 @@ export async function generateMetadata({ params }: any) {
               url: `https://playground.chidahp.com/api/og?title=${slug.name}&author=นักเรียนชูโล่`,
               width: 1200,
               height: 630,
-              alt: slug.name,
+              alt: slug.title,
             },
           ],
         },
         twitter: {
           card: 'summary_large_image',
-          title: slug.name,
-          description: slug.description.replace(/<[^>]*>/g, ''),
+          title: slug.title,
+          description: slug.excerpt.replace(/<[^>]*>/g, ''),
           images: [
             `https://playground.chidahp.com/api/og?title=${slug.name}&author=นักเรียนชูโล่`,
           ],
