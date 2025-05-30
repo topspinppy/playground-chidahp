@@ -1,10 +1,184 @@
 import { notFound } from 'next/navigation';
 import MainCategory from './components/page/MainCategory';
-import SubCategory from './components/page/SubCategory';
 import Post from './components/page/Post';
-import { getCategoriesAll } from '@/lib/api';
+import { getCategoryDetail, getCategoriesAll } from '@/lib/api';
 
 export const dynamic = 'force-dynamic';
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export async function generateMetadata({ params }: any) {
+  const { parentSlug } = await params;
+
+  const [slugLv1, slugLv2, slugLv3] = parentSlug;
+  const childCategoriesRaw = await getCategoriesAll();
+  const childCategories = childCategoriesRaw
+    .filter((category) => category.parent !== null)
+    .map((category) => category.slug);
+
+  if (slugLv1 && !slugLv2) {
+    const slug = await getCategoryDetail(slugLv1);
+    return {
+      title: `หมวดหมู่: ${slug.name}`,
+      description: slug.description,
+      keywords: [
+        slug.slug,
+        'หมวดหมู่',
+        'ชูโล่',
+        'นักเรียนชูโล่',
+        'โรงเรียนชูโล่วิทยาคม',
+        'โรงเรียนชูโล่',
+        'สนามเด็กเล่นโรงเรียนชูโล่',
+        'สนามเด็กเล่นชูโล่',
+        'พอดแคสต์แรงบันดาลใจ',
+        'Podcast ภาษาไทย',
+        'Podcast เรื่องชีวิต',
+        'ฟังพอดแคสต์ฟรี',
+        'Podcast นักเขียน',
+        'เรื่องเล่าพัฒนาตัวเอง',
+        'ชีวิตวัยรุ่น',
+        'เสียงจากใจ',
+        'บันทึกชีวิต',
+        'Chidahp Podcast',
+        'podcast แรงบันดาลใจไทย',
+        'เล่าเรื่องชีวิตจริง'
+      ].join(', '),
+      openGraph: {
+        title: slug.name,
+        description: slug.description,
+        type: 'website',
+        url: `https://playground.chidahp.com/category/${slugLv1}`,
+        images: [
+          {
+            url: `https://playground.chidahp.com/api/og?title=${slug.name}&author=นักเรียนชูโล่`,
+            width: 1200,
+            height: 630,
+            alt: slug.slug,
+          },
+        ],
+      },
+      twitter: {
+        card: 'summary_large_image',
+        title: slug.name,
+        description: slug.description,
+        images: [
+          `https://playground.chidahp.com/api/og?title=${slug.name}&author=นักเรียนชูโล่`,
+        ],
+      },
+      alternates: {
+        canonical: `https://playground.chidahp.com/category/${slugLv1}`,
+      },
+    };
+  }
+
+  if (slugLv1 && slugLv2 && !slugLv3) {
+    if (childCategories.includes(slugLv2)) {
+      const slug = await getCategoryDetail(slugLv2);
+      return {
+        title: `หมวดหมู่: ${slugLv1} / ${slugLv2}`,
+        description: slug.description,
+        keywords: [
+          slug.slug,
+          'หมวดหมู่',
+          'ชูโล่',
+          'นักเรียนชูโล่',
+          'โรงเรียนชูโล่วิทยาคม',
+          'โรงเรียนชูโล่',
+          'สนามเด็กเล่นโรงเรียนชูโล่',
+          'สนามเด็กเล่นชูโล่',
+          'พอดแคสต์แรงบันดาลใจ',
+          'Podcast ภาษาไทย',
+          'Podcast เรื่องชีวิต',
+          'ฟังพอดแคสต์ฟรี',
+          'Podcast นักเขียน',
+          'เรื่องเล่าพัฒนาตัวเอง',
+          'ชีวิตวัยรุ่น',
+          'เสียงจากใจ',
+          'บันทึกชีวิต',
+          'Chidahp Podcast',
+          'podcast แรงบันดาลใจไทย',
+          'เล่าเรื่องชีวิตจริง'
+        ].join(', '),
+        openGraph: {
+          title: `${slug.name}`,
+          description: slug.description,
+          type: 'website',
+          url: `https://playground.chidahp.com/category/${slugLv1}/${slugLv2}`,
+          images: [
+            { 
+              url: `https://playground.chidahp.com/api/og?title=หมวดหมู่ - ${slugLv1} / ${slugLv2}&author=นักเรียนชูโล่`,
+              width: 1200,
+              height: 630,
+              alt: slug.slug,
+            },
+          ],
+        },
+      }
+    } else {
+      const slug = await getCategoryDetail(slugLv2);
+      return {
+        title: slug.name,
+        description: slug.description,
+        keywords: [
+          slug.slug,
+          'หมวดหมู่',
+          'ชูโล่',
+          'นักเรียนชูโล่',
+          'โรงเรียนชูโล่วิทยาคม',
+          'โรงเรียนชูโล่',
+          'สนามเด็กเล่นโรงเรียนชูโล่',
+          'สนามเด็กเล่นชูโล่',
+          'พอดแคสต์แรงบันดาลใจ',
+          'Podcast ภาษาไทย',
+          'Podcast เรื่องชีวิต',
+          'ฟังพอดแคสต์ฟรี',
+          'Podcast นักเขียน',
+          'เรื่องเล่าพัฒนาตัวเอง',
+          'ชีวิตวัยรุ่น',
+          'เสียงจากใจ',
+          'บันทึกชีวิต',
+          'Chidahp Podcast',
+          'podcast แรงบันดาลใจไทย',
+          'เล่าเรื่องชีวิตจริง'
+        ].join(', '),
+        openGraph: {
+          title: `${slugLv1} / ${slugLv2}`,
+          description: slug.description,
+          type: 'website',
+          url: `https://playground.chidahp.com/category/${slugLv1}/${slugLv2}`,
+          images: [
+            {
+              url: `https://playground.chidahp.com/api/og?title=${slug.name}&author=นักเรียนชูโล่`,
+              width: 1200,
+              height: 630,
+              alt: slug.name,
+            },
+          ],
+        },
+        twitter: {
+          card: 'summary_large_image',
+          title: `${slugLv1} / ${slugLv2}`,
+          description: slug.description,
+          images: [
+            `https://playground.chidahp.com/api/og?title=${slug.name}&author=นักเรียนชูโล่`,
+          ],
+        },
+        alternates: {
+          canonical: `https://playground.chidahp.com/category/${slugLv1}/${slugLv2}`,
+        },
+      };
+    }
+  }
+
+  if (slugLv1 && slugLv2 && slugLv3) {
+    return {
+      title: `หมวดหมู่: ${slugLv1} / ${slugLv2} / ${slugLv3}`,
+    };
+  }
+
+  return {
+    title: 'หมวดหมู่: ไม่สามารถระบุได้',
+  };
+}
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export default async function Page({ params }: any) {
@@ -23,10 +197,11 @@ export default async function Page({ params }: any) {
     // @ts-ignore
     return <MainCategory slug={mainSlug} />;
   }
-
   if (parentSlug.length === 2) {
     if (childCategories.includes(second)) {
-      return <SubCategory slug={second} />;
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      return <MainCategory slug={second} />;
     } else {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore

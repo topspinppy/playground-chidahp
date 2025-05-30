@@ -17,7 +17,7 @@ type RouteParams = Promise<{
 export async function generateMetadata(params: RouteParams): Promise<Metadata> {
   const { parentSlug, third } = await params;
   const [slugLv1, slugLv2, slugLv3] = parentSlug;
-
+  console.log("Generating metadata for:", parentSlug);
   const post = third
     ? await getSinglePost(slugLv3, slugLv2)
     : await getSinglePost(slugLv2, slugLv1);
@@ -26,7 +26,6 @@ export async function generateMetadata(params: RouteParams): Promise<Metadata> {
   const postExcerpt = post.excerpt?.replace(/<[^>]+>/g, "") || "";
   const tags = post.tags?.nodes || [];
   const keywords = tags.map((tag) => tag.name).join(", ");
-
   return {
     title: post.title,
     description: postExcerpt || post.title,
