@@ -1,6 +1,5 @@
 import { BlogCard } from "@/app/components/front/BlogCard";
 import { getCategoryDetail, getPostsByCategory } from "@/lib/api";
-import Link from "next/link";
 
 type Props = Promise<{ slug: string }>;
 
