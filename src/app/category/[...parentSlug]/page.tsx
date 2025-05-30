@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import MainCategory from './components/page/MainCategory';
 import Post from './components/page/Post';
-import { getCategoryDetail, getCategoriesAll } from '@/lib/api';
+import { getCategoryDetail, getCategoriesAll, getSinglePost } from '@/lib/api';
 
 export const dynamic = 'force-dynamic';
 
@@ -112,6 +112,22 @@ export async function generateMetadata({ params }: any) {
             },
           ],
         },
+        twitter: {
+          card: 'summary_large_image',
+          title: `${slug.name}`,
+          description: slug.description,
+          images: [
+            {
+              url: `https://playground.chidahp.com/api/og?title=หมวดหมู่ - ${slugLv1} / ${slugLv2}&author=นักเรียนชูโล่`,
+              width: 1200,
+              height: 630,
+              alt: slug.slug,
+            }
+          ],
+        },
+        alternates: {
+          canonical: `https://playground.chidahp.com/category/${slugLv1}/${slugLv2}`,
+        },
       }
     } else {
       const slug = await getCategoryDetail(slugLv2);
@@ -141,7 +157,7 @@ export async function generateMetadata({ params }: any) {
           'เล่าเรื่องชีวิตจริง'
         ].join(', '),
         openGraph: {
-          title: `${slugLv1} / ${slugLv2}`,
+          title: slug.name,
           description: slug.description,
           type: 'website',
           url: `https://playground.chidahp.com/category/${slugLv1}/${slugLv2}`,
@@ -156,25 +172,76 @@ export async function generateMetadata({ params }: any) {
         },
         twitter: {
           card: 'summary_large_image',
-          title: `${slugLv1} / ${slugLv2}`,
+          title: slug.name,
           description: slug.description,
           images: [
             `https://playground.chidahp.com/api/og?title=${slug.name}&author=นักเรียนชูโล่`,
           ],
         },
         alternates: {
-          canonical: `https://playground.chidahp.com/category/${slugLv1}/${slugLv2}`,
+          canonical: `https://playground.chidahp.com/category/${slugLv1}/${slugLv2}/${slugLv3}`,
         },
       };
     }
   }
 
   if (slugLv1 && slugLv2 && slugLv3) {
+    const slug = await getSinglePost(slugLv3, slugLv2);
+
     return {
-      title: `หมวดหมู่: ${slugLv1} / ${slugLv2} / ${slugLv3}`,
+      title: slug.title,
+      description: slug.excerpt,
+      keywords: [
+        slug.slug,
+        'หมวดหมู่',
+        'ชูโล่',
+        'นักเรียนชูโล่',
+        'โรงเรียนชูโล่วิทยาคม',
+        'โรงเรียนชูโล่',
+        'สนามเด็กเล่นโรงเรียนชูโล่',
+        'สนามเด็กเล่นชูโล่',
+        'พอดแคสต์แรงบันดาลใจ',
+        'Podcast ภาษาไทย',
+        'Podcast เรื่องชีวิต',
+        'ฟังพอดแคสต์ฟรี',
+        'Podcast นักเขียน',
+        'เรื่องเล่าพัฒนาตัวเอง',
+        'ชีวิตวัยรุ่น',
+        'เสียงจากใจ',
+        'บันทึกชีวิต',
+        'Chidahp Podcast',
+        'podcast แรงบันดาลใจไทย',
+        'เล่าเรื่องชีวิตจริง'
+      ].join(', '),
+      openGraph: {
+        title: slug.title,
+        description: slug.excerpt,
+        type: 'article',
+        url: `https://playground.chidahp.com/category/${slugLv1}/${slugLv2}/${slugLv3}`,
+        images: [
+          {
+            url: `https://playground.chidahp.com/api/og?title=${slug.title}&author=${slug.author.node.name}`,
+            width: 1200,
+            height: 630,
+            alt: slug.title,
+          },
+        ],
+      },
+      twitter: {
+        card: 'summary_large_image',
+        title: slug.title,
+        description: slug.excerpt,
+        images: [
+          `https://playground.chidahp.com/api/og?title=${slug.title}&author=${slug.author.node.name}`,
+        ],
+      },
+      alternates: {
+        canonical: `https://playground.chidahp.com/category/${slugLv1}/${slugLv2}/${slugLv3}`,
+      },
     };
   }
 
+  // fallback กรณีผิดปกติ
   return {
     title: 'หมวดหมู่: ไม่สามารถระบุได้',
   };
