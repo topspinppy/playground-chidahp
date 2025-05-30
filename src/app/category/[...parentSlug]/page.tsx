@@ -130,7 +130,6 @@ export async function generateMetadata({ params }: any) {
         },
       }
     } else {
-      console.log(slugLv2, 'is not a child category');
       // If slugLv2 is not a child category, treat it as a post
       const slug = await getSinglePost(slugLv2, slugLv1);
       return {
