@@ -8,8 +8,6 @@ export default async function MainCategory(params: Props) {
   const categoryDetail = await getCategoryDetail(slug);
   const posts = await getPostsByCategory(slug);
 
-  console.log('Category Detail:', categoryDetail);
-  console.log('Posts:', posts);
   return (
     <main className="max-w-6xl mx-auto px-4 py-10">
       <section className="mb-12">
