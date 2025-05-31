@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Header from "./components/header";
-import { getAllCategoriesWithChildren, getCategories } from "@/lib/api";
+import { getAllCategoriesWithChildren } from "@/lib/api";
 import Menu from "./components/menu";
 import Footer from "./components/footer";
 import { Noto_Sans_Thai, Poppins } from "next/font/google";
