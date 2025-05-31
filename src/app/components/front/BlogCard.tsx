@@ -3,8 +3,19 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 export function BlogCard({ post }: { post: Post }) {
-  const categorySlug = post.categories.nodes.filter(category => category.slug !== 'featured-post').reverse();
-  const finalSlug = categorySlug.map((category) => category.slug);
+  const categorySlug = post.categories.nodes;
+  const sortedSlug = categorySlug
+    .slice() // เผื่อไม่อยาก mutate ของเดิม
+    .sort((a, b) => {
+      // เอา parentId null (คือ root) มาก่อน
+      if (a.parentId === null && b.parentId !== null) return -1;
+      if (a.parentId !== null && b.parentId === null) return 1;
+      return 0; // เทียบเท่ากัน
+    });
+
+  const finalSlug = sortedSlug.map((category) => category.slug);
+
+  console.log('Category Slug:', post.categories.nodes);
   return (
     <article className="bg-white rounded-xl overflow-hidden shadow hover:shadow-lg transition">
       <Link href={`/category/${finalSlug.join('/')}/${post.slug}`}>

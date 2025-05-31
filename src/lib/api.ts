@@ -116,6 +116,6 @@ export async function getPostInSeries(seriesId: string): Promise<Post[]> {
 
 export async function getAllCategoriesWithChildren(): Promise<Category[]> {
   const data = await graphqlClient.request<{ categories: { nodes: Category[] } }>(GET_ALL_CATEGORIES_WITH_CHILDREN)
-  const categories = data.categories.nodes.filter(cat => cat.slug !== 'uncategorized' && cat.slug !== 'featured-post' && cat.slug !== '13minutes-podcast')
+  const categories = data.categories.nodes.filter(cat => cat.parent === null && cat.slug !== 'uncategorized' && cat.slug !== 'featured-post')
   return categories
 }

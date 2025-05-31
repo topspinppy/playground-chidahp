@@ -58,6 +58,7 @@ export interface Categories {
 export interface Node {
   name: string
   slug: string
+  parentId: string | null
   parent?: Node[] | null
 }
 
