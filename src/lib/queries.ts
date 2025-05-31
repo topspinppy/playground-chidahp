@@ -90,6 +90,9 @@ export const GET_SINGLE_POST = gql`
       date
       excerpt
       content
+      storySeries {
+        seriesId
+      }
       featuredImage {
         node {
           sourceUrl
@@ -298,6 +301,31 @@ export const GET_ALL_PAGES = gql`
       nodes {
         slug
         title
+      }
+    }
+  }
+`
+
+export const GET_POSTS_IN_SERIES = gql`
+  query GetPostsInSeries($seriesId: String!) {
+    posts(
+      where: {
+        metaQuery: {
+          metaArray: [
+            {
+              key: "series_id",
+              value: $seriesId,
+              compare: EQUAL_TO
+            }
+          ]
+        }
+        orderby: { field: DATE, order: ASC }
+      }
+    ) {
+      nodes {
+        title
+        slug
+        date
       }
     }
   }

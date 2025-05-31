@@ -1,4 +1,4 @@
-import { getSinglePost } from "@/lib/api";
+import { getPostInSeries, getSinglePost } from "@/lib/api";
 import { Node } from "@/types/types";
 import Image from "next/image";
 import Link from "next/link";
@@ -6,6 +6,7 @@ import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import Tag from "@/app/components/front/Tag";
 import ShareButtons from "@/app/components/front/SharedButton";
+import SeriesNavigator from "@/app/components/front/SeriesNavigator";
 
 export const dynamic = "force-dynamic";
 
@@ -87,6 +88,8 @@ export default async function Post(params: RouteParams) {
   const post = third
     ? await getSinglePost(slugLv3, slugLv2)
     : await getSinglePost(slugLv2, slugLv1);
+
+  const postInSeries = await getPostInSeries(post.storySeries.seriesId);
   if (!post) return notFound();
 
   const belongsToCategory = post.categories.nodes.some(
@@ -94,7 +97,6 @@ export default async function Post(params: RouteParams) {
   );
 
   if (!belongsToCategory) return notFound();
-
   return (
     <main className="max-w-3xl mx-auto px-4 py-12">
       {/* หมวดหมู่ */}
@@ -147,6 +149,15 @@ export default async function Post(params: RouteParams) {
         `}
         dangerouslySetInnerHTML={{ __html: post.content }}
       />
+
+      {/* ถ้ามีตอนก่อนหน้าและถัดไป */}
+      {post.storySeries?.seriesId && (
+        <SeriesNavigator
+          seriesPosts={postInSeries}
+          parentSlug={parentSlug}
+          currentSlug={post.slug}
+        />
+      )}
 
 
       <Tag nodes={post.tags.nodes} />

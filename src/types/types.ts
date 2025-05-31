@@ -29,6 +29,9 @@ export interface Post {
   date: string
   excerpt: string
   content: string
+  storySeries: {
+    seriesId: string
+  }
   featuredImage: {
     node: {
       sourceUrl: string
