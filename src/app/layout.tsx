@@ -5,8 +5,8 @@ import { getCategories } from "@/lib/api";
 import Menu from "./components/menu";
 import Footer from "./components/footer";
 import { Noto_Sans_Thai, Poppins } from "next/font/google";
-import GoogleAnalytics from "./components/front/GoogleAnalytics";
 import Head from "./Header";
+import CookieConcent from "./components/CookieConsent";
 
 const noto_sans_thai = Noto_Sans_Thai({
   variable: "--font-noto-sans-thai",
@@ -22,7 +22,7 @@ const poppins = Poppins({
 
 export const metadata: Metadata = {
   title: "Playground by Chidahp | สนามเด็กเล่นโรงเรียนชูโล่",
-  description: "Playground คือสนามเด็กเล่นของความคิดสร้างสรรค์ ข่าวสาร เรื่องเล่า และโปรเจกต์กวนประสาทจากจักรวาลชี้ดาบ — เพราะข่าวไม่จำเป็นต้องจริง แต่ต้องเท่!",  
+  description: "Playground คือสนามเด็กเล่นของความคิดสร้างสรรค์ ข่าวสาร เรื่องเล่า และโปรเจกต์กวนประสาทจากจักรวาลชี้ดาบ — เพราะข่าวไม่จำเป็นต้องจริง แต่ต้องเท่!",
   keywords: [
     "โรงเรียนชูโล่",
     "โรงเรียนชูโล่วิทยาคม",
@@ -67,12 +67,12 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <Head />
-      <GoogleAnalytics />
       <body className={`${noto_sans_thai.variable} ${poppins.variable} antialiased`}>
         <Header />
         <Menu categories={categories} />
         {children}
         <Footer categories={categories} />
+        <CookieConcent />
       </body>
     </html>
   );
