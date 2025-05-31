@@ -3,7 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 export function BlogCard({ post }: { post: Post }) {
-  const categorySlug = post.categories.nodes;
+  const categorySlug = post.categories.nodes.filter((category) => category.slug !== 'uncategorized' && category.slug !== 'featured-post');
   const sortedSlug = categorySlug
     .slice() // เผื่อไม่อยาก mutate ของเดิม
     .sort((a, b) => {
