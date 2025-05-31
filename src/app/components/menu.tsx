@@ -1,25 +1,26 @@
 'use client'
 
+import { Category } from '@/types/types'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 
-interface SubCategory {
-  id: string
-  name: string
-  slug: string
-  count: number
-}
+// interface SubCategory {
+//   id: string
+//   name: string
+//   slug: string
+//   count: number
+// }
 
-interface Category {
-  id: string
-  name: string
-  slug: string
-  description?: string
-  count?: number | null
-  children: {
-    nodes: SubCategory[]
-  }
-}
+// interface Category {
+//   id: string
+//   name: string
+//   slug: string
+//   description?: string
+//   count?: number | null
+//   children: {
+//     nodes: SubCategory[]
+//   }
+// }
 
 interface IMenuProps {
   categories: Category[]
