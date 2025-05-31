@@ -89,7 +89,7 @@ export default async function Post(params: RouteParams) {
     ? await getSinglePost(slugLv3, slugLv2)
     : await getSinglePost(slugLv2, slugLv1);
 
-  const postInSeries = await getPostInSeries(post.storySeries.seriesId);
+  const postInSeries = post.storySeries.seriesId ? await getPostInSeries(post.storySeries.seriesId) : [];
   if (!post) return notFound();
 
   const belongsToCategory = post.categories.nodes.some(
