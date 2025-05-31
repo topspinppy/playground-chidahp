@@ -4,24 +4,6 @@ import { Category } from '@/types/types'
 import Link from 'next/link'
 import { usePathname, useRouter } from 'next/navigation'
 
-// interface SubCategory {
-//   id: string
-//   name: string
-//   slug: string
-//   count: number
-// }
-
-// interface Category {
-//   id: string
-//   name: string
-//   slug: string
-//   description?: string
-//   count?: number | null
-//   children: {
-//     nodes: SubCategory[]
-//   }
-// }
-
 interface IMenuProps {
   categories: Category[]
 }
@@ -57,7 +39,7 @@ export default function Menu({ categories }: IMenuProps) {
               <option value={`/category/${cat.slug}`}>{cat.name}</option>
 
               {/* Subcategories */}
-              {cat.children?.nodes.map((child) => (
+              {cat.chidren?.nodes.map((child) => (
                 <option
                   key={child.id}
                   value={`/category/${cat.slug}/${child.slug}`}
@@ -75,7 +57,7 @@ export default function Menu({ categories }: IMenuProps) {
       <ul className="hidden sm:flex flex-wrap gap-4 justify-center mt-2 mb-2" role="menubar">
         {categories.map((cat) => {
           const isActive = pathname === `/category/${cat.slug}`
-          const hasChildren = cat.children?.nodes?.length > 0
+          const hasChildren = cat.chidren?.nodes?.length > 0
 
           return (
             <li key={cat.id} role="none" className="relative group">
@@ -99,7 +81,7 @@ export default function Menu({ categories }: IMenuProps) {
                   className="absolute left-0 mt-2 bg-white border border-yellow-400 rounded shadow-lg z-50 w-max min-w-[200px]
             opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200"
                 >
-                  {cat.children.nodes.map((sub) => (
+                  {cat.chidren.nodes.map((sub) => (
                     <li key={sub.id}>
                       <Link
                         href={`/category/${cat.slug}/${sub.slug}`}
