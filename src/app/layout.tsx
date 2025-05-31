@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Header from "./components/header";
-import { getCategories } from "@/lib/api";
+import { getAllCategoriesWithChildren, getCategories } from "@/lib/api";
 import Menu from "./components/menu";
 import Footer from "./components/footer";
 import { Noto_Sans_Thai, Poppins } from "next/font/google";
@@ -63,7 +63,8 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const categories = await getCategories();
+  const categories = await getAllCategoriesWithChildren();
+  // console.log("Categories fetched:", categories);
   return (
     <html lang="en">
       <Head />

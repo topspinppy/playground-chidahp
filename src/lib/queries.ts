@@ -330,3 +330,27 @@ export const GET_POSTS_IN_SERIES = gql`
     }
   }
 `
+
+
+export const GET_ALL_CATEGORIES_WITH_CHILDREN = gql`
+  query GetAllCategoriesWithChildren {
+    categories(first: 100) {
+      nodes {
+        id
+        name
+        slug
+        description
+        count
+        children {
+          nodes {
+            id
+            name
+            slug
+            count
+          }
+        }
+      }
+    }
+  }
+
+`

@@ -4,10 +4,14 @@ export interface Category {
   slug: string
   parent?: {
     node: {
+      id: string
       name: string
       slug: string
     }
   } | null
+  chidren?: {
+    nodes: Category[]
+  }
   description: string
   count: number
 }
