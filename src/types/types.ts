@@ -9,7 +9,7 @@ export interface Category {
       slug: string
     }
   } | null
-  chidren: {
+  children: {
     nodes: Category[]
   }
   description: string

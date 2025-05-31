@@ -39,7 +39,7 @@ export default function Menu({ categories }: IMenuProps) {
               <option value={`/category/${cat.slug}`}>{cat.name}</option>
 
               {/* Subcategories */}
-              {cat.chidren?.nodes.map((child) => (
+              {cat.children?.nodes.map((child) => (
                 <option
                   key={child.id}
                   value={`/category/${cat.slug}/${child.slug}`}
@@ -53,50 +53,51 @@ export default function Menu({ categories }: IMenuProps) {
 
       </div>
 
-      {/* ✅ Desktop: Inline <ul><li><a> */}
-      <ul className="hidden sm:flex flex-wrap gap-4 justify-center mt-2 mb-2" role="menubar">
-        {categories.map((cat) => {
-          const isActive = pathname === `/category/${cat.slug}`
-          const hasChildren = cat.chidren?.nodes?.length > 0
+{/* ✅ Desktop: Inline <ul><li><a> */}
+<ul className="hidden sm:flex flex-wrap gap-4 justify-center mt-2 mb-2" role="menubar">
+  {categories.map((cat) => {
+    const isActive = pathname === `/category/${cat.slug}`
+    const hasChildren = cat.children?.nodes?.length > 0
 
-          return (
-            <li key={cat.id} role="none" className="relative group">
-              {/* ปุ่มหลัก */}
-              <Link
-                href={`/category/${cat.slug}`}
-                className={`cursor-pointer px-4 py-1.5 border border-black rounded-full transition-all text-sm shadow-sm
+    return (
+      <li key={cat.id} role="none" className="relative group">
+        {/* ปุ่มหลัก */}
+        <Link
+          href={`/category/${cat.slug}`}
+          className={`cursor-pointer px-4 py-1.5 border border-black rounded-full transition-all text-sm shadow-sm
             ${isActive
-                    ? 'bg-black text-yellow-400'
-                    : 'bg-yellow-50 hover:bg-black hover:text-yellow-400'}
+              ? 'bg-black text-yellow-400'
+              : 'bg-yellow-50 hover:bg-black hover:text-yellow-400'}
           `}
-                aria-current={isActive ? 'page' : undefined}
-                role="menuitem"
-              >
-                {cat.name}
-              </Link>
+          aria-current={isActive ? 'page' : undefined}
+          role="menuitem"
+        >
+          {cat.name}
+        </Link>
 
-              {/* Submenu */}
-              {hasChildren && (
-                <ul
-                  className="absolute left-0 mt-2 bg-white border border-yellow-400 rounded shadow-lg z-50 w-max min-w-[200px]
+        {/* Submenu */}
+        {hasChildren && (
+          <ul
+            className="absolute left-0 mt-2 bg-white border border-yellow-400 rounded shadow-lg z-50 w-max min-w-[200px]
             opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200"
+          >
+            {cat.children.nodes.map((sub) => (
+              <li key={sub.id}>
+                <Link
+                  href={`/category/${cat.slug}/${sub.slug}`}
+                  className="block px-4 py-2 text-sm text-yellow-800 hover:bg-yellow-100"
                 >
-                  {cat.chidren.nodes.map((sub) => (
-                    <li key={sub.id}>
-                      <Link
-                        href={`/category/${cat.slug}/${sub.slug}`}
-                        className="block px-4 py-2 text-sm text-yellow-800 hover:bg-yellow-100"
-                      >
-                        {sub.name}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </li>
-          )
-        })}
-      </ul>
+                  {sub.name}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        )}
+      </li>
+    )
+  })}
+</ul>
+
 
 
     </nav>
