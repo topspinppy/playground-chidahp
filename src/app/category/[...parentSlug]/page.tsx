@@ -164,7 +164,7 @@ export async function generateMetadata({ params }: any) {
           url: `https://playground.chidahp.com/category/${slugLv1}/${slugLv2}`,
           images: [
             {
-              url: `https://playground.chidahp.com/api/og?title=${slug.title}&author=นักเรียนชูโล่`,
+              url: `https://playground.chidahp.com/api/og?title=${slug.title}&author=${slug.author.node.name}`,
               width: 1200,
               height: 630,
               alt: slug.title,
@@ -176,7 +176,7 @@ export async function generateMetadata({ params }: any) {
           title: slug.title,
           description: slug.excerpt.replace(/<[^>]*>/g, ''),
           images: [
-            `https://playground.chidahp.com/api/og?title=${slug.title}&author=นักเรียนชูโล่`,
+            `https://playground.chidahp.com/api/og?title=${slug.title}&author=${slug.author.node.name}`,
           ],
         },
         alternates: {
