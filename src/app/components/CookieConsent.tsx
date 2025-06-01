@@ -1,15 +1,19 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import GoogleAnalytics from "./front/GoogleAnalytics"
+import GoogleAnalytics from "./front/GoogleAnalytics";
 import Link from "next/link";
 
 export default function CookieConsent() {
   const [accepted, setAccepted] = useState(false);
+  const [isReady, setIsReady] = useState(false);
 
   useEffect(() => {
     const consent = localStorage.getItem("cookieConsent");
-    if (consent === "true") setAccepted(true);
+    if (consent === "true") {
+      setAccepted(true);
+    }
+    setIsReady(true); // mark as ready to render
   }, []);
 
   const handleAccept = () => {
@@ -17,6 +21,7 @@ export default function CookieConsent() {
     setAccepted(true);
   };
 
+  if (!isReady) return null;
   if (accepted) return <GoogleAnalytics />;
 
   return (
@@ -24,7 +29,8 @@ export default function CookieConsent() {
       <p className="text-sm">
         เราใช้คุกกี้เพื่อวิเคราะห์การใช้งานเว็บไซต์ เพื่อปรับปรุงประสบการณ์ของคุณ 🍪
         <br />
-        โดยท่านสามารถอ่าน <Link
+        โดยท่านสามารถอ่าน{" "}
+        <Link
           href="/page/privacy-policy"
           className="text-yellow-800 font-semibold underline underline-offset-2 hover:text-yellow-600 transition"
         >
