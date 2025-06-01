@@ -144,7 +144,7 @@ export default async function Post(params: RouteParams) {
       {/* เนื้อหา */}
       <article
         className={`
-          ${slugLv1 === "chidahp-podcast" ? proseClassName : wpContentClassName}
+          ${slugLv1 === "chidahp-content" ? proseClassName : wpContentClassName}
           ${articleClassName}
         `}
         dangerouslySetInnerHTML={{ __html: post.content }}

@@ -15,7 +15,6 @@ export function BlogCard({ post }: { post: Post }) {
 
   const finalSlug = sortedSlug.map((category) => category.slug);
 
-  console.log('Category Slug:', post.categories.nodes);
   return (
     <article className="bg-white rounded-xl overflow-hidden shadow hover:shadow-lg transition">
       <Link href={`/category/${finalSlug.join('/')}/${post.slug}`}>
