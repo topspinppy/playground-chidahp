@@ -90,6 +90,7 @@ export const GET_SINGLE_POST = gql`
       date
       excerpt
       content
+      commentStatus
       storySeries {
         seriesId
       }

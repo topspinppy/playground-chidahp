@@ -55,10 +55,6 @@ export async function GET() {
       <loc>${siteUrl}</loc>
       <lastmod>${new Date().toISOString()}</lastmod>
     </url>
-    <url>
-      <loc>${siteUrl}/tags</loc>
-      <lastmod>${new Date().toISOString()}</lastmod>
-    </url>
   `
 
   const sitemap = `<?xml version="1.0" encoding="UTF-8"?>

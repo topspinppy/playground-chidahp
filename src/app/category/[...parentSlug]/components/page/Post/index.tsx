@@ -7,6 +7,7 @@ import { Metadata } from "next";
 import Tag from "@/app/components/front/Tag";
 import ShareButtons from "@/app/components/front/SharedButton";
 import SeriesNavigator from "@/app/components/front/SeriesNavigator";
+import CommentSection from "./CommentSection";
 
 export const dynamic = "force-dynamic";
 
@@ -89,9 +90,10 @@ export default async function Post(params: RouteParams) {
     ? await getSinglePost(slugLv3, slugLv2)
     : await getSinglePost(slugLv2, slugLv1);
 
-  const postInSeries = post.storySeries.seriesId ? await getPostInSeries(post.storySeries.seriesId) : [];
+  const postInSeries = post?.storySeries.seriesId ? await getPostInSeries(post.storySeries.seriesId) : [];
   if (!post) return notFound();
-
+  // const rawId = atob(post.id)
+  // const postId = rawId.split(":")[1]
   const belongsToCategory = post.categories.nodes.some(
     (cat: Node) => cat.slug === slugLv1
   );
@@ -193,6 +195,13 @@ export default async function Post(params: RouteParams) {
         url={`https://playground.chidahp.com/category/${parentSlug.join("/")}`}
         title={post.title}
       />
+
+      {/* คอมเมนต์ */}
+      {post.commentStatus === "open" && (
+        <section className="mt-12">
+          xxx
+        </section>
+      )}
     </main>
   );
 }

@@ -33,6 +33,7 @@ export interface Post {
   date: string
   excerpt: string
   content: string
+  commentStatus: "open" | "closed"
   storySeries: {
     seriesId: string
   }
