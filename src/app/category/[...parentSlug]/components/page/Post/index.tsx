@@ -6,10 +6,20 @@ import { notFound } from "next/navigation";
 import { Metadata } from "next";
 import Tag from "@/app/components/front/Tag";
 import ShareButtons from "@/app/components/front/SharedButton";
-import SeriesNavigator from "@/app/components/front/SeriesNavigator";
-import CommentSection from "./CommentSection";
+import CommentSection from "@/app/components/CommentSection";
+import dynamic from "next/dynamic";
 
-export const dynamic = "force-dynamic";
+const SeriesNavigator = dynamic(() => import("../../../../../components/front/SeriesNavigator"), {
+  ssr: true, // ไม่ render บน server
+  loading() {
+    return (
+      <div className="flex justify-center items-center h-16">
+        <span className="text-yellow-500">กำลังโหลด...</span>
+      </div>
+    );
+  },
+});
+
 
 type RouteParams = Promise<{
   parentSlug: string[];
@@ -92,8 +102,8 @@ export default async function Post(params: RouteParams) {
 
   const postInSeries = post?.storySeries.seriesId ? await getPostInSeries(post.storySeries.seriesId) : [];
   if (!post) return notFound();
-  // const rawId = atob(post.id)
-  // const postId = rawId.split(":")[1]
+  const rawId = atob(post.id)
+  const postId = rawId.split(":")[1]
   const belongsToCategory = post.categories.nodes.some(
     (cat: Node) => cat.slug === slugLv1
   );
@@ -199,7 +209,9 @@ export default async function Post(params: RouteParams) {
       {/* คอมเมนต์ */}
       {post.commentStatus === "open" && (
         <section className="mt-12">
-          xxx
+          <CommentSection 
+            postId={Number(postId)}
+          />
         </section>
       )}
     </main>

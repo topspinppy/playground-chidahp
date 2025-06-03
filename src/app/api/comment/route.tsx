@@ -1,8 +1,4 @@
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-const cache: Record<string, { data: any; timestamp: number }> = {};
-const CACHE_TTL = 60 * 1000; // 1 นาที
-
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
 
@@ -11,13 +7,6 @@ export async function GET(request: Request) {
   const per_page = Math.min(Number(searchParams.get('per_page')) || 5, 20);
   const orderby = searchParams.get('orderby') ?? 'date';
   const order = searchParams.get('order') ?? 'asc';
-
-  const cacheKey = `post:${post}-page:${page}-per:${per_page}-order:${order}-${orderby}`;
-  const now = Date.now();
-
-  if (cache[cacheKey] && (now - cache[cacheKey].timestamp < CACHE_TTL)) {
-    return Response.json(cache[cacheKey].data);
-  }
 
   try {
     const apiUrl = `https://api.playground.chidahp.com/wp-json/wp/v2/comments?post=${post}&page=${page}&per_page=${per_page}&orderby=${orderby}&order=${order}`;
@@ -31,7 +20,7 @@ export async function GET(request: Request) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     const data = await response.json();
-    cache[cacheKey] = { data, timestamp: now };
+    console.log("Fetched comments:", data);
     return Response.json(data);
 
   } catch (error) {
@@ -42,6 +31,7 @@ export async function GET(request: Request) {
     );
   }
 }
+
 
 
 export async function POST(request: Request) {
