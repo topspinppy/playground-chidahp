@@ -8,6 +8,8 @@ import Tag from "@/app/components/front/Tag";
 import ShareButtons from "@/app/components/front/SharedButton";
 import CommentSection from "@/app/components/CommentSection";
 import dynamic from "next/dynamic";
+import TrackViewClient from "@/app/components/TrackViewClient";
+
 
 const SeriesNavigator = dynamic(() => import("../../../../../components/front/SeriesNavigator"), {
   ssr: true, // ไม่ render บน server
@@ -111,6 +113,7 @@ export default async function Post(params: RouteParams) {
   if (!belongsToCategory) return notFound();
   return (
     <main className="max-w-3xl mx-auto px-4 py-12">
+      { !!postId && <TrackViewClient postId={Number(postId)} /> }
       {/* หมวดหมู่ */}
       <div className="mb-4">
         {post.categories.nodes

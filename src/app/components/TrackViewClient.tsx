@@ -1,0 +1,8 @@
+"use client";
+
+import { useTrackView } from "@/app/hooks/useTrackView";
+
+export default function TrackViewClient({ postId }: { postId: number }) {
+  useTrackView(postId); // ✅ ถูกต้อง
+  return null;
+}
