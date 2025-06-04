@@ -171,17 +171,7 @@ export default async function Post(params: RouteParams) {
         )}
       </div>
 
-
-      {/* เนื้อหา */}
-      <article
-        className={`
-          ${slugLv1 === "chidahp-content" ? proseClassName : wpContentClassName}
-          ${articleClassName}
-        `}
-        dangerouslySetInnerHTML={{ __html: post.content }}
-      />
-
-      {/* ถ้ามีตอนก่อนหน้าและถัดไป */}
+            {/* ถ้ามีตอนก่อนหน้าและถัดไป */}
       {post.storySeries?.seriesId && (
         <SeriesNavigator
           seriesPosts={postInSeries}
@@ -189,6 +179,28 @@ export default async function Post(params: RouteParams) {
           currentSlug={post.slug}
         />
       )}
+
+
+      {/* เนื้อหา */}
+      {post.featuredImage?.node && (
+        <div className="mb-8">
+          <Image
+            src={post.featuredImage.node.sourceUrl}
+            alt={post.featuredImage.node.altText || post.title}
+            width={1200}
+            height={630}
+            className="w-full h-auto rounded-lg mb-4 object-cover" 
+          />
+        </div>
+      )}
+      
+      <article
+        className={`
+          ${slugLv1 === "chidahp-content" ? proseClassName : wpContentClassName}
+          ${articleClassName}
+        `}
+        dangerouslySetInnerHTML={{ __html: post.content }}
+      />
 
 
       <Tag nodes={post.tags.nodes} />

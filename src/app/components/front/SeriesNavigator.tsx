@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 
 export default function SeriesNavigator({
   seriesPosts,
@@ -18,33 +18,24 @@ export default function SeriesNavigator({
 }) {
   const rawParentSlug = parentSlug.slice(0, -1).join("/");
   const scrollRef = useRef<HTMLDivElement>(null);
+  const currentRef = useRef<HTMLAnchorElement | null>(null); // 📌 ref สำหรับ current post
 
-  const scroll = (direction: "left" | "right") => {
-    const container = scrollRef.current;
-    if (!container) return;
-    const scrollAmount = 250;
-    container.scrollBy({
-      left: direction === "left" ? -scrollAmount : scrollAmount,
-      behavior: "smooth",
-    });
-  };
+  // ✅ scroll to current post on mount
+  useEffect(() => {
+    if (currentRef.current) {
+      currentRef.current.scrollIntoView({
+        behavior: "smooth",
+        inline: "center",
+        block: "nearest",
+      });
+    }
+  }, []);
 
   return (
-    <section className="mt-16 border-t border-yellow-800 pt-10 relative">
+    <section className="border-yellow-800 pt-2 relative">
       <h2 className="text-xl font-bold text-yellow-600 mb-4">
         📖 อ่านเป็นซีรีส์ได้
       </h2>
-
-      {/* ปุ่มลูกศร */}
-      {seriesPosts.length < 2 && (
-        <button
-          onClick={() => scroll("left")}
-          className="absolute -left-15 top-1/2 -translate-y-1/2 z-10 bg-white shadow px-2 py-1 rounded-full hidden md:block"
-          aria-label="เลื่อนไปซ้าย"
-        >
-          ←
-        </button>
-      )}
 
       <div
         ref={scrollRef}
@@ -56,6 +47,7 @@ export default function SeriesNavigator({
           return (
             <Link
               key={post.slug}
+              ref={isCurrent ? currentRef : null} // 👁 ตั้ง ref ให้กับ current เท่านั้น
               href={`/category/${rawParentSlug}/${post.slug}`}
               className={`min-w-[200px] max-w-[220px] snap-start p-4 rounded-lg shadow-sm transition flex-shrink-0 border
                 ${
@@ -82,17 +74,6 @@ export default function SeriesNavigator({
           );
         })}
       </div>
-
-      {/* ปุ่มลูกศรขวา */}
-      {seriesPosts.length < 2 && (
-        <button
-          onClick={() => scroll("right")}
-          className="absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white shadow px-2 py-1 rounded-full hidden md:block"
-          aria-label="เลื่อนไปขวา"
-        >
-          →
-        </button>
-      )}
     </section>
   );
 }
