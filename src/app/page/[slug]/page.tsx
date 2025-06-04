@@ -7,6 +7,7 @@ import { notFound } from 'next/navigation'
 export const dynamic = 'force-dynamic'
 
 import type { Metadata } from 'next'
+import TrackViewClient from '@/app/components/TrackViewClient';
 
 type Props = Promise<{ slug: string }>
 
@@ -57,6 +58,8 @@ export default async function ContentPage(params: { params: Props }) {
 
   return (
     <main className="max-w-3xl mx-auto px-4 py-16  min-h-screen">
+      <TrackViewClient postId={`page-${slug}-001`} />
+      
       {/* TITLE */}
       <h1 className="text-4xl font-bold text-yellow-800 mb-6 border-b border-yellow-700 pb-2">
         {page.title}

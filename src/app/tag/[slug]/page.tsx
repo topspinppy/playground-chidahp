@@ -1,4 +1,5 @@
 import { BlogCard } from "@/app/components/front/BlogCard";
+import TrackViewClient from "@/app/components/TrackViewClient";
 import { getPostsByTag } from "@/lib/api";
 import { Post } from "@/types/types";
 import Link from "next/link";
@@ -58,6 +59,8 @@ export default async function TagPage({
 
   return (
     <main className="max-w-6xl mx-auto px-4 py-12">
+      <TrackViewClient postId={`tag-${slug}-001`} />
+      
       <h1 className="text-3xl font-bold text-yellow-400 mb-6">
         บทความแท็ก: {`#${decodedSlug}`}
       </h1>

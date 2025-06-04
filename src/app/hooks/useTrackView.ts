@@ -40,6 +40,7 @@ export function useTrackView(postId: number | string) {
         language: navigator.language,
         screenWidth: window.screen.width,
         screenHeight: window.screen.height,
+        country: navigator.language.split("-")[1] || "unknown",
         darkMode: isDark,
         pathname: window.location.pathname,
         utmSource: getQueryParam("utm_source"),
