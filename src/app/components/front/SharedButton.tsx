@@ -5,9 +5,10 @@ import {
   TwitterShareButton,
   LineShareButton,
   FacebookIcon,
-  // TwitterIcon,
+  BlueskyShareButton,
   XIcon,
-  LineIcon
+  LineIcon,
+  BlueskyIcon,
 } from 'react-share'
 
 export default function ShareButtons({ url, title }: { url: string, title: string }) {
@@ -24,6 +25,10 @@ export default function ShareButtons({ url, title }: { url: string, title: strin
       <LineShareButton url={url} title={title}>
         <LineIcon size={32} round />
       </LineShareButton>
+
+      <BlueskyShareButton url={url} title={title}>
+        <BlueskyIcon size={32} round />
+      </BlueskyShareButton>
     </div>
   )
 }

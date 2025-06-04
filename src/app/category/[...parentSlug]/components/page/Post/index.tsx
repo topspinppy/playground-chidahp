@@ -219,7 +219,6 @@ export default async function Post(params: RouteParams) {
           </div>
         </section>
       )}
-
       <ShareButtons
         url={`https://playground.chidahp.com/category/${parentSlug.join("/")}`}
         title={post.title}
