@@ -360,3 +360,14 @@ query GetAllCategoriesWithChildren {
   }
 }
 `
+
+
+export const GET_VIEW_COUNT_POST = gql`
+  query GetViewCountPost($postId: ID!) {
+    post(id: $postId, idType: DATABASE_ID) {
+      id
+      databaseId
+      viewCount
+    }
+  }
+`

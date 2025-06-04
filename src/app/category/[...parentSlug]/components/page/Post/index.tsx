@@ -1,4 +1,4 @@
-import { getPostInSeries, getSinglePost } from "@/lib/api";
+import { getPostInSeries, getSinglePost, getViewCount } from "@/lib/api";
 import { Node } from "@/types/types";
 import Image from "next/image";
 import Link from "next/link";
@@ -28,6 +28,12 @@ type RouteParams = Promise<{
   third?: boolean;
 }>;
 
+function formatViewCount(count: number): string {
+  if (count < 1_000) return `${count}`;
+  if (count < 1_000_000) return `${(count / 1_000).toFixed(1)}k`;
+  return `${(count / 1_000_000).toFixed(1)}M `;
+}
+
 export async function generateMetadata(params: RouteParams): Promise<Metadata> {
   const { parentSlug, third } = await params;
   const [slugLv1, slugLv2, slugLv3] = parentSlug;
@@ -52,8 +58,7 @@ export async function generateMetadata(params: RouteParams): Promise<Metadata> {
         {
           url:
             post.featuredImage?.node?.sourceUrl ||
-            `https://playground.chidahp.com/api/og?title=${post.title}&author=${
-              post.author?.node?.name ?? "นักเรียนชูโล่"
+            `https://playground.chidahp.com/api/og?title=${post.title}&author=${post.author?.node?.name ?? "นักเรียนชูโล่"
             }`,
           width: 1200,
           height: 630,
@@ -67,9 +72,8 @@ export async function generateMetadata(params: RouteParams): Promise<Metadata> {
       description: post.excerpt || post.title,
       images: [
         post.featuredImage?.node?.sourceUrl ||
-          `https://playground.chidahp.com/api/og?title=${post.title}&author=${
-            post.author?.node?.name ?? "นักเรียนชูโล่"
-          }`,
+        `https://playground.chidahp.com/api/og?title=${post.title}&author=${post.author?.node?.name ?? "นักเรียนชูโล่"
+        }`,
       ],
     },
     alternates: {
@@ -109,11 +113,11 @@ export default async function Post(params: RouteParams) {
   const belongsToCategory = post.categories.nodes.some(
     (cat: Node) => cat.slug === slugLv1
   );
-
+  const view = await getViewCount(Number(postId));
   if (!belongsToCategory) return notFound();
   return (
     <main className="max-w-3xl mx-auto px-4 py-12">
-      { !!postId && <TrackViewClient postId={Number(postId)} /> }
+      {!!postId && <TrackViewClient postId={Number(postId)} />}
       {/* หมวดหมู่ */}
       <div className="mb-4">
         {post.categories.nodes
@@ -138,8 +142,11 @@ export default async function Post(params: RouteParams) {
       <h1 className="text-4xl font-black text-yellow-600 mb-2">{post.title}</h1>
 
       {/* วันที่ + ผู้เขียน */}
-      <div className="text-sm text-yellow-600 mb-6 flex items-center gap-3">
+      <div className="text-sm text-yellow-600 mb-10 flex flex-wrap items-center gap-x-4 gap-y-4">
+        {/* วันที่ */}
         <span>{new Date(post.date).toLocaleDateString("th-TH")}</span>
+
+        {/* ผู้เขียน + avatar + views */}
         {post.author?.node && (
           <div className="flex items-center gap-2">
             {post.author.node.avatar?.url && (
@@ -152,9 +159,18 @@ export default async function Post(params: RouteParams) {
               />
             )}
             <span>{post.author.node.name}</span>
+
+            {/* 👁️ จำนวนวิว */}
+            <div className="flex items-center gap-1 text-yellow-600">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-[1em] w-[1em] fill-yellow-600" viewBox="0 0 24 24">
+                <path d="M12 4.5C6 4.5 1.73 9.11 1 12c.73 2.89 5 7.5 11 7.5s10.27-4.61 11-7.5c-.73-2.89-5-7.5-11-7.5zm0 13c-3.03 0-5.5-2.47-5.5-5.5S8.97 6.5 12 6.5s5.5 2.47 5.5 5.5S15.03 17.5 12 17.5zm0-9a3.5 3.5 0 100 7 3.5 3.5 0 000-7z" />
+              </svg>
+              <span className="leading-none">{formatViewCount(view)} ครั้ง</span>
+            </div>
           </div>
         )}
       </div>
+
 
       {/* เนื้อหา */}
       <article
@@ -212,7 +228,7 @@ export default async function Post(params: RouteParams) {
       {/* คอมเมนต์ */}
       {post.commentStatus === "open" && (
         <section className="mt-12">
-          <CommentSection 
+          <CommentSection
             postId={Number(postId)}
           />
         </section>
