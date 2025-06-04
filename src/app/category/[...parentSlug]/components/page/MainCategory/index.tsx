@@ -1,4 +1,5 @@
 import { BlogCard } from "@/app/components/front/BlogCard";
+import TrackViewClient from "@/app/components/TrackViewClient";
 import { getCategoryDetail, getPostsByCategory } from "@/lib/api";
 
 type Props = Promise<{ slug: string }>;
@@ -10,6 +11,8 @@ export default async function MainCategory(params: Props) {
 
   return (
     <main className="max-w-6xl mx-auto px-4 py-10">
+      <TrackViewClient postId={'category-001'} />
+      
       <section className="mb-12">
         {/* 🔹 Heading */}
         <div className="bg-yellow-400 text-black inline-block px-4 py-1 rounded-t-md text-sm uppercase font-semibold tracking-wider">

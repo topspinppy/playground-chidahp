@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import axios from "axios";
 import { getDeviceType, getBrowserName, getOSName, getQueryParam, getBrowserVersion, getOSVersion } from "@/lib/utils";
 
-export function useTrackView(postId: number) {
+export function useTrackView(postId: number | string) {
   const hasTracked = useRef(false); // ป้องกันยิงซ้ำ
 
   useEffect(() => {
