@@ -171,7 +171,7 @@ export default async function Post(params: RouteParams) {
         )}
       </div>
 
-            {/* ถ้ามีตอนก่อนหน้าและถัดไป */}
+      {/* ถ้ามีตอนก่อนหน้าและถัดไป */}
       {post.storySeries?.seriesId && (
         <SeriesNavigator
           seriesPosts={postInSeries}
@@ -183,17 +183,18 @@ export default async function Post(params: RouteParams) {
 
       {/* เนื้อหา */}
       {post.featuredImage?.node && (
-        <div className="mb-8">
+        <div className="mb-8 overflow-hidden rounded-lg group">
           <Image
             src={post.featuredImage.node.sourceUrl}
             alt={post.featuredImage.node.altText || post.title}
             width={1200}
             height={630}
-            className="w-full h-auto rounded-lg mb-4 object-cover" 
+            className="w-full h-auto object-cover rounded-lg transition-transform duration-500 ease-in-out group-hover:scale-105 group-hover:brightness-110"
           />
         </div>
       )}
-      
+
+
       <article
         className={`
           ${slugLv1 === "chidahp-content" ? proseClassName : wpContentClassName}
