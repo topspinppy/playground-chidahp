@@ -105,7 +105,6 @@ export default async function Post(params: RouteParams) {
   const post = third
     ? await getSinglePost(slugLv3, slugLv2)
     : await getSinglePost(slugLv2, slugLv1);
-
   const postInSeries = post?.storySeries.seriesId ? await getPostInSeries(post.storySeries.seriesId) : [];
   if (!post) return notFound();
   const rawId = atob(post.id)
@@ -115,6 +114,7 @@ export default async function Post(params: RouteParams) {
   );
   const view = await getViewCount(Number(postId));
   if (!belongsToCategory) return notFound();
+  
   return (
     <main className="max-w-3xl mx-auto px-4 py-12">
       {!!postId && <TrackViewClient postId={Number(postId)} />}
@@ -182,7 +182,7 @@ export default async function Post(params: RouteParams) {
 
 
       {/* เนื้อหา */}
-      {post.featuredImage?.node && (
+      {post.hidefeaturelabel.ishidefeaturelabel === false && post.featuredImage?.node && (
         <div className="mb-8 overflow-hidden rounded-lg group">
           <Image
             src={post.featuredImage.node.sourceUrl}
@@ -195,13 +195,17 @@ export default async function Post(params: RouteParams) {
       )}
 
 
-      <article
-        className={`
-          ${slugLv1 === "chidahp-content" ? proseClassName : wpContentClassName}
-          ${articleClassName}
-        `}
-        dangerouslySetInnerHTML={{ __html: post.content }}
-      />
+    <article
+      className={[
+        slugLv1 === "chidahp-content"
+          ? proseClassName
+          : post.hidewordpresscss?.ishidewordpresscss
+          ? ""
+          : wpContentClassName,
+        articleClassName,
+      ].join(" ")}
+      dangerouslySetInnerHTML={{ __html: post.content }}
+    />
 
 
       <Tag nodes={post.tags.nodes} />

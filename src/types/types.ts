@@ -37,6 +37,12 @@ export interface Post {
   storySeries: {
     seriesId: string
   }
+  hidefeaturelabel: {
+    ishidefeaturelabel: boolean
+  }
+  hidewordpresscss: {
+    ishidewordpresscss: boolean
+  }
   featuredImage: {
     node: {
       sourceUrl: string

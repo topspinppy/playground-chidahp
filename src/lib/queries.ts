@@ -94,6 +94,12 @@ export const GET_SINGLE_POST = gql`
       storySeries {
         seriesId
       }
+      hidefeaturelabel {
+        ishidefeaturelabel
+      }
+      hidewordpresscss {
+        ishidewordpresscss
+      }
       featuredImage {
         node {
           sourceUrl
