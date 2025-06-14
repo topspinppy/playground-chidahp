@@ -3,6 +3,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 export function BlogCard({ post }: { post: Post }) {
+  const artClass = post.categories.nodes[0]?.slug === 'art-class';
   const categorySlug = post.categories.nodes.filter((category) => category.slug !== 'uncategorized' && category.slug !== 'featured-post');
   const sortedSlug = categorySlug
     .slice() // เผื่อไม่อยาก mutate ของเดิม
@@ -25,13 +26,28 @@ export function BlogCard({ post }: { post: Post }) {
           width={500}
           height={500}
         />
-        <div className="p-4">
-          <h2 className="text-xl font-bold text-gray-900 mb-2 line-clamp-2">{post.title ?? '-'}</h2>
-          <p className="text-gray-700 text-sm line-clamp-3">{post.excerpt
-            ? post.excerpt.replace(/<[^>]+>/g, '').substring(0, 55) + '...'
-            : '-'}</p>
-          <p className="text-yellow-600 mt-2 text-sm font-medium">Read more →</p>
-        </div>
+        {artClass ? (
+          <div className="p-5 border-t border-gray-100 bg-gradient-to-t from-white via-pink-50 to-white rounded-b-xl space-y-2">
+            <div className="flex items-center gap-2">
+              <span className="text-xl">🎨</span>
+              <span className="text-base font-bold text-pink-700 tracking-tight">
+                Art Class Exhibition
+              </span>
+            </div>
+            <p className="text-lg font-bold text-gray-500 leading-relaxed">
+              {post.author?.node?.name ? `วาดโดย ${post.author.node.name}` : 'วาดโดย นักเรียนชูโล่วิทยาคม'}
+            </p>
+          </div>
+        ) : (
+          <div className="p-4">
+            <h2 className="text-xl font-bold text-gray-900 mb-2 line-clamp-2">{post.title ?? '-'}</h2>
+            <p className="text-gray-700 text-sm line-clamp-3">{post.excerpt
+              ? post.excerpt.replace(/<[^>]+>/g, '').substring(0, 55) + '...'
+              : '-'}</p>
+            <p className="text-yellow-600 mt-2 text-sm font-medium">Read more →</p>
+          </div>
+        )}
+
       </Link>
     </article>
   )

@@ -12,7 +12,7 @@ export default async function MainCategory(params: Props) {
   return (
     <main className="max-w-6xl mx-auto px-4 py-10">
       <TrackViewClient postId={'category-001'} />
-      
+
       <section className="mb-12">
         {/* 🔹 Heading */}
         <div className="bg-yellow-400 text-black inline-block px-4 py-1 rounded-t-md text-sm uppercase font-semibold tracking-wider">
@@ -35,9 +35,13 @@ export default async function MainCategory(params: Props) {
         </p>
       ) : (
         <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {posts.map((post) => (
-            <BlogCard key={post.slug} post={post} />
-          ))}
+          {posts.map((post) => {
+            return (
+              <>
+                <BlogCard key={post.slug} post={post} />
+              </>
+            )
+          })}
         </div>
       )}
     </main>

@@ -73,7 +73,7 @@ export default function FeaturedPost({
 
         {latestPosts.map((post, i) => {
           const slug = post.categories?.nodes?.[0]?.slug ?? "-";
-          const category = post.categories?.nodes?.[0];
+          const category = post.categories?.nodes.slice().reverse()[0];
           const formattedDate = new Date(post.date).toLocaleDateString("en-US", {
             year: "numeric",
             month: "long",
