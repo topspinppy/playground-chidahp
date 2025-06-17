@@ -39,6 +39,9 @@ export default function Footer({ categories }: { categories: Category[] }) {
             <li>
               <Link href="/page/privacy-policy" title="นโยบายความเป็นส่วนตัว">Privacy Policy</Link>
             </li>
+            <li>
+              <Link href="/page/term-and-conditions" title="ข้อกำหนดและเงื่อนไขการใช้งาน">Terms & Conditions</Link>
+            </li>
           </ul>
         </nav>
 
