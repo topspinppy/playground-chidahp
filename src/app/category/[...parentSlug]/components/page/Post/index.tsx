@@ -45,6 +45,7 @@ export async function generateMetadata(params: RouteParams): Promise<Metadata> {
   const postExcerpt = post.excerpt?.replace(/<[^>]+>/g, "") || "";
   const tags = post.tags?.nodes || [];
   const keywords = tags.map((tag) => tag.name).join(", ");
+
   return {
     title: post.title,
     description: postExcerpt || post.title,
@@ -58,8 +59,7 @@ export async function generateMetadata(params: RouteParams): Promise<Metadata> {
         {
           url:
             post.featuredImage?.node?.sourceUrl ||
-            `https://playground.chidahp.com/api/og?title=${post.title}&author=${post.author?.node?.name ?? "นักเรียนชูโล่"
-            }`,
+            `https://playground.chidahp.com/api/og?title=${post.title ?? ''}&author=${post.author?.node?.name ?? "นักเรียนชูโล่"}`,
           width: 1200,
           height: 630,
           alt: post.title,
