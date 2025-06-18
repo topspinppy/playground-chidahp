@@ -201,7 +201,7 @@ export const GET_LATEST_POSTS = gql`
 
 export const GET_POSTS_BY_CATEGORY = gql`
   query GetPostsByCategorySlug($slug: String!) {
-    posts(where: { categoryName: $slug }, first: 10) {
+    posts(where: { categoryName: $slug }, first: 100) {
       nodes {
         id
         title

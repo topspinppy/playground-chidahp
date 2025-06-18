@@ -211,9 +211,11 @@ export async function generateMetadata({ params }: any) {
 
   if (slugLv1 && slugLv2 && slugLv3) {
     const slug = await getSinglePost(slugLv3, slugLv2);
+    const hasArtClass = slug.categories['nodes'].some(cat => cat.slug === 'art-class');
 
+    const title = hasArtClass ? `Art Class` : slug.title;
     return {
-      title: slug.title,
+      title: title,
       description: slug.excerpt.replace(/<[^>]*>/g, ''),
       keywords: [
         slug.slug,
@@ -235,16 +237,20 @@ export async function generateMetadata({ params }: any) {
         'บันทึกชีวิต',
         'Chidahp Podcast',
         'podcast แรงบันดาลใจไทย',
-        'เล่าเรื่องชีวิตจริง'
+        'เล่าเรื่องชีวิตจริง',
+        'Art Class',
+        'ชี้ดาบ Art Class',
+        'ชี้ดาบ Art',
+        'ชี้ดาบ Art Class',
       ].join(', '),
       openGraph: {
-        title: slug.title,
+        title: hasArtClass ? 'Art Class' : slug.title,
         description: slug.excerpt.replace(/<[^>]*>/g, ''),
         type: 'article',
         url: `https://playground.chidahp.com/category/${slugLv1}/${slugLv2}/${slugLv3}`,
         images: [
           {
-            url: `https://playground.chidahp.com/api/og?title=${slug.title}&author=${slug.author.node.name}`,
+            url: `https://playground.chidahp.com/api/og?title=${title}&author=${slug.author.node.name}`,
             width: 1200,
             height: 630,
             alt: slug.title,
@@ -253,10 +259,10 @@ export async function generateMetadata({ params }: any) {
       },
       twitter: {
         card: 'summary_large_image',
-        title: slug.title,
+        title: hasArtClass ? 'Art Class' : slug.title,
         description: slug.excerpt.replace(/<[^>]*>/g, ''),
         images: [
-          `https://playground.chidahp.com/api/og?title=${slug.title}&author=${slug.author.node.name}`,
+          `https://playground.chidahp.com/api/og?title=${title}&author=${slug.author.node.name}`,
         ],
       },
       alternates: {
