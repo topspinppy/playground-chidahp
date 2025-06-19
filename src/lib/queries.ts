@@ -394,7 +394,7 @@ export const GET_FIRST_3_POSTS_CURSOR = gql`
 export const GET_NOT_LATEST_POSTS = gql`
   query GetNotLatestPosts($afterCursor: String!) {
     posts(
-      first: 6
+      first: 3
       after: $afterCursor
       where: { orderby: { field: DATE, order: DESC } }
     ) {
@@ -409,6 +409,58 @@ export const GET_NOT_LATEST_POSTS = gql`
             slug
             name
           }
+        }
+        featuredImage {
+          node {
+            sourceUrl
+            altText
+          }
+        }
+        author {
+          node {
+            name
+            slug
+          }
+        }
+      }
+    }
+  }
+`
+
+export const GET_POSTS_SERIES = gql`
+  query PostsWithSeriesId {
+    posts(
+      where: {
+        metaQuery: {
+          metaArray: [
+            {
+              key: "series_id",
+              compare: EXISTS
+            },
+            {
+              key: "series_id",
+              value: "",
+              compare: NOT_EQUAL_TO
+            }
+          ],
+          relation: AND
+        }
+      }
+    ) {
+      nodes {
+        id
+        title
+        slug
+        date
+        excerpt
+        categories {
+          nodes {
+            slug
+            name
+          }
+        }
+        storySeries {
+          seriesId
         }
         featuredImage {
           node {

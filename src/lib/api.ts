@@ -1,5 +1,5 @@
 import { graphqlClient } from './graphql-client'
-import { GET_ALL_CATEGORIES, GET_ALL_CATEGORIES_WITH_CHILDREN, GET_ALL_PAGES, GET_ALL_POSTS, GET_ALL_TAGS, GET_CATEGORY_BY_SLUG, GET_FEATURED_POST, GET_FIRST_3_POSTS_CURSOR, GET_LATEST_POSTS, GET_MAIN_CATEGORIES, GET_NOT_LATEST_POSTS, GET_PAGE_BY_SLUG, GET_POSTS_BY_CATEGORY, GET_POSTS_BY_TAG, GET_POSTS_IN_SERIES, GET_SINGLE_POST, GET_VIEW_COUNT_POST } from './queries'
+import { GET_ALL_CATEGORIES, GET_ALL_CATEGORIES_WITH_CHILDREN, GET_ALL_PAGES, GET_ALL_POSTS, GET_ALL_TAGS, GET_CATEGORY_BY_SLUG, GET_FEATURED_POST, GET_FIRST_3_POSTS_CURSOR, GET_LATEST_POSTS, GET_MAIN_CATEGORIES, GET_NOT_LATEST_POSTS, GET_PAGE_BY_SLUG, GET_POSTS_BY_CATEGORY, GET_POSTS_BY_TAG, GET_POSTS_IN_SERIES, GET_POSTS_SERIES, GET_SINGLE_POST, GET_VIEW_COUNT_POST } from './queries'
 import { Category, ICursor, ITagHelperData, Page, Post, PostSummary } from '../types/types'
 
 
@@ -138,4 +138,30 @@ export async function getNotLatestPosts() {
   })
 
   return postsRes.posts.nodes
+}
+
+
+export async function getPostSeries() {
+  const res = await graphqlClient.request<{ posts: { nodes: Post[] }}>(GET_POSTS_SERIES);
+  // กรองเฉพาะโพสต์ที่มี seriesId จริง ๆ
+  const postsWithSeries = res.posts.nodes.filter(
+    (p) => p.storySeries?.seriesId && p.storySeries.seriesId.trim() !== ''
+  )
+
+  // จัดกลุ่มตาม seriesId
+  const grouped = postsWithSeries.reduce((acc, post) => {
+    const key = post.storySeries.seriesId
+    if (!acc[key]) acc[key] = []
+    acc[key].push(post)
+    return acc
+  }, {} as Record<string, Post[]>)
+
+  // เลือกโพสต์แรกสุดจากแต่ละกลุ่ม (เรียงตาม date หรือ slug ก็ได้)
+  const firstInEachSeries = Object.values(grouped).map((group) => {
+    return group.sort(
+      (a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()
+    )[0]
+  })
+
+  return firstInEachSeries
 }
