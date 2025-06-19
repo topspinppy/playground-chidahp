@@ -1,6 +1,21 @@
 import { Post } from '@/types/types'
 import Image from 'next/image'
 import Link from 'next/link'
+import { decode } from 'html-entities';
+
+function stripHtmlAndDecode(htmlString: string): string {
+  // 1. ลบ tag HTML
+  let stripped = htmlString.replace(/<\/?[^>]+(>|$)/g, "");
+
+  // 2. แปลง HTML entities เช่น &hellip;
+  stripped = decode(stripped);
+
+  // 3. ลบ [...] หรือ [&hellip;] ที่ WordPress มักแถมท้าย excerpt
+  stripped = stripped.replace(/\s*\[(\.{3}|&hellip;)\]\s*/gi, "");
+
+  // 4. ตัดช่องว่างหัวท้าย
+  return stripped.trim();
+}
 
 export function BlogCard({ post }: { post: Post }) {
   const artClass = post.categories.nodes[0]?.slug === 'art-class';
@@ -41,9 +56,7 @@ export function BlogCard({ post }: { post: Post }) {
         ) : (
           <div className="p-4">
             <h2 className="text-xl font-bold text-gray-900 mb-2 line-clamp-2">{post.title ?? '-'}</h2>
-            <p className="text-gray-700 text-sm line-clamp-3">{post.excerpt
-              ? post.excerpt.replace(/<[^>]+>/g, '').substring(0, 55) + '...'
-              : '-'}</p>
+            <p className="text-gray-700 text-sm line-clamp-3">{stripHtmlAndDecode(post.excerpt)}</p>
             <p className="text-yellow-600 mt-2 text-sm font-medium">Read more →</p>
           </div>
         )}

@@ -199,6 +199,8 @@ export const GET_LATEST_POSTS = gql`
   }
 `
 
+
+
 export const GET_POSTS_BY_CATEGORY = gql`
   query GetPostsByCategorySlug($slug: String!) {
     posts(where: { categoryName: $slug }, first: 100) {
@@ -374,6 +376,53 @@ export const GET_VIEW_COUNT_POST = gql`
       id
       databaseId
       viewCount
+    }
+  }
+`
+
+// 1. ดึง endCursor จาก 3 โพสต์แรก
+export const GET_FIRST_3_POSTS_CURSOR = gql`
+  query {
+    posts(first: 3, where: { orderby: { field: DATE, order: DESC } }) {
+      pageInfo {
+        endCursor
+      }
+    }
+  }
+`
+
+export const GET_NOT_LATEST_POSTS = gql`
+  query GetNotLatestPosts($afterCursor: String!) {
+    posts(
+      first: 6
+      after: $afterCursor
+      where: { orderby: { field: DATE, order: DESC } }
+    ) {
+      nodes {
+        id
+        title
+        slug
+        date
+        excerpt
+        categories {
+          nodes {
+            slug
+            name
+          }
+        }
+        featuredImage {
+          node {
+            sourceUrl
+            altText
+          }
+        }
+        author {
+          node {
+            name
+            slug
+          }
+        }
+      }
     }
   }
 `

@@ -1,6 +1,6 @@
 import { graphqlClient } from './graphql-client'
-import { GET_ALL_CATEGORIES, GET_ALL_CATEGORIES_WITH_CHILDREN, GET_ALL_PAGES, GET_ALL_POSTS, GET_ALL_TAGS, GET_CATEGORY_BY_SLUG, GET_FEATURED_POST, GET_LATEST_POSTS, GET_MAIN_CATEGORIES, GET_PAGE_BY_SLUG, GET_POSTS_BY_CATEGORY, GET_POSTS_BY_TAG, GET_POSTS_IN_SERIES, GET_SINGLE_POST, GET_VIEW_COUNT_POST } from './queries'
-import { Category, ITagHelperData, Page, Post, PostSummary } from '../types/types'
+import { GET_ALL_CATEGORIES, GET_ALL_CATEGORIES_WITH_CHILDREN, GET_ALL_PAGES, GET_ALL_POSTS, GET_ALL_TAGS, GET_CATEGORY_BY_SLUG, GET_FEATURED_POST, GET_FIRST_3_POSTS_CURSOR, GET_LATEST_POSTS, GET_MAIN_CATEGORIES, GET_NOT_LATEST_POSTS, GET_PAGE_BY_SLUG, GET_POSTS_BY_CATEGORY, GET_POSTS_BY_TAG, GET_POSTS_IN_SERIES, GET_SINGLE_POST, GET_VIEW_COUNT_POST } from './queries'
+import { Category, ICursor, ITagHelperData, Page, Post, PostSummary } from '../types/types'
 
 
 export async function getMainCategories() {
@@ -125,4 +125,17 @@ export async function getViewCount(id: number): Promise<number> {
   const variables = { postId: id }
   const data = await graphqlClient.request<{ post: { viewCount: number } }>(GET_VIEW_COUNT_POST, variables)
   return data.post.viewCount
+}
+
+export async function getNotLatestPosts() {
+  // ดึง cursor ตัวที่ 3
+  const cursorRes = await graphqlClient.request<ICursor>(GET_FIRST_3_POSTS_CURSOR)
+  const afterCursor = cursorRes?.posts?.pageInfo?.endCursor
+
+  // ใช้ cursor ดึงโพสต์ถัดไป
+  const postsRes = await graphqlClient.request<{ posts: { nodes: Post[] } }>(GET_NOT_LATEST_POSTS, {
+    afterCursor
+  })
+
+  return postsRes.posts.nodes
 }

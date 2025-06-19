@@ -114,3 +114,17 @@ export interface ITagHelperNode {
   count?: number
 }
 
+
+export interface ICursor {
+  posts: Posts
+}
+
+export interface Posts {
+  pageInfo: PageInfo
+}
+
+export interface PageInfo {
+  endCursor: string
+}
+
+

@@ -113,7 +113,7 @@ export default function FeaturedPost({
                   </Link>
                   <a
                     href={`/category/${slug}/${post.slug}`}
-                    className="block font-semibold text-gray-900 hover:text-yellow-600 transition"
+                    className="block w-[15rem] max-w-xs font-semibold text-gray-900 hover:text-yellow-600 transition truncate"
                   >
                     {post.title}
                   </a>
