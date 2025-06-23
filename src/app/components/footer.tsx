@@ -51,7 +51,7 @@ export default function Footer({ categories }: { categories: Category[] }) {
           <ul className="space-y-1 text-yellow-300 text-sm">
             <li>
               <a
-                href="mailto:hello@chidahp.com"
+                href="mailto:story@mail.playground.chidahp.com"
                 title="ส่งอีเมลถึงเรา"
               >
                 story@mail.playground.chidahp.com
