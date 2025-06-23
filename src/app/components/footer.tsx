@@ -54,7 +54,7 @@ export default function Footer({ categories }: { categories: Category[] }) {
                 href="mailto:hello@chidahp.com"
                 title="ส่งอีเมลถึงเรา"
               >
-                chidahp@gmail.com
+                story@mail.playground.chidahp.com
               </a>
             </li>
             <li>
