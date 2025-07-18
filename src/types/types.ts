@@ -16,6 +16,22 @@ export interface Category {
   count: number
 }
 
+export interface Author {
+  id: string
+  name: string
+  slug: string
+  email: string
+  description: string
+  avatar: {
+    url: string
+  }
+  posts: {
+    nodes: Post[]
+  }
+  count: number
+}
+
+
 
 export interface Page {
   title: string
@@ -78,7 +94,12 @@ export interface Node2 {
   slug: string
   avatar: Avatar
   description: string;
+  slugAuthor?: {
+    slug?: string;
+  }
 }
+
+
 
 export interface Avatar {
   url: string

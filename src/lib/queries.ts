@@ -478,3 +478,53 @@ export const GET_POSTS_SERIES = gql`
     }
   }
 `
+
+export const GET_AUTHORS_ALL = gql`
+query GetAllAuthorsSlug {
+  users(first: 1000) {
+    nodes {
+      slug
+      name
+    	slugAuthor {
+        slug
+      }
+    }
+  }
+}
+`
+
+export const GET_AUTHOR_BY_SLUG = gql`
+
+query GetAuthorBySlug($slug: ID!) {
+  user(id: $slug, idType: SLUG) {
+    id
+    name
+    slug
+    email
+    description
+    avatar {
+      url
+    }
+    posts {
+      nodes {
+        title
+        slug
+        date
+        featuredImage {
+          node {
+            sourceUrl
+            altText
+          }
+        }
+        categories {
+          nodes {
+            name
+            slug
+          }
+        }
+      }
+    }
+  }
+}
+
+`

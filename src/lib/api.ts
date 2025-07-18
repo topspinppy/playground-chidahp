@@ -5,6 +5,8 @@ import {
   GET_ALL_PAGES,
   GET_ALL_POSTS,
   GET_ALL_TAGS,
+  GET_AUTHOR_BY_SLUG,
+  GET_AUTHORS_ALL,
   GET_CATEGORY_BY_SLUG,
   GET_FEATURED_POST,
   GET_FIRST_3_POSTS_CURSOR,
@@ -19,7 +21,7 @@ import {
   GET_SINGLE_POST,
   GET_VIEW_COUNT_POST,
 } from './queries';
-import { Category, ICursor, ITagHelperData, Page, Post, PostSummary } from '../types/types';
+import { Author, Category, ICursor, ITagHelperData, Node2, Page, Post, PostSummary } from '../types/types';
 
 export async function getMainCategories() {
   const data = await cachedGraphQLRequest<{ posts: { nodes: Post[] } }>(
@@ -239,4 +241,16 @@ export async function getPostSeries(): Promise<Post[]> {
   return Object.values(grouped).map(group =>
     group.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime())[0]
   );
+}
+
+export async function getAuthorBySlug(name: string): Promise<{ user: Author }> {
+  return await cachedGraphQLRequest<{ user: Author }>(
+    GET_AUTHOR_BY_SLUG,
+    { slug: name },
+    { ttl: 6000, namespace: "author" }
+  );
+}
+
+export async function getAuthorsAll(): Promise<{ users: { nodes: Node2[] }}> {
+  return await cachedGraphQLRequest<{ users: { nodes: Node2[] }}>(GET_AUTHORS_ALL, undefined, { ttl: 6000, namespace: "authors" });
 }
