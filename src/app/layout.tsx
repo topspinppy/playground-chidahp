@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Header from "./components/header";
 import { getAllCategoriesWithChildren } from "@/lib/api";
-import Menu from "./components/menu";
 import Footer from "./components/footer";
 import { Noto_Sans_Thai, Poppins } from "next/font/google";
 import Head from "./Header";
@@ -68,8 +67,7 @@ export default async function RootLayout({
     <html lang="en">
       <Head />
       <body className={`${noto_sans_thai.variable} ${poppins.variable} antialiased`}>
-        <Header />
-        <Menu categories={categories} />
+        <Header categories={categories}/>
         {children}
         <Footer categories={categories} />
         <CookieConcent />

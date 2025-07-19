@@ -7,12 +7,13 @@ import { useState, useCallback } from 'react'
 
 interface IMenuProps {
   categories: Category[]
+  mobileMenuOpen: boolean
+  setMobileMenuOpen: (open: boolean) => void
 }
 
-export default function Menu({ categories }: IMenuProps) {
+export default function Menu({ categories, mobileMenuOpen, setMobileMenuOpen }: IMenuProps) {
   const pathname = usePathname()
   const [hoveredCategory, setHoveredCategory] = useState<string | null>(null)
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [expandedCategories, setExpandedCategories] = useState<Set<string>>(() => {
     // Initialize expanded categories based on current pathname
     const activeCategory = categories.find(cat =>
@@ -23,7 +24,7 @@ export default function Menu({ categories }: IMenuProps) {
 
   const closeMobileMenu = useCallback(() => {
     setMobileMenuOpen(false)
-  }, [])
+  }, [setMobileMenuOpen])
 
   const toggleCategoryExpansion = useCallback((categorySlug: string) => {
     setExpandedCategories(prev => {
@@ -43,27 +44,13 @@ export default function Menu({ categories }: IMenuProps) {
 
   return (
     <>
+      {/* Desktop Only Navigation - ซ่อนในหน้า mobile */}
       <nav
-        className="bg-white border-b border-gray-100 px-4 py-3 relative z-10"
+        className="hidden sm:block bg-white border-b border-gray-100 px-4 py-3 relative z-10"
         aria-label="หมวดหมู่บทความ"
       >
-        {/* Mobile: Header with Hamburger Menu */}
-        <div className="flex justify-between items-center sm:hidden cursor-pointer">
-          <div className="text-lg font-medium text-gray-900" />
-          <button
-            onClick={() => setMobileMenuOpen(true)}
-            className="flex items-center justify-center w-10 h-10 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-colors cursor-pointer"
-            aria-label="เปิดเมนู"
-          >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
-            </svg>
-          </button>
-        </div>
-
-        {/* Desktop: Horizontal Menu */}
-        <div className="hidden sm:block">
-          <div className="flex flex-wrap items-center justify-center gap-1">
+        <div>
+        <div className="flex flex-wrap items-center justify-center gap-1">
             {categories.map((cat) => {
               // Check if this category or any of its subcategories is active
               const isDirectActive = pathname === `/category/${cat.slug}`
