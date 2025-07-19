@@ -14,7 +14,6 @@ export default async function AuthorPage(params: { params: Props }) {
     return <NotFound />
   }
 
-  console.log(user.posts)
   return (
     <div className="min-h-screen bg-white py-16 px-6 text-gray-900">
       <div className="max-w-5xl mx-auto">

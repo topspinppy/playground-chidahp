@@ -500,6 +500,9 @@ query GetAuthorBySlug($slug: ID!) {
     id
     name
     slug
+    slugAuthor {
+      slug
+    }
     email
     description
     avatar {
