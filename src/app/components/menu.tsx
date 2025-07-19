@@ -48,11 +48,11 @@ export default function Menu({ categories }: IMenuProps) {
         aria-label="หมวดหมู่บทความ"
       >
         {/* Mobile: Header with Hamburger Menu */}
-        <div className="flex justify-between items-center sm:hidden">
-          <h1 className="text-lg font-medium text-gray-900">หมวดหมู่</h1>
+        <div className="flex justify-between items-center sm:hidden cursor-pointer">
+          <div className="text-lg font-medium text-gray-900" />
           <button
             onClick={() => setMobileMenuOpen(true)}
-            className="flex items-center justify-center w-10 h-10 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-colors"
+            className="flex items-center justify-center w-10 h-10 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-colors cursor-pointer"
             aria-label="เปิดเมนู"
           >
             <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -174,8 +174,7 @@ export default function Menu({ categories }: IMenuProps) {
         <div className="flex-1 overflow-y-auto p-4">
           <nav className="space-y-2">
             {categories.map((cat) => {
-              const isActive = pathname === `/category/${cat.slug}` ||
-                pathname.startsWith(`/category/${cat.slug}/`)
+              const isActive = pathname === `/category/${cat.slug}` || pathname.startsWith(`/category/${cat.slug}/`)
               const hasChildren = cat.children?.nodes?.length > 0
               const isExpanded = expandedCategories.has(cat.slug)
 
@@ -206,7 +205,7 @@ export default function Menu({ categories }: IMenuProps) {
                         aria-expanded={isExpanded}
                       >
                         <svg
-                          className={`w-4 h-4 transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''}`}
+                          className={`w-4 h-4 transition-transform duration-200 ${isExpanded ? 'rotate-180' : ''} cursor-pointer`}
                           fill="none"
                           stroke="currentColor"
                           viewBox="0 0 24 24"
