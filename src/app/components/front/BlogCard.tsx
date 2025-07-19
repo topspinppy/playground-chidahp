@@ -21,46 +21,73 @@ export function BlogCard({ post }: { post: Post }) {
   const artClass = post.categories.nodes[0]?.slug === 'art-class';
   const categorySlug = post.categories.nodes.filter((category) => category.slug !== 'uncategorized' && category.slug !== 'featured-post');
   const sortedSlug = categorySlug
-    .slice() // เผื่อไม่อยาก mutate ของเดิม
+    .slice()
     .sort((a, b) => {
-      // เอา parentId null (คือ root) มาก่อน
       if (a.parentId === null && b.parentId !== null) return -1;
       if (a.parentId !== null && b.parentId === null) return 1;
-      return 0; // เทียบเท่ากัน
+      return 0;
     });
 
   const finalSlug = sortedSlug.map((category) => category.slug);
 
   return (
-    <article className="bg-white rounded-xl overflow-hidden shadow hover:shadow-lg transition">
+    <article className="group bg-white border-2 border-yellow-200 hover:border-yellow-300 transition-colors rounded-lg overflow-hidden">
       <Link href={`/category/${finalSlug.join('/')}/${post.slug}`}>
-        <Image
-          src={post.featuredImage?.node?.sourceUrl ?? '/chidahp.png'}
-          alt={post.title}
-          className="w-full h-48 object-cover"
-          width={500}
-          height={500}
-        />
-        {artClass ? (
-          <div className="p-5 border-t border-gray-100 bg-gradient-to-t from-white via-pink-50 to-white rounded-b-xl space-y-2">
-            <div className="flex items-center gap-2">
-              <span className="text-xl">🎨</span>
-              <span className="text-base font-bold text-pink-700 tracking-tight">
-                Art Class Exhibition
+        <div className="relative">
+          <Image
+            src={post.featuredImage?.node?.sourceUrl ?? '/chidahp.png'}
+            alt={post.title}
+            className="w-full h-48 object-cover"
+            width={500}
+            height={500}
+          />
+          
+          {/* Category tag */}
+          {!artClass && categorySlug.length > 0 && (
+            <div className="absolute top-3 left-3">
+              <span className="bg-black text-yellow-400 px-3 py-1 rounded-full text-xs font-semibold">
+                {categorySlug[0].name || categorySlug[0].slug}
               </span>
             </div>
-            <p className="text-lg font-bold text-gray-500 leading-relaxed">
+          )}
+        </div>
+
+        {artClass ? (
+          <div className="p-5 bg-yellow-50 border-t-4 border-yellow-400">
+            <div className="flex items-center gap-3 mb-3">
+              <div className="bg-yellow-300 p-2 rounded-full">
+                <span className="text-xl">🎨</span>
+              </div>
+              <div>
+                <span className="text-base font-bold text-gray-900">
+                  นิทรรศการผลงานศิลปะ
+                </span>
+                <div className="w-12 h-1 bg-yellow-400 rounded-full mt-1"></div>
+              </div>
+            </div>
+            <p className="text-gray-700 font-medium">
               {post.author?.node?.name ? `วาดโดย ${post.author.node.name}` : 'วาดโดย นักเรียนชูโล่วิทยาคม'}
             </p>
           </div>
         ) : (
-          <div className="p-4">
-            <h2 className="text-xl font-bold text-gray-900 mb-2 line-clamp-2">{post.title ?? '-'}</h2>
-            {post.excerpt && <p className="text-gray-700 text-sm line-clamp-3">{stripHtmlAndDecode(post.excerpt)}</p>}
-            <p className="text-yellow-600 mt-2 text-sm font-medium">Read more →</p>
+          <div className="p-5">
+            <h2 className="text-lg font-bold text-gray-900 mb-3 line-clamp-2 leading-snug group-hover:text-gray-700 transition-colors">
+              {post.title ?? '-'}
+            </h2>
+            
+            {post.excerpt && (
+              <p className="text-gray-600 text-sm leading-relaxed line-clamp-3 mb-4">
+                {stripHtmlAndDecode(post.excerpt)}
+              </p>
+            )}
+            
+            <div className="flex items-center justify-between pt-3 border-t border-yellow-200">
+              <span className="text-sm font-medium text-black group-hover:text-gray-700 transition-colors">
+                อ่านต่อ →
+              </span>
+            </div>
           </div>
         )}
-
       </Link>
     </article>
   )

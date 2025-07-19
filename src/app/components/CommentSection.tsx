@@ -33,7 +33,6 @@ const comments: Comment[] = data
 
   return (
     <section className="mt-12">
-      <h2 className="text-2xl font-bold text-yellow-600 mb-4">💬 แสดงความคิดเห็น</h2>
       <CommentForm postId={postId} />
       <CommentListClient comments={comments} />
     </section>
