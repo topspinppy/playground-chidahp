@@ -5,32 +5,41 @@ import Link from 'next/link'
 
 export default function Header() {
   return (
-    <header className="relative bg-gradient-to-b from-black via-zinc-900 to-black text-yellow-400 py-10 text-center border-b border-yellow-600 shadow-inner">
-      <div className="relative z-10 max-w-3xl mx-auto px-4 animate-fade-in-up space-y-4">
-
-        {/* คลิกแล้วกลับหน้าหลัก */}
-        <h1 className="text-4xl md:text-5xl font-logo font-extrabold tracking-tight drop-shadow-[0_2px_4px_rgba(0,0,0,0.4)]">
+    <header className="bg-white border-b border-gray-200 sticky top-0 z-50 backdrop-blur-sm bg-white/95">
+      <div className="max-w-6xl mx-auto px-6">
+        {/* Main header */}
+        <div className="py-5 flex items-center justify-between">
           <Link
             href="/"
-            className="inline-flex items-center justify-center gap-3 hover:opacity-90 transition"
+            className="flex items-center gap-4 group"
             title="กลับสู่หน้าแรกของ Playground by Chidahp"
-            aria-label="กลับสู่หน้าแรกของ Playground by Chidahp"
           >
-            <Image
-              src="/chuloh.png"
-              alt="โลโก้ Playground by Chidahp"
-              width={42}
-              height={42}
-              className="drop-shadow-sm bg-yellow-400 p-1.5 rounded-2xl"
-            />
-            <span>PLAYGROUND</span>
+            <div className="relative">
+              <div className="absolute -inset-0.5 bg-gradient-to-r from-yellow-400 to-amber-500 rounded-xl opacity-75 group-hover:opacity-100 transition-opacity blur-sm"></div>
+              <Image
+                src="/chuloh.png"
+                alt="โลโก้ Playground by Chidahp"
+                width={40}
+                height={40}
+                className="relative rounded-xl bg-gradient-to-br from-yellow-400 to-amber-500 p-2 shadow-sm"
+              />
+            </div>
+            <div>
+              <h1 className="text-2xl font-black text-gray-900 group-hover:text-gray-700 transition-colors tracking-tight">
+                PLAYGROUND
+              </h1>
+              <div className="text-xs text-gray-400 uppercase tracking-wider font-medium -mt-1">
+                by Chidahp
+              </div>
+            </div>
           </Link>
-        </h1>
 
-        {/* คำโปรย */}
-        <blockquote className="italic text-yellow-200 text-base md:text-lg max-w-md mx-auto leading-relaxed">
-          “พื้นที่เล่า พื้นที่เล่น พื้นที่ปล่อยของทุกอารมณ์”
-        </blockquote>
+          <div className="hidden md:flex items-center gap-6">
+            <blockquote className="text-gray-500 text-sm font-light italic max-w-sm">
+              "พื้นที่เล่า พื้นที่เล่น พื้นที่ปล่อยของทุกอารมณ์"
+            </blockquote>
+          </div>
+        </div>
       </div>
     </header>
   )

@@ -23,7 +23,7 @@ export default function FeaturedPost({
             <div className="aspect-[16/9] overflow-hidden rounded-lg shadow relative group">
               {/* ป้าย Featured Post */}
               <div className="absolute top-4 left-4 z-10 bg-orange-600 text-white text-xs font-bold px-3 py-1 rounded-full shadow">
-                🚨 บทความแนะนำสุดจี๊ด!
+                🚨 เรื่องราวแนะนำสุดจี๊ด!
               </div>
 
               {/* รูปภาพพร้อม Hover Zoom */}
@@ -58,9 +58,9 @@ export default function FeaturedPost({
           </a>
         ) : (
           <div className="text-center text-gray-400 italic border rounded-lg py-20">
-            📰 ยังไม่มีบทความปักหมุดตอนนี้
+            📰 ยังไม่มีเรื่องราวปักหมุดตอนนี้
             <br />
-            ติดตามบทความล่าสุดทางด้านขวาได้เลยค้าบ
+            ติดตามเรื่องราวล่าสุดทางด้านขวาได้เลยค้าบ
           </div>
         )}
       </div>
@@ -68,7 +68,7 @@ export default function FeaturedPost({
       {/* SIDEBAR */}
       <aside className="space-y-6">
         <div className="flex items-center justify-between">
-          <h3 className="text-2xl font-bold text-gray-800">บทความล่าสุด</h3>
+          <h3 className="text-2xl font-bold text-gray-800">เรื่องราวล่าสุด 🔎</h3>
         </div>
 
         {latestPosts.map((post, i) => {
