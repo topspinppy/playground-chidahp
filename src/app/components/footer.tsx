@@ -1,7 +1,6 @@
 import { Category } from '@/types/types';
 import { FaFacebookSquare, FaLine, FaInstagramSquare } from "react-icons/fa";
 import { FaSquareXTwitter } from "react-icons/fa6";
-
 import Link from 'next/link';
 
 export default function Footer({ categories }: { categories: Category[] }) {
@@ -13,16 +12,21 @@ export default function Footer({ categories }: { categories: Category[] }) {
         <nav aria-label="หมวดหมู่บทความ">
           <h4 className="text-yellow-400 font-bold mb-3">หมวดหมู่</h4>
           <ul className="space-y-1 text-yellow-300 text-sm">
-            {categories.map((category) => (
-              <li key={category.id}>
-                <Link
-                  href={`/category/${category.slug}`}
-                  title={`ดูบทความในหมวด ${category.name}`}
-                >
-                  {category.name}
-                </Link>
-              </li>
-            ))}
+            {categories?.length > 0 ? (
+              categories.map((category) => (
+                <li key={category.id}>
+                  <Link
+                    href={`/category/${category.slug}`}
+                    title={`ดูบทความในหมวด ${category.name}`}
+                    className="hover:text-yellow-400 transition-colors duration-200"
+                  >
+                    {category.name}
+                  </Link>
+                </li>
+              ))
+            ) : (
+              <li className="text-yellow-500">กำลังโหลด...</li>
+            )}
           </ul>
         </nav>
 
@@ -31,16 +35,40 @@ export default function Footer({ categories }: { categories: Category[] }) {
           <h4 className="text-yellow-400 font-bold mb-3">เกี่ยวกับ</h4>
           <ul className="space-y-1 text-yellow-300 text-sm">
             <li>
-              <Link href="/page/about" title="เกี่ยวกับ Playground">เกี่ยวกับ Playground</Link>
+              <Link 
+                href="/page/about" 
+                title="เกี่ยวกับ Playground"
+                className="hover:text-yellow-400 transition-colors duration-200"
+              >
+                เกี่ยวกับ Playground
+              </Link>
             </li>
             <li>
-              <Link href="/page/contact" title="ติดต่อทีมงาน">ติดต่อทีมงาน</Link>
+              <Link 
+                href="/page/contact" 
+                title="ติดต่อทีมงาน"
+                className="hover:text-yellow-400 transition-colors duration-200"
+              >
+                ติดต่อทีมงาน
+              </Link>
             </li>
             <li>
-              <Link href="/page/privacy-policy" title="นโยบายความเป็นส่วนตัว">Privacy Policy</Link>
+              <Link 
+                href="/page/privacy-policy" 
+                title="นโยบายความเป็นส่วนตัว"
+                className="hover:text-yellow-400 transition-colors duration-200"
+              >
+                Privacy Policy
+              </Link>
             </li>
             <li>
-              <Link href="/page/term-and-conditions" title="ข้อกำหนดและเงื่อนไขการใช้งาน">Terms & Conditions</Link>
+              <Link 
+                href="/page/term-and-conditions" 
+                title="ข้อกำหนดและเงื่อนไขการใช้งาน"
+                className="hover:text-yellow-400 transition-colors duration-200"
+              >
+                Terms & Conditions
+              </Link>
             </li>
           </ul>
         </nav>
@@ -53,12 +81,19 @@ export default function Footer({ categories }: { categories: Category[] }) {
               <a
                 href="mailto:story@mail.playground.chidahp.com"
                 title="ส่งอีเมลถึงเรา"
+                className="hover:text-yellow-400 transition-colors duration-200"
               >
                 story@mail.playground.chidahp.com
               </a>
             </li>
             <li>
-              <Link href="/page/write-with-us" title="ร่วมเป็นนักเขียนกับเรา">ร่วมเป็นนักเขียน</Link>
+              <Link 
+                href="/page/write-with-us" 
+                title="ร่วมเป็นนักเขียนกับเรา"
+                className="hover:text-yellow-400 transition-colors duration-200"
+              >
+                ร่วมเป็นนักเขียน
+              </Link>
             </li>
           </ul>
         </nav>
@@ -72,6 +107,8 @@ export default function Footer({ categories }: { categories: Category[] }) {
               target="_blank"
               rel="noopener noreferrer"
               title="ไปยัง Instagram ของชี้ดาบ"
+              aria-label="ไปยัง Instagram ของชี้ดาบ"
+              className="hover:text-yellow-400 transition-colors duration-200"
             >
               <FaInstagramSquare />
             </a>
@@ -80,6 +117,8 @@ export default function Footer({ categories }: { categories: Category[] }) {
               target="_blank"
               rel="noopener noreferrer"
               title="ไปยัง Facebook ของชี้ดาบ"
+              aria-label="ไปยัง Facebook ของชี้ดาบ"
+              className="hover:text-yellow-400 transition-colors duration-200"
             >
               <FaFacebookSquare />
             </a>
@@ -87,7 +126,9 @@ export default function Footer({ categories }: { categories: Category[] }) {
               href="https://link.chidahp.com/moOmpm"
               target="_blank"
               rel="noopener noreferrer"
-              title=""
+              title="ติดตาม Line Official ของชี้ดาบ"
+              aria-label="ติดตาม Line Official ของชี้ดาบ"
+              className="hover:text-yellow-400 transition-colors duration-200"
             >
               <FaLine />
             </a>
@@ -95,7 +136,9 @@ export default function Footer({ categories }: { categories: Category[] }) {
               href="https://x.com/chidahp"
               target="_blank"
               rel="noopener noreferrer"
-              title=""
+              title="ไปยัง X (Twitter) ของชี้ดาบ"
+              aria-label="ไปยัง X (Twitter) ของชี้ดาบ"
+              className="hover:text-yellow-400 transition-colors duration-200"
             >
               <FaSquareXTwitter />
             </a>

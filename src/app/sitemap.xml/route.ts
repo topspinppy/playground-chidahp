@@ -1,5 +1,5 @@
 // src/app/sitemap.xml/route.ts
-import { getAllCategories, getAllPages, getAllPosts, getAllTags, getAuthorsAll } from '@/lib/api' // ดึงข้อมูล post จาก GraphQL / WordPress
+import { getAllCategories, getAllPages, getAllPosts, getAllTags } from '@/lib/api' // ดึงข้อมูล post จาก GraphQL / WordPress
 import { NextResponse } from 'next/server'
 
 export const dynamic = 'force-dynamic'
@@ -9,7 +9,6 @@ export async function GET() {
   const siteUrl = 'https://playground.chidahp.com'
   const posts = await getAllPosts()
   const data = await getAllTags()
-  const authors = await getAuthorsAll()
   const categories = await getAllCategories()
   const pages = await getAllPages()
 
@@ -49,14 +48,14 @@ export async function GET() {
     `
   }).join('')
 
-  const rawAuthors = authors.users.nodes.map((node) => {
-    return `
-      <url>
-        <loc>${siteUrl}/author/${node.slugAuthor?.slug}</loc>
-        <lastmod>${new Date().toISOString()}</lastmod>
-      </url>
-    `
-  }).join('')
+  // const rawAuthors = authors.users.nodes.map((node) => {
+  //   return `
+  //     <url>
+  //       <loc>${siteUrl}/author/${node.slugAuthor?.slug}</loc>
+  //       <lastmod>${new Date().toISOString()}</lastmod>
+  //     </url>
+  //   `
+  // }).join('')
 
 
 
@@ -74,7 +73,6 @@ export async function GET() {
     ${staticRoutes}
     ${categoryRoutes}
     ${routes}
-    ${rawAuthors}
   </urlset>`
   return new NextResponse(sitemap, {
     headers: {

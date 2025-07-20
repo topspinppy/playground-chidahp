@@ -95,7 +95,7 @@ export interface Node2 {
   avatar: Avatar
   description: string;
   slugAuthor?: {
-    slug?: string;
+    slugAuthor?: string;
   }
 }
 

@@ -20,7 +20,6 @@ export async function GET(request: Request) {
       throw new Error(`HTTP error! status: ${response.status}`);
     }
     const data = await response.json();
-    console.log("Fetched comments:", data);
     return Response.json(data);
 
   } catch (error) {

@@ -430,6 +430,7 @@ export const GET_NOT_LATEST_POSTS = gql`
 export const GET_POSTS_SERIES = gql`
   query PostsWithSeriesId {
     posts(
+      first: 1000
       where: {
         metaQuery: {
           metaArray: [
