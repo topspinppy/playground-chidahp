@@ -8,6 +8,7 @@ import ShareButtons from "@/app/components/front/SharedButton";
 import CommentSection from "@/app/components/CommentSection";
 import dynamic from "next/dynamic";
 import TrackViewClient from "@/app/components/TrackViewClient";
+import WordPressContent from "@/app/components/WordPressContent";
 
 const SeriesNavigator = dynamic(() => import("../../../../../components/front/SeriesNavigator"), {
   ssr: true,
@@ -34,40 +35,6 @@ function formatViewCount(count: number): string {
   return `${(count / 1_000_000).toFixed(1)}M `;
 }
 
-const articleClassName = `
-  [&_iframe]:w-full
-  [&_iframe]:aspect-video
-  [&_iframe]:max-w-full
-  [&_iframe]:mx-auto
-  [&_iframe]:rounded-lg
-  [&_iframe]:shadow-sm
-`;
-
-const proseClassName = `
-  prose prose-yellow max-w-none leading-relaxed text-gray-800
-  prose-headings:text-yellow-700 prose-headings:font-bold
-  prose-p:text-gray-700 prose-p:leading-relaxed prose-p:mb-4
-  prose-a:text-yellow-600 hover:prose-a:text-yellow-700 prose-a:transition-colors prose-a:no-underline hover:prose-a:underline
-  prose-strong:text-gray-900 prose-em:text-gray-700
-  prose-code:text-yellow-700 prose-code:bg-yellow-50 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:text-sm
-  prose-blockquote:border-l-yellow-500 prose-blockquote:text-gray-600 prose-blockquote:bg-yellow-50/50 prose-blockquote:py-2
-  prose-ul:text-gray-700 prose-ol:text-gray-700
-  prose-li:mb-1
-`;
-
-const wpContentClassName = `
-  wp-content text-gray-700 leading-relaxed
-  [&_p]:text-gray-700 [&_p]:leading-relaxed [&_p]:mb-4
-  [&_h1]:text-yellow-700 [&_h1]:font-bold [&_h1]:mb-6 [&_h1]:text-2xl
-  [&_h2]:text-yellow-700 [&_h2]:font-bold [&_h2]:mb-4 [&_h2]:text-xl
-  [&_h3]:text-yellow-700 [&_h3]:font-bold [&_h3]:mb-3 [&_h3]:text-lg
-  [&_a]:text-yellow-600 hover:[&_a]:text-yellow-700 [&_a]:transition-colors [&_a]:no-underline hover:[&_a]:underline
-  [&_strong]:text-gray-900 [&_em]:text-gray-700
-  [&_ul]:text-gray-700 [&_ol]:text-gray-700 [&_ul]:space-y-1 [&_ol]:space-y-1
-  [&_li]:mb-1
-  [&_blockquote]:border-l-4 [&_blockquote]:border-yellow-500 [&_blockquote]:pl-4 [&_blockquote]:italic [&_blockquote]:text-gray-600 [&_blockquote]:bg-yellow-50/50 [&_blockquote]:py-2 [&_blockquote]:my-4
-`;
-
 export default async function Post(params: RouteParams) {
   const { parentSlug, third } = await params;
   const [slugLv1, slugLv2, slugLv3] = parentSlug;
@@ -85,6 +52,19 @@ export default async function Post(params: RouteParams) {
   if (!belongsToCategory) return notFound();
   const isArtGallery = post.categories.nodes.find((cat: Node) => cat.slug === "art-class");
   
+    // Determine content type based on category or content analysis
+  const getContentType = (): 'gutenberg' | 'classic' | 'prose' => {
+    if (slugLv1 === "chidahp-content") return 'prose';
+    
+    // Check if content contains Gutenberg block classes
+    if (post.content?.includes('wp-block-')) return 'gutenberg';
+    
+    // Check if WordPress CSS should be hidden
+    if (post.hidewordpresscss?.ishidewordpresscss) return 'classic';
+    
+    return 'gutenberg'; // Default to gutenberg for better compatibility
+  };
+
   return (
     <main className="max-w-4xl mx-auto px-4 py-8 lg:py-12">
       {!!postId && <TrackViewClient postId={Number(postId)} />}
@@ -180,16 +160,12 @@ export default async function Post(params: RouteParams) {
 
       {/* Content - Clean White Background */}
       <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 lg:p-8 mb-8">
-        <article
-          className={[
-            slugLv1 === "chidahp-content"
-              ? proseClassName
-              : post.hidewordpresscss?.ishidewordpresscss
-              ? ""
-              : wpContentClassName,
-            articleClassName,
-          ].join(" ")}
-          dangerouslySetInnerHTML={{ __html: post.content }}
+
+        <WordPressContent
+          content={post.content}
+          contentType={getContentType()}
+          enableSantization={true}
+          className="post-content"
         />
       </div>
 
