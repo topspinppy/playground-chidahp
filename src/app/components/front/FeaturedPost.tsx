@@ -21,10 +21,11 @@ export default function FeaturedPost({
             className="block group cursor-pointer"
           >
             <div className="aspect-[16/9] overflow-hidden rounded-2xl shadow-2xl relative group bg-gradient-to-br from-gray-900 to-black">
-              {/* ป้าย Featured Post - ปรับให้มีเอฟเฟกต์สวยขึ้น */}
-              <div className="absolute top-6 left-6 z-20 bg-gradient-to-r from-orange-500 to-red-500 text-white text-sm font-bold px-4 py-2 rounded-full shadow-xl backdrop-blur-sm border border-white/20 animate-pulse">
-                <span className="flex items-center gap-2">
-                  🚨 <span>เรื่องราวแนะนำสุดจี๊ด!</span>
+              {/* ป้าย Featured Post - ปรับให้ responsive */}
+              <div className="absolute top-3 left-3 sm:top-6 sm:left-6 z-20 bg-gradient-to-r from-orange-500 to-red-500 text-white text-xs sm:text-sm font-bold px-2 py-1 sm:px-4 sm:py-2 rounded-full shadow-xl backdrop-blur-sm border border-white/20 animate-pulse">
+                <span className="flex items-center gap-1 sm:gap-2">
+                  🚨 <span className="hidden sm:inline">เรื่องราวแนะนำสุดจี๊ด!</span>
+                  <span className="sm:hidden">แนะนำ!</span>
                 </span>
               </div>
 
@@ -35,10 +36,8 @@ export default function FeaturedPost({
               <Image
                 src={
                   featuredPost.featuredImage?.node.sourceUrl ??
-                  `https://playground.chidahp.com/api/og?title=${
-                    featuredPost.title
-                  }&author=${
-                    featuredPost.author?.node?.name ?? "นักเรียนชูโล่"
+                  `https://playground.chidahp.com/api/og?title=${featuredPost.title
+                  }&author=${featuredPost.author?.node?.name ?? "นักเรียนชูโล่"
                   }`
                 }
                 alt={featuredPost.title}
@@ -47,19 +46,19 @@ export default function FeaturedPost({
                 height={1000}
               />
 
-              {/* Content Area ปรับให้สวยขึ้น */}
-              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/95 via-black/80 to-transparent p-8 z-15">
-                {/* Title พร้อมเอฟเฟกต์ */}
-                <h2 className="text-3xl md:text-4xl font-black text-transparent bg-gradient-to-r from-yellow-400 via-yellow-500 to-orange-400 bg-clip-text mb-4 leading-tight group-hover:from-yellow-300 group-hover:via-yellow-400 group-hover:to-orange-300 transition-all duration-500 drop-shadow-lg">
+              {/* Content Area - เพิ่ม padding สำหรับ mobile */}
+              <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/95 via-black/80 to-transparent p-5 sm:p-6 md:p-8 z-15">
+                {/* Title - ปรับขนาดให้เหมาะกับ mobile มากขึ้น */}
+                <h2 className="text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-5xl font-black text-transparent bg-gradient-to-r from-yellow-400 via-yellow-500 to-orange-400 bg-clip-text mb-3 sm:mb-3 md:mb-4 leading-tight group-hover:from-yellow-300 group-hover:via-yellow-400 group-hover:to-orange-300 transition-all duration-500 drop-shadow-lg line-clamp-2">
                   {featuredPost.title}
                 </h2>
 
-                {/* Meta Information */}
-                <div className="flex items-center gap-4 text-sm">
+                {/* Meta Information - ปรับขนาดให้ใหญ่ขึ้นบน mobile */}
+                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 text-sm sm:text-sm">
                   {/* Date */}
-                  <div className="flex items-center gap-2 text-gray-300 bg-white/10 backdrop-blur-sm rounded-full px-3 py-1.5 border border-white/10">
+                  <div className="flex items-center gap-2 sm:gap-2 text-gray-300 bg-white/10 backdrop-blur-sm rounded-full px-3 py-1.5 sm:px-3 sm:py-1.5 border border-white/10">
                     <svg
-                      className="w-4 h-4"
+                      className="w-4 h-4 sm:w-4 sm:h-4 flex-shrink-0"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -71,19 +70,19 @@ export default function FeaturedPost({
                         d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
                       />
                     </svg>
-                    <span className="font-medium">
+                    <span className="font-medium whitespace-nowrap">
                       {new Date(featuredPost.date).toLocaleDateString("th-TH", {
                         year: "numeric",
-                        month: "long",
+                        month: "short",
                         day: "numeric",
                       })}
                     </span>
                   </div>
 
                   {/* Author */}
-                  <div className="flex items-center gap-2 text-gray-300 bg-white/10 backdrop-blur-sm rounded-full px-3 py-1.5 border border-white/10">
+                  <div className="flex items-center gap-2 sm:gap-2 text-gray-300 bg-white/10 backdrop-blur-sm rounded-full px-3 py-1.5 sm:px-3 sm:py-1.5 border border-white/10">
                     <svg
-                      className="w-4 h-4"
+                      className="w-4 h-4 sm:w-4 sm:h-4 flex-shrink-0"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -95,18 +94,18 @@ export default function FeaturedPost({
                         d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
                       />
                     </svg>
-                    <span className="font-medium">
+                    <span className="font-medium truncate max-w-[140px] sm:max-w-none">
                       {featuredPost.author.node.name}
                     </span>
                   </div>
                 </div>
               </div>
 
-              {/* Floating Particles Effect (Optional) */}
+              {/* Floating Particles Effect - ปรับให้เหมาะกับ mobile */}
               <div className="absolute inset-0 pointer-events-none z-5">
-                <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-yellow-400/30 rounded-full animate-ping delay-1000"></div>
-                <div className="absolute top-3/4 right-1/4 w-1.5 h-1.5 bg-orange-400/30 rounded-full animate-ping delay-2000"></div>
-                <div className="absolute top-1/2 right-1/3 w-1 h-1 bg-red-400/30 rounded-full animate-ping delay-3000"></div>
+                <div className="absolute top-1/4 left-1/4 w-1.5 sm:w-2 h-1.5 sm:h-2 bg-yellow-400/30 rounded-full animate-ping delay-1000"></div>
+                <div className="absolute top-3/4 right-1/4 w-1 sm:w-1.5 h-1 sm:h-1.5 bg-orange-400/30 rounded-full animate-ping delay-2000"></div>
+                <div className="absolute top-1/2 right-1/3 w-0.5 sm:w-1 h-0.5 sm:h-1 bg-red-400/30 rounded-full animate-ping delay-3000"></div>
               </div>
             </div>
           </a>
