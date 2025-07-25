@@ -67,7 +67,7 @@ export interface Post {
   }
   categories: Categories
   tags: Tags
-  author: Author
+  author: AuthorA
 }
 
 interface Tags {
@@ -85,17 +85,25 @@ export interface Node {
   parent?: Node[] | null
 }
 
-export interface Author {
+export interface AuthorA {
   node: Node2
 }
 
+export interface Author {
+  nodes: Node2[]
+}
+
 export interface Node2 {
+  id: string
   name: string
-  slug: string
-  avatar: Avatar
-  description: string;
   slugAuthor?: {
     slugAuthor?: string;
+  }
+  email: string
+  description: string;
+  avatar: Avatar;
+  posts: {
+    nodes: Post[];
   }
 }
 

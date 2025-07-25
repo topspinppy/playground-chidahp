@@ -126,6 +126,9 @@ export const GET_SINGLE_POST = gql`
             url
           }
           description
+          slugAuthor {
+            slugAuthor
+          }
         }
       }
     }
@@ -495,40 +498,41 @@ query GetAllAuthorsSlug {
 `
 
 export const GET_AUTHOR_BY_SLUG = gql`
-
-query GetAuthorBySlug($slug: ID!) {
-  user(id: $slug, idType: SLUG) {
-    id
-    name
-    slug
-    slugAuthor {
-      slug
-    }
-    email
-    description
-    avatar {
-      url
-    }
-    posts {
+  query GetAuthorBySlugAuthor($slugAuthor: String!) {
+    users(where: {search: $slugAuthor} first: 1) {
       nodes {
-        title
-        slug
-        date
-        featuredImage {
-          node {
-            sourceUrl
-            altText
-          }
+        id
+        name
+        slugAuthor {
+          slugAuthor
         }
-        categories {
+        email
+        description
+        avatar {
+          url
+        }
+        posts {
           nodes {
-            name
+            title
             slug
+            date
+            featuredImage {
+              node {
+                sourceUrl 
+                altText
+              }
+            }
+            categories {
+              nodes {
+                name
+                slug
+              }
+            }
           }
         }
       }
     }
   }
-}
+
 
 `

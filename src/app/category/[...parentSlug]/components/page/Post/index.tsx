@@ -64,7 +64,7 @@ export default async function Post(params: RouteParams) {
     
     return 'gutenberg'; // Default to gutenberg for better compatibility
   };
-
+  console.log(post.author)
   return (
     <main className="max-w-4xl mx-auto px-4 py-8 lg:py-12">
       {!!postId && <TrackViewClient postId={Number(postId)} />}
@@ -190,7 +190,13 @@ export default async function Post(params: RouteParams) {
               )}
               <div>
                 <h3 className="text-lg font-bold text-yellow-800 mb-1">
-                  {isArtGallery ? 'วาดโดย' : 'เขียนโดย'} {post.author.node.name}
+                  {isArtGallery ? 'วาดโดย' : 'เขียนโดย'}
+                  <Link
+                    href={`/author/${post.author.node.slugAuthor?.slugAuthor}`}
+                    className="text-yellow-600 ml-2"
+                  >
+                    {post.author.node.name}
+                  </Link>
                 </h3>
                 {post.author.node.description && (
                   <p className="text-sm text-gray-700 leading-relaxed">

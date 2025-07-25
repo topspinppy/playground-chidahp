@@ -243,10 +243,10 @@ export async function getPostSeries(): Promise<Post[]> {
   );
 }
 
-export async function getAuthorBySlug(name: string): Promise<{ user: Author }> {
-  return await cachedGraphQLRequest<{ user: Author }>(
+export async function getAuthorBySlug(name: string): Promise<{ users: Author }> {
+  return await cachedGraphQLRequest<{ users: Author }>(
     GET_AUTHOR_BY_SLUG,
-    { slug: name },
+    { slugAuthor: name },
     { ttl: 6000, namespace: "author" }
   );
 }
