@@ -192,7 +192,7 @@ export default async function Post(params: RouteParams) {
                 <h3 className="text-lg font-bold text-yellow-800 mb-1">
                   {isArtGallery ? 'วาดโดย' : 'เขียนโดย'}
                   <Link
-                    href={`/author/${post.author.node.slugAuthor?.slugAuthor}`}
+                    href={`/author/${post.author.node.userId}`}
                     className="text-yellow-600 ml-2"
                   >
                     {post.author.node.name}

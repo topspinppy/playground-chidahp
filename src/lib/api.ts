@@ -5,7 +5,7 @@ import {
   GET_ALL_PAGES,
   GET_ALL_POSTS,
   GET_ALL_TAGS,
-  GET_AUTHOR_BY_SLUG,
+  GET_AUTHOR_BY_ID,
   GET_AUTHORS_ALL,
   GET_CATEGORY_BY_SLUG,
   GET_FEATURED_POST,
@@ -21,7 +21,7 @@ import {
   GET_SINGLE_POST,
   GET_VIEW_COUNT_POST,
 } from './queries';
-import { Author, Category, ICursor, ITagHelperData, Node2, Page, Post, PostSummary } from '../types/types';
+import { Category, ICursor, ITagHelperData, Node2, Page, Post, PostSummary } from '../types/types';
 
 export async function getMainCategories() {
   const data = await cachedGraphQLRequest<{ posts: { nodes: Post[] } }>(
@@ -243,10 +243,10 @@ export async function getPostSeries(): Promise<Post[]> {
   );
 }
 
-export async function getAuthorBySlug(name: string): Promise<{ users: Author }> {
-  return await cachedGraphQLRequest<{ users: Author }>(
-    GET_AUTHOR_BY_SLUG,
-    { slugAuthor: name },
+export async function getAuthorById(id: number): Promise<{ user: Node2 }> {
+  return await cachedGraphQLRequest<{ user: Node2 }>(
+    GET_AUTHOR_BY_ID,
+    { id },
     { ttl: 6000, namespace: "author" }
   );
 }

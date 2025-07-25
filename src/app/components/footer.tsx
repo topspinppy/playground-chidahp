@@ -123,11 +123,11 @@ export default function Footer({ categories }: { categories: Category[] }) {
               <FaFacebookSquare />
             </a>
             <a
-              href="https://link.chidahp.com/moOmpm"
+              href="https://app.chidahp.com/chulo-admission"
               target="_blank"
               rel="noopener noreferrer"
-              title="ติดตาม Line Official ของชี้ดาบ"
-              aria-label="ติดตาม Line Official ของชี้ดาบ"
+              title="Line OpenChat โรงเรียนชูโล่วิทยาคม"
+              aria-label="Line OpenChat โรงเรียนชูโล่วิทยาคม"
               className="hover:text-yellow-400 transition-colors duration-200"
             >
               <FaLine />

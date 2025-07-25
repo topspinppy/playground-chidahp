@@ -1,18 +1,20 @@
 import { BlogCard } from '@/app/components/front/BlogCard'
 import NotFound from '@/app/not-found'
-import { getAuthorBySlug } from '@/lib/api'
+import { getAuthorById } from '@/lib/api'
 import Image from 'next/image'
 
 type Props = Promise<{ slug: string }>
 
 export default async function AuthorPage(params: { params: Props }) {
-  const slug = (await params.params).slug
-  const user = await getAuthorBySlug(slug)
-  if (!user) {
+  const slug = (await params.params).slug as unknown as number
+  const data = await getAuthorById(slug)
+  console.log('Author Data:', data)
+  if (!data.user) {
     return <NotFound />
   }
 
-  const author = user.users.nodes[0];
+  const author = data.user
+
   return (
     <div className="min-h-screen bg-white">
       <div className="max-w-4xl mx-auto px-6 py-16">
@@ -20,7 +22,7 @@ export default async function AuthorPage(params: { params: Props }) {
         <div className="flex flex-col md:flex-row items-center gap-8 mb-16 p-8 bg-gray-50 rounded-xl">
           <div className="w-32 h-32 rounded-full overflow-hidden shadow-lg flex-shrink-0">
             <Image 
-              src={author.avatar.url} 
+              src={author?.avatar?.url ?? ''} 
               alt={author.name} 
               width={128}
               height={128}

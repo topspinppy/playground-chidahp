@@ -120,6 +120,7 @@ export const GET_SINGLE_POST = gql`
       }
       author {
         node {
+          userId
           name
           slug
           avatar {
@@ -497,42 +498,41 @@ query GetAllAuthorsSlug {
 }
 `
 
-export const GET_AUTHOR_BY_SLUG = gql`
-  query GetAuthorBySlugAuthor($slugAuthor: String!) {
-    users(where: {search: $slugAuthor} first: 1) {
+export const GET_AUTHOR_BY_ID = gql`
+  query GetAuthorById($id: ID!) {
+  user(id: $id, idType: DATABASE_ID) {
+    id
+    name
+    email
+    description
+    slugAuthor {
+      slugAuthor
+    }
+    avatar {
+      url
+    }
+    posts {
       nodes {
-        id
-        name
-        slugAuthor {
-          slugAuthor
+        title
+        slug
+        date
+        featuredImage {
+          node {
+            sourceUrl
+            altText
+          }
         }
-        email
-        description
-        avatar {
-          url
-        }
-        posts {
+        categories {
           nodes {
-            title
+            name
             slug
-            date
-            featuredImage {
-              node {
-                sourceUrl 
-                altText
-              }
-            }
-            categories {
-              nodes {
-                name
-                slug
-              }
-            }
           }
         }
       }
     }
   }
+}
+
 
 
 `
