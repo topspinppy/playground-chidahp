@@ -94,6 +94,7 @@ export interface Author {
 }
 
 export interface Node2 {
+  userId: number;
   id: string
   name: string
   slugAuthor?: {
