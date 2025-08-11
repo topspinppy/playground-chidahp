@@ -94,6 +94,9 @@ export const GET_SINGLE_POST = gql`
       storySeries {
         seriesId
       }
+      triggerwarning {
+        istriggerwarning
+      }
       hidefeaturelabel {
         ishidefeaturelabel
       }

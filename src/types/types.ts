@@ -53,6 +53,9 @@ export interface Post {
   storySeries: {
     seriesId: string
   }
+  triggerwarning: {
+    istriggerwarning: boolean
+  }
   hidefeaturelabel: {
     ishidefeaturelabel: boolean
   }

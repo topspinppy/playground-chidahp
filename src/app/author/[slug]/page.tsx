@@ -8,7 +8,6 @@ type Props = Promise<{ slug: string }>
 export default async function AuthorPage(params: { params: Props }) {
   const slug = (await params.params).slug as unknown as number
   const data = await getAuthorById(slug)
-  console.log('Author Data:', data)
   if (!data.user) {
     return <NotFound />
   }

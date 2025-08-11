@@ -64,7 +64,6 @@ export default async function Post(params: RouteParams) {
     
     return 'gutenberg'; // Default to gutenberg for better compatibility
   };
-  console.log(post.author)
   return (
     <main className="max-w-4xl mx-auto px-4 py-8 lg:py-12">
       {!!postId && <TrackViewClient postId={Number(postId)} />}
@@ -131,6 +130,18 @@ export default async function Post(params: RouteParams) {
           </div>
         </div>
       </div>
+
+      {/* Warning Section */}
+      {post.triggerwarning?.istriggerwarning && (
+        <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
+          <div className="flex items-center gap-3">
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 text-red-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <span className="text-red-700 font-medium">คำเตือน: เนื้อหานี้อาจมีความอ่อนไหว</span>
+          </div>
+        </div>
+      )}
 
       {/* Series Navigator */}
       {post.storySeries?.seriesId && (
