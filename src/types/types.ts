@@ -56,6 +56,9 @@ export interface Post {
   triggerwarning: {
     istriggerwarning: boolean
   }
+  triggerWarningMessage: {
+    triggerWarningMessage: string;
+  }
   hidefeaturelabel: {
     ishidefeaturelabel: boolean
   }

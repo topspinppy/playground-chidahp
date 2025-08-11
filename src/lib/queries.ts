@@ -100,6 +100,9 @@ export const GET_SINGLE_POST = gql`
       hidefeaturelabel {
         ishidefeaturelabel
       }
+      triggerWarningMessage {
+        triggerWarningMessage
+      }
       hidewordpresscss {
         ishidewordpresscss
       }
