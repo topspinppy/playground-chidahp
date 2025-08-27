@@ -1,6 +1,6 @@
 // src/app/global-error.tsx
 "use client";
-import "../globals.css"; // 👈 เพิ่มบรรทัดนี้
+import "global.css"
 
 export default function GlobalError({ error, reset }: { error: Error; reset: () => void }) {
   return (
