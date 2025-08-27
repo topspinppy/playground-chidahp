@@ -1,33 +1,131 @@
-import { NextRequest } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 
-export async function POST(req: NextRequest) {
-  const body = await req.text();
-  const controller = new AbortController();
-  const timeout = setTimeout(() => controller.abort(), 7000); // 7s timeout
+const GRAPHQL_ENDPOINT = "https://api.playground.chidahp.com/graphql";
+const REQUEST_TIMEOUT = 7000;
+const CONTENT_TYPE_JSON = "application/json";
 
+const ERROR_MESSAGES = {
+  TIMEOUT: "GraphQL API ช้าหรือไม่ตอบสนอง",
+  NETWORK: "ไม่สามารถเชื่อมต่อกับ GraphQL API ได้",
+  INVALID_REQUEST: "คำขอไม่ถูกต้อง",
+} as const;
+
+
+interface ErrorResponse {
+  message: string;
+  error?: string;
+}
+
+export async function POST(req: NextRequest): Promise<NextResponse> {
   try {
-    const gqlRes = await fetch("https://api.playground.chidahp.com/graphql", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body,
-      signal: controller.signal,
-    });
+    const body = await req.text();
+    
+    if (!body.trim()) {
+      return NextResponse.json(
+        { message: ERROR_MESSAGES.INVALID_REQUEST } satisfies ErrorResponse,
+        { status: 400 }
+      );
+    }
 
-    clearTimeout(timeout);
-    const data = await gqlRes.text();
+    let parsedBody;
+    try {
+      parsedBody = JSON.parse(body);
+    } catch {
+      return NextResponse.json(
+        { message: ERROR_MESSAGES.INVALID_REQUEST } satisfies ErrorResponse,
+        { status: 400 }
+      );
+    }
 
-    return new Response(data, {
-      status: gqlRes.status,
-      headers: { "Content-Type": "application/json" },
-    });
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  } catch (error) {
-    return new Response(
-      JSON.stringify({ message: "GraphQL API ช้าหรือไม่ตอบสนอง" }),
-      {
-        status: 504,
-        headers: { "Content-Type": "application/json" },
+    if (!parsedBody.query) {
+      return NextResponse.json(
+        { message: ERROR_MESSAGES.INVALID_REQUEST } satisfies ErrorResponse,
+        { status: 400 }
+      );
+    }
+
+    const controller = new AbortController();
+    const timeout = setTimeout(() => controller.abort(), REQUEST_TIMEOUT);
+
+    try {
+      const gqlRes = await fetch(GRAPHQL_ENDPOINT, {
+        method: "POST",
+        headers: {
+          "Content-Type": CONTENT_TYPE_JSON,
+          ...(req.headers.get("authorization") && {
+            Authorization: req.headers.get("authorization")!,
+          }),
+        },
+        body,
+        signal: controller.signal,
+      });
+
+      clearTimeout(timeout);
+      
+      const responseHeaders: Record<string, string> = {
+        "Content-Type": CONTENT_TYPE_JSON,
+      };
+
+      const corsHeaders = [
+        "access-control-allow-origin",
+        "access-control-allow-credentials",
+        "access-control-expose-headers",
+      ];
+      
+      corsHeaders.forEach((header) => {
+        const value = gqlRes.headers.get(header);
+        if (value) {
+          responseHeaders[header] = value;
+        }
+      });
+
+      if (gqlRes.ok) {
+        const data = await gqlRes.text();
+        return new NextResponse(data, {
+          status: gqlRes.status,
+          headers: responseHeaders,
+        });
+      } else {
+        const errorData = await gqlRes.text();
+        let errorMessage: ErrorResponse;
+        
+        try {
+          const parsedError = JSON.parse(errorData);
+          errorMessage = {
+            message: parsedError.errors?.[0]?.message || parsedError.message || "GraphQL request failed",
+            error: parsedError.errors?.[0]?.extensions?.code,
+          };
+        } catch {
+          errorMessage = { message: "GraphQL request failed" };
+        }
+
+        return NextResponse.json(errorMessage, {
+          status: gqlRes.status,
+          headers: responseHeaders,
+        });
       }
+    } catch (fetchError) {
+      clearTimeout(timeout);
+      
+      if (fetchError instanceof Error && fetchError.name === "AbortError") {
+        return NextResponse.json(
+          { message: ERROR_MESSAGES.TIMEOUT } satisfies ErrorResponse,
+          { status: 504 }
+        );
+      }
+
+      return NextResponse.json(
+        { message: ERROR_MESSAGES.NETWORK } satisfies ErrorResponse,
+        { status: 503 }
+      );
+    }
+  } catch (error) {
+    return NextResponse.json(
+      { 
+        message: ERROR_MESSAGES.INVALID_REQUEST,
+        error: error instanceof Error ? error.message : "Unknown error"
+      } satisfies ErrorResponse,
+      { status: 400 }
     );
   }
 }
