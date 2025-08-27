@@ -1,6 +1,6 @@
 // src/app/global-error.tsx
 "use client";
-import "global.css"
+import "./globals.css"
 
 export default function GlobalError({ error, reset }: { error: Error; reset: () => void }) {
   return (
