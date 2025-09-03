@@ -188,7 +188,7 @@ export async function generateMetadata({ params }: any) {
           url: `https://playground.chidahp.com/category/${slugLv1}/${slugLv2}`,
           images: [
             {
-              url: slug.featuredImage.node.sourceUrl ? slug.featuredImage.node.sourceUrl : `https://playground.chidahp.com/api/og?title=${slug.title}&author=${slug.author.node.name}`,
+              url: slug.featuredImage?.node?.sourceUrl ? slug.featuredImage?.node?.sourceUrl : `https://playground.chidahp.com/api/og?title=${slug.title}&author=${slug.author.node.name}`,
               width: 1200,
               height: 630,
               alt: slug.title,
