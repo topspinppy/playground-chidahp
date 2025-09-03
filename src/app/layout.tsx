@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Header from "./components/header";
+import ConditionalHeader from "./components/ConditionalHeader";
 import { getAllCategoriesWithChildren } from "@/lib/api";
 import Footer from "./components/footer";
 import { Noto_Sans_Thai, Poppins } from "next/font/google";
@@ -63,11 +63,12 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   const categories = await getAllCategoriesWithChildren();
+
   return (
     <html lang="en">
       <Head />
       <body className={`${noto_sans_thai.variable} ${poppins.variable} antialiased`}>
-        <Header categories={categories}/>
+        <ConditionalHeader categories={categories} />
         {children}
         <Footer categories={categories} />
         <CookieConcent />
