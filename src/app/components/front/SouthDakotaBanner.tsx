@@ -1,54 +1,94 @@
-import React from 'react';
-import { ShoppingCart, BookOpen } from 'lucide-react';
-import Image from 'next/image';
+"use client";
+import React, { useEffect, useState } from 'react';
+import Image from "next/image";
 import Link from 'next/link';
+import Typewriter from 'typewriter-effect';
 
-export default function SouthDakotaBanner() {
+export default function SouthDakotaHero() {
+  const [offsetY, setOffsetY] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => setOffsetY(window.scrollY);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <div className="relative w-full max-w-8xl mx-auto overflow-hidden rounded-lg">
-      <div className="relative w-full h-64 md:h-80 lg:h-96 overflow-hidden">
-        <Image
-          src="/south-dakota-18.png"
-          alt="South Dakota Book Background"
-          className="w-full h-full object-cover"
-          width={1200}
-          height={600}
-          priority
-          quality={100}
-        />
+    <section className="relative flex flex-col items-center justify-center min-h-[60vh] overflow-hidden bg-gradient-to-br from-gray-900 via-purple-900 to-gray-800 text-center px-2 pt-20">
+      {/* Parallax Background */}
+      <div
+        className="absolute inset-0 bg-cover bg-center transition-transform duration-700"
+        style={{
+          backgroundImage: `url('/sd-background.png')`,
+          transform: `translateY(${offsetY * 0.3}px) scale(1.1)`,
+          opacity: 0.15,
+        }}
+      />
 
-        {/* Gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/50 to-transparent mix-blend-multiply"></div>
+      {/* Animated Gradient Overlay */}
+      <div className="absolute inset-0 bg-gradient-to-t from-gray-900/90 via-purple-900/60 to-transparent"></div>
 
-        {/* Radial gradient focal point */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_rgba(0,0,0,0.6)_0%,_transparent_70%)]"></div>
+      {/* Neon Floating Glow */}
+      <div className="absolute -top-40 -left-32 h-96 w-96 rounded-full bg-pink-600/20 blur-3xl animate-pulse"></div>
+      <div className="absolute bottom-0 right-0 h-80 w-80 rounded-full bg-purple-500/10 blur-2xl animate-pulse"></div>
 
-        <div className="absolute inset-0 flex flex-col md:flex-row items-center md:items-center justify-between p-6 md:p-8 space-y-4 md:space-y-0">
-          <div className="flex-1 text-white">
-            <h1 className="text-3xl md:text-5xl font-extrabold mb-2 drop-shadow-lg">
-              SOUTH DAKOTA 18+
-            </h1>
-            <p className="text-base md:text-lg mb-4 max-w-md italic drop-shadow-sm">
-              เมื่ออิสรภาพและความฝัน แลกมาด้วยความพัง และความจริง...
-            </p>
-          </div>
+      <Image
+        src="/southdakota.png"
+        alt="South Dakota Logo"
+        width={300}
+        height={100}
+        style={{
+          transform: `translateY(${offsetY * 0.15}px)`,
+        }}
+        className="relative z-10 drop-shadow-[0_0_40px_rgba(236,72,153,0.5)] transition-transform duration-1000 hover:scale-105 animate-zoom-fade"
+        priority
+      />
+        
+      {/* Main Content */}
+      <div className="relative z-10 max-w-4xl mx-auto text-center">
 
-          <div className="flex flex-col w-full md:w-auto space-y-3">
-            <Link href="https://chidahp.page365.net/products/79228651">
-              <button className="w-full bg-gradient-to-r from-pink-500 to-pink-600 hover:scale-105 transform transition-all duration-200 text-white px-6 py-3 rounded font-semibold flex items-center justify-center space-x-2 shadow-md">
-                <ShoppingCart className="w-5 h-5" />
-                <span>Pre-order</span>
-              </button>
-            </Link>
-            <Link href="/category/chidahp-book-reviewer/southdakota">
-              <button className="w-full border-2 border-pink-400 text-pink-300 hover:bg-pink-400 hover:text-white px-6 py-3 rounded font-medium transition-colors flex items-center justify-center space-x-2 shadow-sm">
-                <BookOpen className="w-5 h-5" />
-                <span>อ่าน Review</span>
-              </button>
-            </Link>
-          </div>
+        {/* Subtitle with Typewriter Effect */}
+        <div 
+          style={{
+            transform: `translateY(${offsetY * 0.25}px)`,
+          }}
+          className="mb-8 text-lg md:text-2xl text-gray-300 max-w-2xl mx-auto leading-relaxed animate-fade-in delay-700"
+        >
+          <Typewriter
+            options={{
+              strings: ['เมื่ออิสรภาพและความฝัน แลกมาด้วยความพัง และความจริง...'],
+              autoStart: true,
+              loop: true,
+              delay: 75,
+            }}
+          />
+        </div>
+
+        {/* CTA Buttons */}
+        <div 
+          style={{
+            transform: `translateY(${offsetY * 0.2}px)`,
+          }}
+          className="flex flex-col sm:flex-row gap-4 justify-center items-center animate-fade-in delay-1000"
+        >
+          <Link href="/southdakota">
+            <button className="group relative bg-gradient-to-r from-purple-600/20 to-pink-600/20 border border-purple-400/50 hover:border-pink-300 hover:from-purple-600/30 hover:to-pink-600/30 transform hover:scale-105 transition-all duration-300 text-white px-8 py-4 rounded-full font-semibold flex items-center text-center space-x-3 backdrop-blur-sm cursor-pointer mb-6 animate-pulse hover:animate-none shadow-lg hover:shadow-pink-500/25">
+              <span className="ml-3 text-xs md:text-sm group-hover:scale-110 transition-transform duration-200">🌟 เริ่มต้นการผจญภัย 🌟 </span>
+              <div className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-400/20 to-pink-400/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 animate-pulse"></div>
+            </button>
+          </Link>
         </div>
       </div>
-    </div>
+
+      {/* Floating Center Glow */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 h-[600px] w-[600px] rounded-full bg-pink-500/10 blur-[140px] animate-pulse"></div>
+      
+      {/* Scroll Indicator
+      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+        <div className="w-6 h-10 border-2 border-purple-400 rounded-full flex justify-center">
+          <div className="w-1 h-3 bg-purple-400 rounded-full mt-2 animate-pulse"></div>
+        </div>
+      </div> */}
+    </section>
   );
 }
