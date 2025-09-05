@@ -10,6 +10,7 @@ import dynamic from "next/dynamic";
 import TrackViewClient from "@/app/components/TrackViewClient";
 import WordPressContent from "@/app/components/WordPressContent";
 import WarningComponent from "@/app/components/front/WarningComponent";
+import SouthDakotaAds from "@/app/components/front/SouthDakotaAds";
 
 const SeriesNavigator = dynamic(() => import("../../../../../components/front/SeriesNavigator"), {
   ssr: true,
@@ -166,7 +167,6 @@ export default async function Post(params: RouteParams) {
 
       {/* Content - Clean White Background */}
       <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 lg:p-8 mb-8">
-
         <WordPressContent
           content={post.content}
           contentType={getContentType()}
@@ -174,6 +174,10 @@ export default async function Post(params: RouteParams) {
           className="post-content"
         />
       </div>
+
+      {parentSlug.some(slug => slug.includes('southdakota')) && (
+        <SouthDakotaAds />
+      )}
 
       {/* Tags */}
       <div className="mb-8">
@@ -214,6 +218,7 @@ export default async function Post(params: RouteParams) {
           </div>
         </section>
       )}
+      
 
       {/* Share Buttons */}
       <div className="mb-8">
