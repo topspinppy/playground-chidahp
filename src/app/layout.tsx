@@ -30,7 +30,10 @@ export const metadata: Metadata = {
     "ข่าวสายกวน",
     "สนามเด็กเล่นชูโล่",
     "บทความสร้างสรรค์",
-    "ชี้ดาบ"
+    "ชี้ดาบ",
+    "southdakota18+",
+    "southdakota",
+    "เซ้าท์ดาโกต้า"
   ],
   authors: [{ name: "นักเรียนชูโล่", url: "https://www.chidahp.com/" }],
   metadataBase: new URL("https://playground.chidahp.com"),
