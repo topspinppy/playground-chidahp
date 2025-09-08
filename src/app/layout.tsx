@@ -33,6 +33,9 @@ export const metadata: Metadata = {
     "ชี้ดาบ",
     "southdakota18+",
     "southdakota",
+    "south dakota 18+",
+    "SouthDakota18+",
+    "JamesIsBack",
     "เซ้าท์ดาโกต้า"
   ],
   authors: [{ name: "นักเรียนชูโล่", url: "https://www.chidahp.com/" }],
