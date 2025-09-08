@@ -112,6 +112,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <Head />
+      
       <body className={`${noto_sans_thai.variable} ${poppins.variable} antialiased`}>
         <ConditionalHeader categories={categories} />
         {children}

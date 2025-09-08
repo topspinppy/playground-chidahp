@@ -5,6 +5,11 @@ export default function Header() {
   return (
     <Head>
       <script
+        async
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8360416910031647"
+        crossOrigin="anonymous"
+      />
+      <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
