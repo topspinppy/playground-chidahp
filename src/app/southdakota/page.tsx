@@ -4,7 +4,6 @@ import React from 'react';
 import Hero from '../components/sd18/Hero';
 import About from '../components/sd18/About';
 import TrackViewClient from '../components/TrackViewClient';
-import { platform } from 'os';
 import Link from 'next/link';
 
 export default function SouthDakotaPage() {
@@ -159,7 +158,7 @@ export default function SouthDakotaPage() {
           </div>
 
           {/* Short Reviews Section */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6 max-w-6xl mx-auto">
+          {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 md:gap-6 max-w-6xl mx-auto">
             {shortReviews.map((review, index) => (
               <div 
                 key={`short-${index}`}
@@ -192,7 +191,7 @@ export default function SouthDakotaPage() {
                 </div>
               </div>
             ))}
-          </div>
+          </div> */}
 
           <div className="text-center mt-8 md:mt-12 px-4">
             <p className="text-gray-400 text-base md:text-lg">
