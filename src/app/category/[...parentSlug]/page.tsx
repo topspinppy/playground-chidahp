@@ -1,7 +1,7 @@
 import { notFound } from 'next/navigation';
 import MainCategory from './components/page/MainCategory';
 import Post from './components/page/Post';
-import { getCategoryDetail, getCategoriesAll, getSinglePost } from '@/lib/api';
+import { getCategoryDetail, getCategoriesAll, getSinglePost, getPostsByCategory } from '@/lib/api';
 
 export const dynamic = 'force-dynamic';
 
@@ -291,15 +291,33 @@ export default async function Page({ params }: any) {
   const [mainSlug, second] = parentSlug;
 
   if (parentSlug.length === 1) {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    return <MainCategory slug={mainSlug} />;
+    const categoryDetail = await getCategoryDetail(mainSlug);
+    const postsResult = await getPostsByCategory(mainSlug, 6);
+    
+    return (
+      <MainCategory 
+        slug={mainSlug}
+        initialCategory={categoryDetail}
+        initialPosts={postsResult.nodes}
+        initialHasNextPage={postsResult.pageInfo.hasNextPage}
+        initialEndCursor={postsResult.pageInfo.endCursor || ''}
+      />
+    );
   }
   if (parentSlug.length === 2) {
     if (childCategories.includes(second)) {
-      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      // @ts-ignore
-      return <MainCategory slug={second} />;
+      const categoryDetail = await getCategoryDetail(second);
+      const postsResult = await getPostsByCategory(second, 6);
+      
+      return (
+        <MainCategory 
+          slug={second}
+          initialCategory={categoryDetail}
+          initialPosts={postsResult.nodes}
+          initialHasNextPage={postsResult.pageInfo.hasNextPage}
+          initialEndCursor={postsResult.pageInfo.endCursor || ''}
+        />
+      );
     } else {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-ignore

@@ -97,12 +97,16 @@ export async function getLatestPosts(): Promise<Post[]> {
   return data.posts.nodes;
 }
 
-export async function getPostsByCategory(category: string): Promise<Post[]> {
-  const data = await graphqlRequest<{ posts: { nodes: Post[] } }>(
+export async function getPostsByCategory(
+  category: string, 
+  first: number = 6, 
+  after?: string
+): Promise<{ nodes: Post[], pageInfo: { hasNextPage: boolean, endCursor: string } }> {
+  const data = await graphqlRequest<{ posts: { nodes: Post[], pageInfo: { hasNextPage: boolean, endCursor: string } } }>(
     GET_POSTS_BY_CATEGORY,
-    { slug: category }
+    { slug: category, first, after }
   );
-  return data.posts.nodes;
+  return data.posts;
 }
 
 type TagData = {

@@ -1,13 +1,46 @@
+'use client';
+
 import { BlogCard } from "@/app/components/front/BlogCard";
 import TrackViewClient from "@/app/components/TrackViewClient";
-import { getCategoryDetail, getPostsByCategory } from "@/lib/api";
+import { getPostsByCategory } from "@/lib/api";
+import { Category, Post } from "@/types/types";
+import { useState } from "react";
 
-type Props = Promise<{ slug: string }>;
+type Props = {
+  slug: string;
+  initialCategory: Category;
+  initialPosts: Post[];
+  initialHasNextPage: boolean;
+  initialEndCursor: string;
+};
 
-export default async function MainCategory(params: Props) {
-  const { slug } = await params;
-  const categoryDetail = await getCategoryDetail(slug);
-  const posts = await getPostsByCategory(slug);
+export default function MainCategory({ 
+  slug, 
+  initialCategory, 
+  initialPosts, 
+  initialHasNextPage, 
+  initialEndCursor 
+}: Props) {
+  const [posts, setPosts] = useState<Post[]>(initialPosts);
+  const [hasNextPage, setHasNextPage] = useState(initialHasNextPage);
+  const [endCursor, setEndCursor] = useState(initialEndCursor);
+  const [loading, setLoading] = useState(false);
+
+  const loadMore = async () => {
+    if (loading || !hasNextPage) return;
+    
+    setLoading(true);
+    try {
+      const result = await getPostsByCategory(slug, 6, endCursor);
+      setPosts(prev => [...prev, ...result.nodes]);
+      setHasNextPage(result.pageInfo.hasNextPage);
+      setEndCursor(result.pageInfo.endCursor);
+    } catch (error) {
+      console.error('Error loading more posts:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <main className="max-w-6xl mx-auto px-4 py-10">
@@ -19,10 +52,10 @@ export default async function MainCategory(params: Props) {
           Category
         </div>
         <h1 className="text-4xl font-black text-yellow-600 mt-2">
-          {categoryDetail.name}
+          {initialCategory.name}
         </h1>
         <p className="text-yellow-800 max-w-2xl mt-3 text-base leading-relaxed">
-          {categoryDetail.description?.replace(/<[^>]*>/g, '')}
+          {initialCategory.description?.replace(/<[^>]*>/g, '')}
         </p>
         <hr className="border-t border-yellow-800 mt-6" />
       </section>
@@ -34,15 +67,27 @@ export default async function MainCategory(params: Props) {
           ไว้กลับมาเยี่ยมเราอีกครั้งเร็ว ๆ นี้นะครับ 🌼
         </p>
       ) : (
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-          {posts.map((post) => {
-            return (
-              <>
+        <>
+          <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+            {posts.map((post) => {
+              return (
                 <BlogCard key={post.slug} post={post} />
-              </>
-            )
-          })}
-        </div>
+              )
+            })}
+          </div>
+          
+          {hasNextPage && (
+            <div className="text-center mt-12">
+              <button
+                onClick={loadMore}
+                disabled={loading}
+                className="bg-yellow-500 hover:bg-yellow-600 disabled:bg-yellow-300 text-white font-semibold px-8 py-3 rounded-lg transition-colors duration-200 shadow-md hover:shadow-lg"
+              >
+                {loading ? 'กำลังโหลด...' : 'โหลดเพิ่มเติม'}
+              </button>
+            </div>
+          )}
+        </>
       )}
     </main>
   );

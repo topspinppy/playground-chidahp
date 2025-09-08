@@ -212,8 +212,12 @@ export const GET_LATEST_POSTS = gql`
 
 
 export const GET_POSTS_BY_CATEGORY = gql`
-  query GetPostsByCategorySlug($slug: String!) {
-    posts(where: { categoryName: $slug }, first: 100) {
+  query GetPostsByCategorySlug($slug: String!, $first: Int = 6, $after: String) {
+    posts(where: { categoryName: $slug }, first: $first, after: $after) {
+      pageInfo {
+        hasNextPage
+        endCursor
+      }
       nodes {
         id
         title
