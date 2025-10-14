@@ -117,7 +117,7 @@ const BrainstormCard = ({ feedback, index, onVote, hasVoted }: {
       {/* Content */}
       <div className="p-4 pt-8 pr-8">
         <p className={`text-gray-800 leading-relaxed ${getTextSize()} font-medium`}>
-          {feedback.text}
+          {feedback.text.length > 100 ? `${feedback.text.substring(0, 100)}...` : feedback.text}
         </p>
       </div>
 
@@ -167,12 +167,19 @@ export default function TellMePage() {
   const [loading, setLoading] = useState(false);
   const [isLoadingFeedbacks, setIsLoadingFeedbacks] = useState(true);
   const [showForm, setShowForm] = useState(false);
+  
+  // Character limit for post-it notes
+  const MAX_CHARACTERS = 120;
 
   // Generate a simple user ID (in real app, this would come from auth)
   const userId = useRef(`user_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`).current;
 
   const handleSubmit = async () => {
     if (message.trim() === '') return;
+    if (message.trim().length > MAX_CHARACTERS) {
+      setError(`ข้อความยาวเกินไป กรุณาเขียนไม่เกิน ${MAX_CHARACTERS} ตัวอักษร`);
+      return;
+    }
 
     setLoading(true);
     setError('');
@@ -328,16 +335,24 @@ export default function TellMePage() {
 
                   <textarea
                     className="w-full h-32 border border-gray-300 p-4 rounded-lg resize-none focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:border-transparent"
-                    placeholder="คุณได้อะไรจากบู๊ตชี้ดาบ? แบ่งปันประสบการณ์ของคุณที่นี่..."
+                    placeholder="เขียนความคิดเห็นสั้นๆ (ไม่เกิน 120 ตัวอักษร) เช่น: 'ได้หนังสือมา 2 เล่ม!' หรือ 'เจอผู้เขียนแล้ว!'"
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
                     disabled={loading}
+                    maxLength={MAX_CHARACTERS}
                   />
+                  
+                  {/* Character counter */}
+                  <div className="mt-2 text-right">
+                    <span className={`text-sm ${message.length > MAX_CHARACTERS * 0.9 ? 'text-red-500' : 'text-gray-500'}`}>
+                      {message.length}/{MAX_CHARACTERS}
+                    </span>
+                  </div>
 
                   <button
                     className="mt-4 bg-gradient-to-r from-yellow-500 to-yellow-600 text-gray-900 px-6 py-3 rounded-xl font-semibold hover:from-yellow-600 hover:to-yellow-700 disabled:bg-gray-400 disabled:cursor-not-allowed transition-all duration-300 transform hover:scale-105 hover:shadow-lg"
                     onClick={handleSubmit}
-                    disabled={loading || message.trim() === ''}
+                    disabled={loading || message.trim() === '' || message.trim().length > MAX_CHARACTERS}
                   >
                     {loading ? 'กำลังส่ง...' : 'แปะความคิดเห็น'}
                   </button>
