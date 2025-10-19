@@ -293,7 +293,6 @@ export default async function Page({ params }: any) {
   if (parentSlug.length === 1) {
     const categoryDetail = await getCategoryDetail(mainSlug);
     const postsResult = await getPostsByCategory(mainSlug, 6);
-    
     return (
       <MainCategory 
         slug={mainSlug}
