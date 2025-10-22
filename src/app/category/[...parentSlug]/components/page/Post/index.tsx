@@ -11,6 +11,7 @@ import TrackViewClient from "@/app/components/TrackViewClient";
 import WordPressContent from "@/app/components/WordPressContent";
 import WarningComponent from "@/app/components/front/WarningComponent";
 import SouthDakotaAds from "@/app/components/front/SouthDakotaAds";
+import GoogleAdsense from "@/app/components/GoogleAdsense";
 
 const SeriesNavigator = dynamic(() => import("../../../../../components/front/SeriesNavigator"), {
   ssr: true,
@@ -69,6 +70,8 @@ export default async function Post(params: RouteParams) {
 
   return (
     <main className="max-w-4xl mx-auto px-4 py-8 lg:py-12">
+      <GoogleAdsense adSlot="5899108832" />
+      
       {!!postId && <TrackViewClient postId={Number(postId)} />}
       
       {/* Header Section - Clean and Simple */}
