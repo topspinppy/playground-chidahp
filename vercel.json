@@ -1,0 +1,9 @@
+{
+  "redirects": [
+    {
+      "source": "/ads.txt",
+      "destination": "https://chidahp.com/ads.txt",
+      "permanent": true
+    }
+  ]
+}
