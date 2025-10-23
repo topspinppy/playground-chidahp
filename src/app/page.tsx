@@ -17,7 +17,7 @@ export default async function HomePage() {
 
   return (
     <div>
-      <AdvertisementSection className="mt-8" isCloseText={true} adSlot="4577743133" style={{ display: 'inline-block', width: '1200px', height: '300px'}} />
+      <AdvertisementSection className="mt-8" isCloseText={true} adSlot="4577743133" style={{ display: 'inline-block', width: 'auto', height: '300px'}} />
       <SouthDakotaBanner />
       <main className="max-w-6xl mx-auto px-4 py-10 space-y-16 mb-0">
         <FeaturedPost featuredPost={featuredPost} latestPosts={latestPosts} />
