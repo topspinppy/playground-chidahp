@@ -3,14 +3,12 @@ import GoogleAdsense from "./GoogleAdsense";
 interface AdvertisementSectionProps {
   adSlot: string;
   className?: string;
-  style?: React.CSSProperties;
   isCloseText?: boolean;
 }
 
 export default function AdvertisementSection({ 
   adSlot, 
   className = "",
-  style = {},
   isCloseText = false
 }: AdvertisementSectionProps) {
   return (
@@ -25,12 +23,6 @@ export default function AdvertisementSection({
           <div className="w-full max-w-4xl min-h-[250px]">
             <GoogleAdsense 
               adSlot={adSlot} 
-              className="rounded-lg overflow-hidden shadow-sm w-full"
-              style={{
-                minHeight: '250px',
-                minWidth: '300px',
-                ...style
-              }}
             />
           </div>
         </div>
