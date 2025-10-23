@@ -1,7 +1,6 @@
 'use client';
 
 import { BlogCard } from "@/app/components/front/BlogCard";
-import { RandomBlogCard } from "@/app/components/front/RandomBlogCard";
 import TrackViewClient from "@/app/components/TrackViewClient";
 import { getPostsByCategory } from "@/lib/api";
 import { Category, Post } from "@/types/types";
