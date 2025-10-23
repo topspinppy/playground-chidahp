@@ -21,7 +21,7 @@ export default function GoogleAdsense({
   adSlot,
   adFormat = 'auto',
   fullWidthResponsive = true,
-  // _,
+  style,
   className = ''
 }: GoogleAdsenseProps) {
   useEffect(() => {
@@ -42,7 +42,7 @@ export default function GoogleAdsense({
     <div className={className}>
       <ins
         className="adsbygoogle"
-        style={{ display: 'block', width: '100%', minHeight: '250px' }}
+        style={style ?? { display: 'block', width: '100%', minHeight: '250px' }}
         data-ad-client="ca-pub-8360416910031647"
         data-ad-slot={adSlot}
         data-ad-format={adFormat}
