@@ -12,7 +12,7 @@ export default function AdvertisementSection({
   isCloseText = false
 }: AdvertisementSectionProps) {
   return (
-    <div className={`mb-8 hidden md:block ${className}`}>
+    <div className={`mt-2 md:mt-8 mb-8 hidden md:block ${className}`}>
       <div>
         {!isCloseText && (
           <div className="flex items-center justify-center gap-2 mb-4">

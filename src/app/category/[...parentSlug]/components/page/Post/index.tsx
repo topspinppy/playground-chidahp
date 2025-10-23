@@ -71,7 +71,7 @@ export default async function Post(params: RouteParams) {
   return (
     <main className="max-w-4xl mx-auto px-4 py-8 lg:py-12">
       {/* Advertisement Section */}
-      <div className="mt-8">
+      <div className="mt-8 md:block flex justify-center">
         <AdvertisementSection adSlot="5899108832" />
       </div>
 
