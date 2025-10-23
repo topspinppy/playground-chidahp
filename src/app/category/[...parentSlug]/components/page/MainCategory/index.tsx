@@ -82,7 +82,7 @@ export default function MainCategory({
                 disabled={loading}
                 className="bg-yellow-500 hover:bg-yellow-600 disabled:bg-yellow-300 text-white font-semibold px-8 py-3 rounded-lg transition-colors duration-200 shadow-md hover:shadow-lg"
               >
-                {loading ? 'กำลังโหลด...' : 'โหลดเพิ่มเติม'}
+                {loading ? 'กำลังโหลด..' : 'โหลดเพิ่มเติม'}
               </button>
             </div>
           )}
