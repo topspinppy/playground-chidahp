@@ -1,6 +1,7 @@
 'use client';
 
 import { BlogCard } from "@/app/components/front/BlogCard";
+import { RandomBlogCard } from "@/app/components/front/RandomBlogCard";
 import TrackViewClient from "@/app/components/TrackViewClient";
 import { getPostsByCategory } from "@/lib/api";
 import { Category, Post } from "@/types/types";
@@ -55,7 +56,7 @@ export default function MainCategory({
           {initialCategory.name}
         </h1>
         <p className="text-yellow-800 max-w-2xl mt-3 text-base leading-relaxed">
-          {initialCategory.description?.replace(/<[^>]*>/g, '')}
+          {initialCategory.description?.replaceAll(/<[^>]*>/g, '')}
         </p>
         <hr className="border-t border-yellow-800 mt-6" />
       </section>
@@ -69,10 +70,12 @@ export default function MainCategory({
       ) : (
         <>
           <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {posts.map((post) => {
-              return (
-                <BlogCard key={post.slug} post={post} />
-              )
+            {posts.map((post, index) => {
+              // แสดง RandomBlogCard แค่ตัวแรกเท่านั้น
+              if (index === 0) {
+                return <RandomBlogCard key={`random-${index}`} />;
+              }
+              return <BlogCard key={post.slug} post={post} />;
             })}
           </div>
           
