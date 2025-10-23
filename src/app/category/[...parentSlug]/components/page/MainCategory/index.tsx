@@ -70,11 +70,7 @@ export default function MainCategory({
       ) : (
         <>
           <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
-            {posts.map((post, index) => {
-              // แสดง RandomBlogCard แค่ตัวแรกเท่านั้น
-              if (index === 0) {
-                return <RandomBlogCard key={`random-${index}`} />;
-              }
+            {posts.map((post) => {
               return <BlogCard key={post.slug} post={post} />;
             })}
           </div>
