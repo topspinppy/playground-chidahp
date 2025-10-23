@@ -1,40 +1,53 @@
-import GoogleAdsense from "./GoogleAdsense";
+'use client'
 
-interface AdvertisementSectionProps {
-  adSlot: string;
-  className?: string;
-  style?: React.CSSProperties;
-  isCloseText?: boolean;
+import { useEffect } from 'react'
+
+interface GoogleAdsenseProps {
+  adSlot: string
+  adFormat?: 'auto' | 'rectangle' | 'horizontal' | 'vertical'
+  fullWidthResponsive?: boolean
+  style?: React.CSSProperties
+  className?: string
 }
 
-export default function AdvertisementSection({ 
-  adSlot, 
-  className = "",
-  style = {},
-  isCloseText = false
-}: AdvertisementSectionProps) {
+declare global {
+  interface Window {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    adsbygoogle: any[]
+  }
+}
+
+export default function GoogleAdsense({
+  adSlot,
+  adFormat = 'auto',
+  fullWidthResponsive = true,
+  style,
+  className = ''
+}: GoogleAdsenseProps) {
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      try {
+        if (typeof window !== 'undefined' && window.adsbygoogle) {
+          window.adsbygoogle.push({})
+        }
+      } catch (error) {
+        console.error('AdSense error:', error)
+      }
+    }, 100)
+
+    return () => clearTimeout(timer)
+  }, [adSlot])
+
   return (
-    <div className={`mb-8 hidden md:block ${className}`}>
-      <div>
-        {!isCloseText && (
-          <div className="flex items-center justify-center gap-2 mb-4">
-            <span className="text-xs font-medium text-gray-600 uppercase tracking-wide">Advertisement</span>
-          </div>
-        )}
-        <div className="flex justify-center">
-          <div className="w-full max-w-4xl min-h-[250px]">
-            <GoogleAdsense 
-              adSlot={adSlot} 
-              className="rounded-lg overflow-hidden shadow-sm w-full"
-              style={{
-                minHeight: '250px',
-                minWidth: '300px',
-                ...style
-              }}
-            />
-          </div>
-        </div>
-      </div>
+    <div className={className}>
+      <ins
+        className="adsbygoogle"
+        style={style ?? { display: 'block', width: '100%', minHeight: '250px' }}
+        data-ad-client="ca-pub-8360416910031647"
+        data-ad-slot={adSlot}
+        data-ad-format={adFormat}
+        data-full-width-responsive={fullWidthResponsive.toString()}
+      />
     </div>
-  );
+  )
 }
