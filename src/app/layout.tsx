@@ -112,7 +112,13 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <Head />
-      
+      <script
+        async
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8360416910031647"
+        crossOrigin="anonymous"
+      />
+      <link rel="canonical" href="https://chidahp.com/playground" />
+
       <body className={`${noto_sans_thai.variable} ${poppins.variable} antialiased`}>
         <ConditionalHeader categories={categories} />
         {children}
