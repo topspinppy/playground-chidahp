@@ -72,7 +72,7 @@ export default async function Post(params: RouteParams) {
     <main className="max-w-4xl mx-auto px-4 py-8 lg:py-12">
       {/* Advertisement Section */}
       <AdvertisementSection adSlot="5899108832" />
-      
+
       {!!postId && <TrackViewClient postId={Number(postId)} />}
       
       {/* Header Section - Clean and Simple */}

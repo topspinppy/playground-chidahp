@@ -11,11 +11,9 @@ export default function AdvertisementSection({
 }: AdvertisementSectionProps) {
   return (
     <div className={`mb-8 ${className}`}>
-      <div className="bg-gradient-to-r from-yellow-50 to-yellow-100 border border-yellow-200 rounded-xl p-6 shadow-sm">
+      <div>
         <div className="flex items-center justify-center gap-2 mb-4">
-          <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
-          <span className="text-sm font-medium text-yellow-700 uppercase tracking-wide">โฆษณา</span>
-          <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
+          <span className="text-xs font-medium text-gray-600 uppercase tracking-wide">Advertisement</span>
         </div>
         <div className="flex justify-center">
           <div className="w-full max-w-4xl">
