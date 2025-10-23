@@ -5,7 +5,7 @@ import RoadTo100K from "./components/front/RoadTo100K";
 import LatestPosts from "./components/front/LatestPosts";
 import SeriesSection from "./components/front/SeriesSection";
 import SouthDakotaBanner from "./components/front/SouthDakotaBanner";
-import AdvertisementSection from "./components/AdvertisementSection";
+// import AdvertisementSection from "./components/AdvertisementSection";
 
 export const dynamic = 'force-dynamic';
 
@@ -17,7 +17,7 @@ export default async function HomePage() {
 
   return (
     <div>
-      <AdvertisementSection className="mt-8" isCloseText={true} adSlot="4577743133" style={{ display: 'inline-block', width: '1200px', height: '500px'}} />
+      {/* <AdvertisementSection className="mt-8" isCloseText={true} adSlot="4577743133" style={{ display: 'inline-block', width: '1200px', height: '500px'}} /> */}
       <SouthDakotaBanner />
       <main className="max-w-6xl mx-auto px-4 py-10 space-y-16 mb-0">
         <FeaturedPost featuredPost={featuredPost} latestPosts={latestPosts} />
