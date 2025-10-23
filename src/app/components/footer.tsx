@@ -80,7 +80,7 @@ export default function Footer({ categories }: { categories: Category[] }) {
             <li>
               <a
                 href="mailto:playground.chidahp@gmail.com"
-                title="ส่งอีเมลถึงเรา"
+                title="ส่งอีเมลถึงเราที่นี่"
                 className="hover:text-yellow-400 transition-colors duration-200"
               >
                 playground.chidahp@gmail.com
