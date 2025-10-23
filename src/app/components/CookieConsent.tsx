@@ -31,7 +31,7 @@ export default function CookieConsent() {
         <br />
         โดยท่านสามารถอ่าน{" "}
         <Link
-          href="/page/privacy-policy"
+          href="https://www.chidahp.com/privacy-policy"
           className="text-yellow-800 font-semibold underline underline-offset-2 hover:text-yellow-600 transition"
         >
           นโยบายความเป็นส่วนตัวได้ที่นี่

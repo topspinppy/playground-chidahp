@@ -54,7 +54,7 @@ export default function Footer({ categories }: { categories: Category[] }) {
             </li>
             <li>
               <Link 
-                href="/page/privacy-policy" 
+                href="https://www.chidahp.com/privacy-policy" 
                 title="นโยบายความเป็นส่วนตัว"
                 className="hover:text-yellow-400 transition-colors duration-200"
               >
@@ -79,11 +79,11 @@ export default function Footer({ categories }: { categories: Category[] }) {
           <ul className="space-y-1 text-yellow-300 text-sm">
             <li>
               <a
-                href="mailto:story@mail.playground.chidahp.com"
+                href="mailto:playground.chidahp@gmail.com"
                 title="ส่งอีเมลถึงเรา"
                 className="hover:text-yellow-400 transition-colors duration-200"
               >
-                story@mail.playground.chidahp.com
+                playground.chidahp@gmail.com
               </a>
             </li>
             <li>
