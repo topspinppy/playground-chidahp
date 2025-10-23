@@ -18,10 +18,12 @@ export default function AdvertisementSection({
           <div className="w-2 h-2 bg-yellow-500 rounded-full"></div>
         </div>
         <div className="flex justify-center">
-          <GoogleAdsense 
-            adSlot={adSlot} 
-            className="rounded-lg overflow-hidden shadow-sm"
-          />
+          <div className="w-full max-w-4xl">
+            <GoogleAdsense 
+              adSlot={adSlot} 
+              className="rounded-lg overflow-hidden shadow-sm w-full"
+            />
+          </div>
         </div>
       </div>
     </div>
