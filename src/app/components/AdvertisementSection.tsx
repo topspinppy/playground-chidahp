@@ -22,12 +22,15 @@ export default function AdvertisementSection({
           </div>
         )}
         <div className="flex justify-center">
-          <div className="w-full max-w-4xl">
+          <div className="w-full max-w-4xl min-h-[250px]">
             <GoogleAdsense 
-              
               adSlot={adSlot} 
               className="rounded-lg overflow-hidden shadow-sm w-full"
-              style={style}
+              style={{
+                minHeight: '250px',
+                minWidth: '300px',
+                ...style
+              }}
             />
           </div>
         </div>
