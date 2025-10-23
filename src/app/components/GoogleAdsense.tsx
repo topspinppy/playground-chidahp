@@ -21,7 +21,7 @@ export default function GoogleAdsense({
   adSlot,
   adFormat = 'auto',
   fullWidthResponsive = true,
-  style,
+  // _,
   className = ''
 }: GoogleAdsenseProps) {
   useEffect(() => {
