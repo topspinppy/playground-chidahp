@@ -42,7 +42,7 @@ export default function GoogleAdsense({
     <div className={className}>
       <ins
         className="adsbygoogle"
-        style={style ?? { display: 'block', width: '100%', minHeight: '250px' }}
+        style={{ display: 'block' }}
         data-ad-client="ca-pub-8360416910031647"
         data-ad-slot={adSlot}
         data-ad-format={adFormat}
