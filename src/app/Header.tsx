@@ -9,6 +9,7 @@ export default function Header() {
         src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8360416910031647"
         crossOrigin="anonymous"
       />
+      <link rel="canonical" href="https://chidahp.com/playground" />
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
