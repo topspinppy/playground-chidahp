@@ -275,7 +275,7 @@ export class ArticleModel {
     const { error } = await supabaseAdmin
       .from('articles')
       .update({
-        view_count: supabaseAdmin.raw('view_count + 1'),
+        view_count: 'view_count + 1',
         updated_at: new Date().toISOString()
       })
       .eq('id', id);
