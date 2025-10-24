@@ -1,11 +1,11 @@
-import { NextRequest, NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { cookies } from 'next/headers';
 import jwt from 'jsonwebtoken';
 import UserModel from '@/models/User';
 
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 
-export async function GET(request: NextRequest) {
+export async function GET() {
   try {
     // Get token from cookie
     const cookieStore = await cookies();
@@ -19,7 +19,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Verify token
-    const decoded = jwt.verify(token, JWT_SECRET) as any;
+    const decoded = jwt.verify(token, JWT_SECRET) as { userId: string };
     
     // Get user from database
     const user = await UserModel.findById(decoded.userId);

@@ -48,7 +48,11 @@ export class UserModel {
       throw new Error(`Failed to find user: ${error.message}`);
     }
 
-    return this.mapToIUser(data);
+    if (!data) {
+      return null;
+    }
+
+    return this.mapToIUser(data as unknown as User);
   }
 
   // Find user by ID
@@ -66,7 +70,11 @@ export class UserModel {
       throw new Error(`Failed to find user: ${error.message}`);
     }
 
-    return this.mapToIUser(data);
+    if (!data) {
+      return null;
+    }
+
+    return this.mapToIUser(data as unknown as User);
   }
 
   // Check if email exists
@@ -88,17 +96,21 @@ export class UserModel {
   }
 
   // Map Supabase user to IUser with methods
-  private static mapToIUser(user: User): IUser {
+  private static mapToIUser(user: User | Partial<User>): IUser {
     return {
       ...user,
       comparePassword: async function(candidatePassword: string): Promise<boolean> {
+        if (!user.password) {
+          throw new Error('Password not available for comparison');
+        }
         return bcrypt.compare(candidatePassword, user.password);
       },
       toJSON: function() {
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         const { password, ...userWithoutPassword } = user;
         return userWithoutPassword;
       }
-    };
+    } as IUser;
   }
 }
 
