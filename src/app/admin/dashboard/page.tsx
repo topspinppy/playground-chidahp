@@ -6,8 +6,6 @@ import {
   FileText, 
   LogOut, 
   User,
-  Settings,
-  BarChart3,
   Calendar,
   Users
 } from 'lucide-react';
