@@ -112,7 +112,7 @@ export default function AffiliatePage() {
         setError(data.error || 'เกิดข้อผิดพลาดในการสมัครสมาชิก');
       }
     } catch (error) {
-      setError('เกิดข้อผิดพลาดในการเชื่อมต่อกับเซิร์ฟเวอร์');
+      setError(error instanceof Error ? error.message : 'เกิดข้อผิดพลาดในการเชื่อมต่อกับเซิร์ฟเวอร์');
     } finally {
       setIsLoading(false);
     }
