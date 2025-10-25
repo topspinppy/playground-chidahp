@@ -25,7 +25,7 @@ export async function POST(
     // TODO: Implement WordPress API integration
     // This is a mock implementation
     const wordpressResponse = await syncToWordPress(article);
-    
+    console.log('WordPress API response:', wordpressResponse);
     if (wordpressResponse.success) {
       // Update article with WordPress ID
       const { data: updatedArticle, error: updateError } = await supabase
@@ -89,7 +89,7 @@ async function syncToWordPress(articleData: { id: string; title: string; content
     
     console.log('WordPress API success response:', wordpressPost);
 
-  
+    
     return {
       success: true,
       wordpress_id: wordpressPost.post_id,

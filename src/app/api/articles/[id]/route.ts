@@ -123,7 +123,7 @@ export async function DELETE(
             },
           }
         );
-
+        console.log(wordpressResponse);
         if (!wordpressResponse.ok) {
           console.error('Failed to delete from WordPress:', wordpressResponse.status, wordpressResponse.statusText);
         } else {

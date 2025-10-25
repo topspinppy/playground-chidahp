@@ -65,7 +65,6 @@ export async function POST(request: NextRequest) {
 
     // Step 2: Only if WordPress creation succeeds, save to Supabase
     const supabase = createSupabaseClient();
-
     const { data: article, error } = await supabase
       .from('articles')
       .insert({
@@ -123,12 +122,11 @@ async function createWordPressPost(postData: {
       const errorText = await response.text();
       throw new Error(`WordPress API error: ${response.status} - ${errorText}`);
     }
-
-    const wordpressPost = await response.json();
     
+    const wordpressPost = await response.json();
     return {
       success: true,
-      wordpress_id: wordpressPost.id || wordpressPost.ID,
+      wordpress_id: wordpressPost.data['post_id'],
       wordpress_data: wordpressPost
     };
   } catch (error) {
