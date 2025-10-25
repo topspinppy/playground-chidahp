@@ -119,7 +119,7 @@ export async function DELETE(
             method: 'DELETE',
             headers: {
               'Content-Type': 'application/json',
-              'Authorization': 'Bearer 5ffe5730-25e6-40d3-903e-0dbba87d28a0',
+              'Authorization': `Bearer ${process.env.WORDPRESS_API_TOKEN}`,
             },
           }
         );

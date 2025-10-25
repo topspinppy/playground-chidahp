@@ -1,7 +1,7 @@
 // WordPress API configuration and utilities
 
 const WORDPRESS_API_URL = 'https://api.playground.chidahp.com/wp-json/chidahp-affiliate/v1/register';
-const WORDPRESS_API_TOKEN = '5ffe5730-25e6-40d3-903e-0dbba87d28a0';
+const WORDPRESS_API_TOKEN = process.env.WORDPRESS_API_TOKEN;
 
 export interface WordPressUserData {
   name: string;

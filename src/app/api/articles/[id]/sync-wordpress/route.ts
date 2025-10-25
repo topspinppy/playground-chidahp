@@ -68,7 +68,7 @@ async function syncToWordPress(articleData: { id: string; title: string; content
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        'Authorization': `Bearer ${process.env.WORDPRESS_API_TOKEN || 'SKKouBZJHhWOwd4HWbybBv3xZBne9yjk'}`
+        'Authorization': `Bearer ${process.env.WORDPRESS_API_TOKEN}`
       },
       body: JSON.stringify({
         user_id: parseInt(process.env.WORDPRESS_DEFAULT_USER_ID || '16'), // Default user_id for Chulo Reviewer
@@ -87,9 +87,12 @@ async function syncToWordPress(articleData: { id: string; title: string; content
 
     const wordpressPost = await response.json();
     
+    console.log('WordPress API success response:', wordpressPost);
+
+  
     return {
       success: true,
-      wordpress_id: wordpressPost.id || wordpressPost.ID,
+      wordpress_id: wordpressPost.post_id,
       wordpress_data: wordpressPost
     };
   } catch (error) {
