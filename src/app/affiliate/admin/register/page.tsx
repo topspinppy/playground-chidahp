@@ -71,7 +71,7 @@ export default function AdminRegisterPage() {
       
       // Redirect to login after 2 seconds
       setTimeout(() => {
-        router.push('/admin/login');
+        router.push('/affiliate/admin/login');
       }, 2000);
 
     } catch (err) {
@@ -82,19 +82,19 @@ export default function AdminRegisterPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-yellow-50 to-yellow-100 flex items-center justify-center p-4">
       <div className="max-w-md w-full">
         {/* Logo/Brand */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-indigo-600 rounded-full mb-4">
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-yellow-500 rounded-full mb-4 shadow-lg">
             <UserPlus className="w-8 h-8 text-white" />
           </div>
           <h1 className="text-2xl font-bold text-gray-900">สมัครสมาชิก Admin</h1>
-          <p className="text-gray-600 mt-2">ระบบจัดการบทความ</p>
+          <p className="text-gray-700 mt-2">ระบบจัดการบทความ</p>
         </div>
 
         {/* Register Form */}
-        <div className="bg-white rounded-lg shadow-xl p-8">
+        <div className="bg-white rounded-lg shadow-xl p-8 border border-yellow-200">
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Name Field */}
             <div>
@@ -103,7 +103,7 @@ export default function AdminRegisterPage() {
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <User className="h-5 w-5 text-gray-400" />
+                  <User className="h-5 w-5 text-yellow-500" />
                 </div>
                 <input
                   id="name"
@@ -112,7 +112,7 @@ export default function AdminRegisterPage() {
                   required
                   value={formData.name}
                   onChange={handleInputChange}
-                  className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors"
+                  className="block w-full pl-10 pr-3 py-3 border border-yellow-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-colors"
                   placeholder="กรอกชื่อ-นามสกุลของคุณ"
                 />
               </div>
@@ -125,7 +125,7 @@ export default function AdminRegisterPage() {
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Mail className="h-5 w-5 text-gray-400" />
+                  <Mail className="h-5 w-5 text-yellow-500" />
                 </div>
                 <input
                   id="email"
@@ -134,7 +134,7 @@ export default function AdminRegisterPage() {
                   required
                   value={formData.email}
                   onChange={handleInputChange}
-                  className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors"
+                  className="block w-full pl-10 pr-3 py-3 border border-yellow-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-colors"
                   placeholder="กรอกอีเมล์ของคุณ"
                 />
               </div>
@@ -147,7 +147,7 @@ export default function AdminRegisterPage() {
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Lock className="h-5 w-5 text-gray-400" />
+                  <Lock className="h-5 w-5 text-yellow-500" />
                 </div>
                 <input
                   id="password"
@@ -156,7 +156,7 @@ export default function AdminRegisterPage() {
                   required
                   value={formData.password}
                   onChange={handleInputChange}
-                  className="block w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors"
+                  className="block w-full pl-10 pr-12 py-3 border border-yellow-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-colors"
                   placeholder="กรอกรหัสผ่านของคุณ"
                 />
                 <button
@@ -165,9 +165,9 @@ export default function AdminRegisterPage() {
                   onClick={() => setShowPassword(!showPassword)}
                 >
                   {showPassword ? (
-                    <EyeOff className="h-5 w-5 text-gray-400 hover:text-gray-600" />
+                    <EyeOff className="h-5 w-5 text-yellow-500 hover:text-yellow-600" />
                   ) : (
-                    <Eye className="h-5 w-5 text-gray-400 hover:text-gray-600" />
+                    <Eye className="h-5 w-5 text-yellow-500 hover:text-yellow-600" />
                   )}
                 </button>
               </div>
@@ -180,7 +180,7 @@ export default function AdminRegisterPage() {
               </label>
               <div className="relative">
                 <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                  <Lock className="h-5 w-5 text-gray-400" />
+                  <Lock className="h-5 w-5 text-yellow-500" />
                 </div>
                 <input
                   id="confirmPassword"
@@ -189,7 +189,7 @@ export default function AdminRegisterPage() {
                   required
                   value={formData.confirmPassword}
                   onChange={handleInputChange}
-                  className="block w-full pl-10 pr-12 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 transition-colors"
+                  className="block w-full pl-10 pr-12 py-3 border border-yellow-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 transition-colors"
                   placeholder="ยืนยันรหัสผ่านของคุณ"
                 />
                 <button
@@ -198,9 +198,9 @@ export default function AdminRegisterPage() {
                   onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                 >
                   {showConfirmPassword ? (
-                    <EyeOff className="h-5 w-5 text-gray-400 hover:text-gray-600" />
+                    <EyeOff className="h-5 w-5 text-yellow-500 hover:text-yellow-600" />
                   ) : (
-                    <Eye className="h-5 w-5 text-gray-400 hover:text-gray-600" />
+                    <Eye className="h-5 w-5 text-yellow-500 hover:text-yellow-600" />
                   )}
                 </button>
               </div>
@@ -224,7 +224,7 @@ export default function AdminRegisterPage() {
             <button
               type="submit"
               disabled={isLoading}
-              className="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              className="w-full flex justify-center py-3 px-4 border border-transparent rounded-lg shadow-sm text-sm font-medium text-white bg-yellow-500 hover:bg-yellow-600 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
             >
               {isLoading ? (
                 <div className="flex items-center">
@@ -241,7 +241,7 @@ export default function AdminRegisterPage() {
           <div className="mt-6 text-center">
             <p className="text-sm text-gray-600">
               มีบัญชีแล้ว?{' '}
-              <a href="/admin/login" className="font-medium text-indigo-600 hover:text-indigo-500">
+              <a href="/affiliate/admin/login" className="font-medium text-yellow-600 hover:text-yellow-700">
                 เข้าสู่ระบบ
               </a>
             </p>
@@ -250,8 +250,8 @@ export default function AdminRegisterPage() {
 
         {/* Footer */}
         <div className="text-center mt-8">
-          <p className="text-sm text-gray-500">
-            © 2024 Chidahp Admin System
+          <p className="text-sm text-gray-600">
+            © {new Date().getFullYear()} Chidahp Admin System
           </p>
         </div>
       </div>

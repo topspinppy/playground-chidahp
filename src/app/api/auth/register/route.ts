@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import UserModel from '@/models/User';
+import { syncUserToWordPress } from '@/lib/wordpress';
 
 export async function POST(request: NextRequest) {
   try {
@@ -29,12 +30,31 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Create user with Supabase
+    // Sync user to WordPress FIRST (before creating in Supabase)
+    let wordpressResponse;
+    try {
+      wordpressResponse = await syncUserToWordPress({
+        name,
+        email,
+        password, // Use original password for WordPress (not hashed)
+        role
+      });
+      console.log(`User synced to WordPress successfully with ID: ${wordpressResponse.user_id}`);
+    } catch (wordpressError) {
+      console.error('Failed to sync user to WordPress:', wordpressError);
+      return NextResponse.json(
+        { error: 'ไม่สามารถเชื่อมต่อกับ Backoffice ได้ กรุณาลองใหม่อีกครั้ง' },
+        { status: 500 }
+      );
+    }
+
+    // Only create user in Supabase if WordPress sync was successful
     const newUser = await UserModel.create({
       name,
       email,
       password, // จะถูก hash อัตโนมัติใน create method
       role,
+      wordpress_user_id: wordpressResponse.user_id || null, // Store WordPress user ID directly
       profile: profile || {
         bio: '',
         social_media: {},
@@ -70,6 +90,14 @@ export async function POST(request: NextRequest) {
         return NextResponse.json(
           { error: error.message },
           { status: 400 }
+        );
+      }
+
+      // Check for WordPress API errors
+      if (error.message.includes('WordPress API error')) {
+        return NextResponse.json(
+          { error: 'ไม่สามารถเชื่อมต่อกับ WordPress ได้ กรุณาลองใหม่อีกครั้ง' },
+          { status: 500 }
         );
       }
     }

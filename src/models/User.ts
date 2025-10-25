@@ -37,7 +37,7 @@ export class UserModel {
   static async findByEmail(email: string, includePassword = false): Promise<IUser | null> {
     const { data, error } = await supabaseAdmin
       .from('users')
-      .select(includePassword ? '*' : 'id, name, email, role, status, last_login, profile, created_at, updated_at')
+      .select(includePassword ? '*' : 'id, name, email, role, status, last_login, wordpress_user_id, profile, created_at, updated_at')
       .eq('email', email.toLowerCase())
       .single();
 
@@ -59,7 +59,7 @@ export class UserModel {
   static async findById(id: string): Promise<IUser | null> {
     const { data, error } = await supabaseAdmin
       .from('users')
-      .select('id, name, email, role, status, last_login, profile, created_at, updated_at')
+      .select('id, name, email, role, status, last_login, wordpress_user_id, profile, created_at, updated_at')
       .eq('id', id)
       .single();
 
@@ -94,6 +94,7 @@ export class UserModel {
 
     return !!data;
   }
+
 
   // Map Supabase user to IUser with methods
   private static mapToIUser(user: User | Partial<User>): IUser {

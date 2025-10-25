@@ -11,9 +11,9 @@ export function middleware(request: NextRequest) {
   response.headers.set('x-pathname', request.nextUrl.pathname)
   
   // Protect admin routes
-  if (request.nextUrl.pathname.startsWith('/admin')) {
-    // Allow login page
-    if (request.nextUrl.pathname === '/admin/login') {
+  if (request.nextUrl.pathname.startsWith('/affiliate/admin')) {
+    // Allow login and register pages
+    if (request.nextUrl.pathname === '/affiliate/admin/login' || request.nextUrl.pathname === '/affiliate/admin/register') {
       return response
     }
     
@@ -21,7 +21,7 @@ export function middleware(request: NextRequest) {
     const token = request.cookies.get('auth-token')?.value
     
     if (!token) {
-      return NextResponse.redirect(new URL('/admin/login', request.url))
+      return NextResponse.redirect(new URL('/affiliate/admin/login', request.url))
     }
     
     try {
@@ -29,7 +29,7 @@ export function middleware(request: NextRequest) {
       jwt.verify(token, JWT_SECRET)
     } catch (error) {
       // Token is invalid, redirect to login
-      return NextResponse.redirect(new URL('/admin/login', request.url))
+      return NextResponse.redirect(new URL('/affiliate/admin/login', request.url))
     }
   }
   

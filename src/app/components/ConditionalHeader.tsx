@@ -10,7 +10,7 @@ interface ConditionalHeaderProps {
 
 export default function ConditionalHeader({ categories }: ConditionalHeaderProps) {
   const pathname = usePathname()
-  const shouldHideHeader = pathname === '/southdakota' || pathname === '/tellme' || pathname === '/countdown'
+  const shouldHideHeader = pathname === '/southdakota' || pathname === '/tellme' || pathname === '/countdown' || pathname.includes('/admin/')
   
   if (shouldHideHeader) {
     return null

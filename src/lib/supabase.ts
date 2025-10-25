@@ -28,6 +28,7 @@ export interface Database {
           role: 'admin' | 'writer' | 'reviewer';
           status: 'active' | 'inactive' | 'suspended';
           last_login: string | null;
+          wordpress_user_id: number | null;
           profile: {
             bio?: string;
             social_media?: {
@@ -50,6 +51,7 @@ export interface Database {
           role?: 'admin' | 'writer' | 'reviewer';
           status?: 'active' | 'inactive' | 'suspended';
           last_login?: string | null;
+          wordpress_user_id?: number | null;
           profile?: {
             bio?: string;
             social_media?: {
@@ -72,6 +74,7 @@ export interface Database {
           role?: 'admin' | 'writer' | 'reviewer';
           status?: 'active' | 'inactive' | 'suspended';
           last_login?: string | null;
+          wordpress_user_id?: number | null;
           profile?: {
             bio?: string;
             social_media?: {
