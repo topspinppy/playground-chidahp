@@ -123,6 +123,45 @@ export default function AdminDashboard() {
           </nav>
         </div>
 
+        {/* Quick Actions */}
+        <div className="mb-8">
+          <h3 className="text-lg font-semibold text-gray-900 mb-4">การจัดการ</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <button
+              onClick={() => router.push('/affiliate/admin/articles')}
+              className="p-6 bg-white rounded-lg shadow border border-yellow-200 hover:shadow-md transition-shadow text-left"
+            >
+              <div className="flex items-center">
+                <FileText className="h-8 w-8 text-yellow-500 mr-4" />
+                <div>
+                  <h4 className="font-semibold text-gray-900">จัดการบทความ</h4>
+                  <p className="text-sm text-gray-600">สร้าง แก้ไข และลบบทความ</p>
+                </div>
+              </div>
+            </button>
+            
+            <div className="p-6 bg-white rounded-lg shadow border border-yellow-200 text-left opacity-50">
+              <div className="flex items-center">
+                <Users className="h-8 w-8 text-gray-400 mr-4" />
+                <div>
+                  <h4 className="font-semibold text-gray-900">จัดการผู้ใช้</h4>
+                  <p className="text-sm text-gray-600">จัดการสมาชิกและสิทธิ์</p>
+                </div>
+              </div>
+            </div>
+            
+            <div className="p-6 bg-white rounded-lg shadow border border-yellow-200 text-left opacity-50">
+              <div className="flex items-center">
+                <Calendar className="h-8 w-8 text-gray-400 mr-4" />
+                <div>
+                  <h4 className="font-semibold text-gray-900">รายงาน</h4>
+                  <p className="text-sm text-gray-600">ดูสถิติและรายงาน</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
         {/* Content */}
         {activeTab === 'overview' && (
           <div>
