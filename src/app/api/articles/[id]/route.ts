@@ -22,9 +22,9 @@ export async function GET(
     }
 
     return NextResponse.json({ article });
-  } catch (error) {
-    console.error('Error in GET /api/articles/[id]:', error);
-    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  } catch (error: any) {
+    return NextResponse.json({ error }, { status: 500 });
   }
 }
 
@@ -36,7 +36,15 @@ export async function PUT(
   try {
     const { id } = await params;
     const body = await request.json();
-    const { title, content, excerpt, tags, status } = body;
+    const { title, slug, content, excerpt, tags, status } = body;
+
+    // Validate slug format if provided
+    if (slug && !/^[a-z0-9-]+$/.test(slug)) {
+      return NextResponse.json(
+        { error: 'Slug must contain only lowercase English letters, numbers, and hyphens' },
+        { status: 400 }
+      );
+    }
 
     const supabase = createSupabaseClient();
 
@@ -44,6 +52,7 @@ export async function PUT(
       .from('articles')
       .update({
         title,
+        slug,
         content,
         excerpt,
         category: 'chulo-reviewer', // Force category to chulo-reviewer
@@ -101,10 +110,28 @@ export async function DELETE(
       return NextResponse.json({ error: 'Failed to delete article' }, { status: 500 });
     }
 
-    // TODO: Delete from WordPress if synced
+    // Delete from WordPress if synced
     if (article.wordpress_synced && article.wordpress_id) {
-      // This would call WordPress API to delete the post
-      console.log('Should delete from WordPress:', article.wordpress_id);
+      try {
+        const wordpressResponse = await fetch(
+          `https://api.playground.chidahp.com/wp-json/chidahp-affiliate/v1/delete-post/${article.wordpress_id}`,
+          {
+            method: 'DELETE',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer 5ffe5730-25e6-40d3-903e-0dbba87d28a0',
+            },
+          }
+        );
+
+        if (!wordpressResponse.ok) {
+          console.error('Failed to delete from WordPress:', wordpressResponse.status, wordpressResponse.statusText);
+        } else {
+          console.log('Successfully deleted from WordPress:', article.wordpress_id);
+        }
+      } catch (error) {
+        console.error('Error deleting from WordPress:', error);
+      }
     }
 
     return NextResponse.json({ message: 'Article deleted successfully' });

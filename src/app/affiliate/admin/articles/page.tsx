@@ -13,10 +13,12 @@ import {
   Tag,
   ArrowLeft
 } from 'lucide-react';
+import { useAuth } from '../hook/useAuth';
 
 interface Article {
   id: string;
   title: string;
+  slug: string;
   content: string;
   excerpt: string;
   status: 'draft' | 'published' | 'archived';
@@ -42,6 +44,7 @@ interface CreateArticleModalProps {
 function CreateArticleModal({ isOpen, onClose, onSave, editingArticle }: CreateArticleModalProps) {
   const [formData, setFormData] = useState({
     title: '',
+    slug: '',
     content: '',
     excerpt: '',
     category: '',
@@ -54,6 +57,7 @@ function CreateArticleModal({ isOpen, onClose, onSave, editingArticle }: CreateA
     if (editingArticle) {
       setFormData({
         title: editingArticle.title,
+        slug: editingArticle.slug || '',
         content: editingArticle.content,
         excerpt: editingArticle.excerpt,
         category: editingArticle.category,
@@ -63,6 +67,7 @@ function CreateArticleModal({ isOpen, onClose, onSave, editingArticle }: CreateA
     } else {
       setFormData({
         title: '',
+        slug: '',
         content: '',
         excerpt: '',
         category: '',
@@ -72,11 +77,42 @@ function CreateArticleModal({ isOpen, onClose, onSave, editingArticle }: CreateA
     }
   }, [editingArticle, isOpen]);
 
+  // Function to generate slug from title
+  const generateSlug = (title: string): string => {
+    return title
+      .toLowerCase()
+      .replace(/[^a-z0-9\s-]/g, '') // Remove special characters except spaces and hyphens
+      .replace(/\s+/g, '-') // Replace spaces with hyphens
+      .replace(/-+/g, '-') // Replace multiple hyphens with single hyphen
+      .trim();
+  };
+
+  // Function to validate English-only slug
+  const validateSlug = (slug: string): boolean => {
+    return /^[a-z0-9-]+$/.test(slug);
+  };
+
+  // Auto-generate slug when title changes (only for new articles)
+  const handleTitleChange = (title: string) => {
+    setFormData(prev => ({
+      ...prev,
+      title,
+      slug: editingArticle ? prev.slug : generateSlug(title) // Only auto-generate for new articles
+    }));
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
 
     try {
+      // Validate slug
+      if (!validateSlug(formData.slug)) {
+        alert('Slug ต้องเป็นภาษาอังกฤษเท่านั้น (a-z, 0-9, -)');
+        setIsLoading(false);
+        return;
+      }
+
       const articleData = {
         ...formData,
         category: 'chulo-reviewer', // Force category to chulo-reviewer
@@ -117,11 +153,41 @@ function CreateArticleModal({ isOpen, onClose, onSave, editingArticle }: CreateA
             <input
               type="text"
               value={formData.title}
-              onChange={(e) => setFormData({ ...formData, title: e.target.value })}
+              onChange={(e) => handleTitleChange(e.target.value)}
               className="w-full px-4 py-3 border border-yellow-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500"
               placeholder="กรอกชื่อบทความ"
               required
             />
+          </div>
+
+          {/* Slug */}
+          <div>
+            <label className="block text-sm font-medium text-gray-700 mb-2">
+              Slug (URL) *
+            </label>
+            <input
+              type="text"
+              value={formData.slug}
+              onChange={(e) => {
+                const value = e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, '');
+                setFormData({ ...formData, slug: value });
+              }}
+              className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 ${
+                formData.slug && !validateSlug(formData.slug) 
+                  ? 'border-red-300 bg-red-50' 
+                  : 'border-yellow-300'
+              }`}
+              placeholder="article-slug-url"
+              required
+            />
+            <p className="text-sm text-gray-500 mt-1">
+              ใช้สำหรับ URL ของบทความ ต้องเป็นภาษาอังกฤษเท่านั้น (a-z, 0-9, -)
+            </p>
+            {formData.slug && !validateSlug(formData.slug) && (
+              <p className="text-sm text-red-600 mt-1">
+                Slug ต้องเป็นภาษาอังกฤษเท่านั้น (a-z, 0-9, -)
+              </p>
+            )}
           </div>
 
           {/* Category */}
@@ -226,6 +292,8 @@ export default function ArticlesPage() {
   const [editingArticle, setEditingArticle] = useState<Article | null>(null);
   const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null);
   const router = useRouter();
+  const { user } = useAuth();
+
 
   // Load articles from Supabase
   useEffect(() => {
@@ -258,7 +326,7 @@ export default function ArticlesPage() {
         },
         body: JSON.stringify({
           ...articleData,
-          user_id: 16, // WordPress user_id for API call (not stored in Supabase)
+          user_id: user?.wordpress_user_id, // WordPress user_id for API call (not stored in Supabase)
         }),
       });
 

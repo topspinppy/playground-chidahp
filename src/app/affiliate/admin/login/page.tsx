@@ -2,7 +2,8 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { Eye, EyeOff, Lock, Mail, User } from 'lucide-react';
+import { Eye, EyeOff, Lock, Mail } from 'lucide-react';
+import { useAuth } from '../hook/useAuth';
 
 export default function AdminLoginPage() {
   const [formData, setFormData] = useState({
@@ -10,9 +11,9 @@ export default function AdminLoginPage() {
     password: ''
   });
   const [showPassword, setShowPassword] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const router = useRouter();
+  const { login, isLoading, isAuthenticated } = useAuth();
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -26,43 +27,48 @@ export default function AdminLoginPage() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setIsLoading(true);
     setError('');
 
-    try {
-      const response = await fetch('/api/auth/login', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-
-      const data = await response.json();
-
-      if (!response.ok) {
-        throw new Error(data.error || 'เกิดข้อผิดพลาดในการเข้าสู่ระบบ');
-      }
-
+    const result = await login(formData.email, formData.password);
+    
+    if (result.success) {
       // Redirect to admin dashboard
       router.push('/affiliate/admin/dashboard');
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'เกิดข้อผิดพลาดในการเข้าสู่ระบบ');
-    } finally {
-      setIsLoading(false);
+    } else {
+      setError(result.error || 'เกิดข้อผิดพลาดในการเข้าสู่ระบบ');
     }
   };
+
+  // Show loading while checking authentication
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-yellow-50 to-yellow-100 flex items-center justify-center p-4">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-yellow-500 mx-auto mb-4"></div>
+          <p className="text-gray-600">กำลังตรวจสอบการเข้าสู่ระบบ...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // If already authenticated, don't show login form (will redirect via useEffect)
+  if (isAuthenticated) {
+    return (
+      <div className="min-h-screen bg-gradient-to-br from-yellow-50 to-yellow-100 flex items-center justify-center p-4">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-yellow-500 mx-auto mb-4"></div>
+          <p className="text-gray-600">กำลังเปลี่ยนเส้นทาง...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-yellow-50 to-yellow-100 flex items-center justify-center p-4">
       <div className="max-w-md w-full">
         {/* Logo/Brand */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-yellow-500 rounded-full mb-4 shadow-lg">
-            <User className="w-8 h-8 text-white" />
-          </div>
-          <h1 className="text-2xl font-bold text-gray-900">เข้าสู่ระบบ Chidahp Admin Affiliate</h1>
-          <p className="text-gray-700 mt-2">ระบบจัดการสมาชิก Affiliate</p>
+          <h1 className="text-2xl font-bold text-gray-900">เข้าสู่ระบบ Chidahp Book Seller Affiliate</h1>
         </div>
 
         {/* Login Form */}
@@ -161,7 +167,7 @@ export default function AdminLoginPage() {
         {/* Footer */}
         <div className="text-center mt-8">
           <p className="text-sm text-gray-600">
-            © {new Date().getFullYear()} Chidahp Admin Affiliate System
+            © {new Date().getFullYear()} สำนักพิมพ์ชี้ดาบ
           </p>
         </div>
       </div>

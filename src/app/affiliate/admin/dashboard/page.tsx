@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { 
   FileText, 
@@ -9,49 +9,15 @@ import {
   Calendar,
   Users
 } from 'lucide-react';
-
-interface User {
-  id: string;
-  name: string;
-  email: string;
-  role: 'admin' | 'writer' | 'reviewer';
-  status: 'active' | 'inactive' | 'suspended';
-}
+import { useAuth } from '../hook/useAuth';
 
 export default function AdminDashboard() {
-  const [user, setUser] = useState<User | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<'overview' | 'settings'>('overview');
   const router = useRouter();
-
-  useEffect(() => {
-    checkAuth();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
-
-  const checkAuth = async () => {
-    try {
-      const response = await fetch('/api/auth/me');
-      if (!response.ok) {
-        router.push('/affiliate/admin/login');
-        return;
-      }
-      const data = await response.json();
-      setUser(data.user);
-    } catch (error) {
-      console.error('Auth check failed:', error);
-      router.push('/affiliate/admin/login');
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  const { user, isLoading, logout } = useAuth();
 
   const handleLogout = async () => {
-    try {
-      await fetch('/api/auth/logout', { method: 'POST' });
-      router.push('/affiliate/admin/login');
-    } catch (error) {
-      console.error('Logout failed:', error);
-    }
+    await logout();
   };
 
   if (isLoading) {

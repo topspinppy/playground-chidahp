@@ -42,8 +42,21 @@ export async function POST(request: NextRequest) {
       console.log(`User synced to WordPress successfully with ID: ${wordpressResponse.user_id}`);
     } catch (wordpressError) {
       console.error('Failed to sync user to WordPress:', wordpressError);
+      
+      // Provide more specific error messages based on the error
+      let errorMessage = 'ไม่สามารถเชื่อมต่อกับ Backoffice ได้ กรุณาลองใหม่อีกครั้ง';
+      if (wordpressError instanceof Error) {
+        if (wordpressError.message.includes('400')) {
+          errorMessage = 'ข้อมูลผู้ใช้ไม่ถูกต้อง กรุณาตรวจสอบข้อมูลอีกครั้ง';
+        } else if (wordpressError.message.includes('409')) {
+          errorMessage = 'อีเมล์นี้ถูกใช้งานในระบบ Backoffice แล้ว';
+        } else if (wordpressError.message.includes('500')) {
+          errorMessage = 'เกิดข้อผิดพลาดในระบบ Backoffice กรุณาลองใหม่อีกครั้ง';
+        }
+      }
+      
       return NextResponse.json(
-        { error: 'ไม่สามารถเชื่อมต่อกับ Backoffice ได้ กรุณาลองใหม่อีกครั้ง' },
+        { error: errorMessage },
         { status: 500 }
       );
     }

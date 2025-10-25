@@ -27,12 +27,20 @@ export async function GET() {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { title, content, excerpt, tags, status, user_id } = body;
+    const { title, slug, content, excerpt, tags, status, user_id } = body;
 
     // Validate required fields
-    if (!title || !content) {
+    if (!title || !content || !slug) {
       return NextResponse.json(
-        { error: 'Missing required fields: title and content are required' },
+        { error: 'Missing required fields: title, slug, and content are required' },
+        { status: 400 }
+      );
+    }
+
+    // Validate slug format (English only)
+    if (!/^[a-z0-9-]+$/.test(slug)) {
+      return NextResponse.json(
+        { error: 'Slug must contain only lowercase English letters, numbers, and hyphens' },
         { status: 400 }
       );
     }
@@ -62,6 +70,7 @@ export async function POST(request: NextRequest) {
       .from('articles')
       .insert({
         title,
+        slug,
         content,
         excerpt: excerpt || '',
         category: 'chulo-reviewer', // Force category to chulo-reviewer

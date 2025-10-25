@@ -1,7 +1,7 @@
 // WordPress API configuration and utilities
 
 const WORDPRESS_API_URL = 'https://api.playground.chidahp.com/wp-json/chidahp-affiliate/v1/register';
-const WORDPRESS_API_TOKEN = 'SKKouBZJHhWOwd4HWbybBv3xZBne9yjk';
+const WORDPRESS_API_TOKEN = '5ffe5730-25e6-40d3-903e-0dbba87d28a0';
 
 export interface WordPressUserData {
   name: string;
@@ -27,6 +27,8 @@ export interface WordPressResponse {
  */
 export async function syncUserToWordPress(userData: WordPressUserData): Promise<WordPressResponse> {
   try {
+    console.log('Syncing user to WordPress:', { email: userData.email, role: userData.role });
+    
     const response = await fetch(WORDPRESS_API_URL, {
       method: 'POST',
       headers: {
@@ -34,21 +36,26 @@ export async function syncUserToWordPress(userData: WordPressUserData): Promise<
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        username: userData.email, // Convert to lowercase and remove spaces
+        username: userData.email, // Use email as username
         email: userData.email,
         password: userData.password,
-        role: userData.role === 'writer' ? 'contributor' : userData.role,
-        first_name: userData.name.split(' ')[0],
-        last_name: userData.name.split(' ')[1]
+        role: mapRoleToWordPress(userData.role), // Use the mapping function
+        first_name: userData.name.split(' ')[0] || userData.name,
+        last_name: userData.name.split(' ').slice(1).join(' ') || ''
       }),
     });
 
+    console.log('WordPress API response status:', response.status);
+
     if (!response.ok) {
       const errorData = await response.json().catch(() => ({}));
+      console.error('WordPress API error response:', errorData);
       throw new Error(`WordPress API error: ${response.status} - ${errorData.message || response.statusText}`);
     }
 
     const result = await response.json();
+    console.log('WordPress API success response:', result);
+    
     return {
       success: true,
       ...result
