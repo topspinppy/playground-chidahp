@@ -7,7 +7,6 @@ import {
   LogOut, 
   User,
   Calendar,
-  Users
 } from 'lucide-react';
 import { useAuth } from '../hook/useAuth';
 

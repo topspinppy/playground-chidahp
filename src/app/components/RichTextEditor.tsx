@@ -40,7 +40,6 @@ interface RichTextEditorProps {
   onChange: (content: string) => void;
   placeholder?: string;
   className?: string;
-  authToken?: string;
 }
 
 export default function RichTextEditor({ 
@@ -48,7 +47,6 @@ export default function RichTextEditor({
   onChange, 
   placeholder = "เขียนเนื้อหาบทความที่นี่...",
   className = "",
-  authToken
 }: RichTextEditorProps) {
   const [showLinkDialog, setShowLinkDialog] = useState(false);
   const [linkUrl, setLinkUrl] = useState('');
