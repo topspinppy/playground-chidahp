@@ -229,7 +229,6 @@ function CreateArticleModal({ isOpen, onClose, onSave, editingArticle }: CreateA
               onChange={(content: string) => setFormData({ ...formData, content })}
               placeholder="เขียนเนื้อหาบทความที่นี่..."
               className="w-full"
-              authToken={process.env.WORDPRESS_API_TOKEN}
             />
           </div>
 
