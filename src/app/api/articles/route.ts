@@ -45,23 +45,19 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Step 1: Create article in WordPress first
-    const wordpressResponse = await createWordPressPost({
-      user_id: user_id || parseInt(process.env.WORDPRESS_DEFAULT_USER_ID || '16'), // Default user_id or use provided one
-      title,
-      content,
-      excerpt: excerpt || '',
-      categories: [parseInt(process.env.WORDPRESS_DEFAULT_CATEGORY_ID || '107')], // Always use category 107 (Chulo Reviewer)
-      tags: tags || []
-    });
+    // Step 1: Mock WordPress creation (for development/testing)
+    const wordpressResponse = {
+      success: true,
+      wordpress_id: Math.floor(Math.random() * 10000) + 1000, // Mock WordPress ID
+      wordpress_data: {
+        message: 'Article created successfully (mocked)',
+        data: {
+          post_id: Math.floor(Math.random() * 10000) + 1000
+        }
+      }
+    };
 
-    if (!wordpressResponse.success) {
-      console.error('WordPress creation failed:', wordpressResponse.error);
-      return NextResponse.json(
-        { error: `WordPress creation failed: ${wordpressResponse.error}` },
-        { status: 500 }
-      );
-    }
+    console.log('Mock WordPress creation:', wordpressResponse);
 
     // Step 2: Only if WordPress creation succeeds, save to Supabase
     const supabase = createSupabaseClient();
@@ -74,7 +70,7 @@ export async function POST(request: NextRequest) {
         excerpt: excerpt || '',
         category: 'chulo-reviewer', // Force category to chulo-reviewer
         tags: tags || [],
-        status: status || 'draft',
+        status: 'draft', // Default status since we removed status selection
         author_id: null, // Set to null since we don't have UUID for WordPress user_id
         author_name: 'Chulo Reviewer',
         wordpress_id: wordpressResponse.wordpress_id,

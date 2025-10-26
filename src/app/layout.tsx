@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import ConditionalHeader from "./components/ConditionalHeader";
 import { getAllCategoriesWithChildren } from "@/lib/api";
-import Footer from "./components/footer";
+import ConditionalFooter from "./components/ConditionalFooter";
 import { Noto_Sans_Thai, Poppins } from "next/font/google";
 import Head from "./Header";
 import CookieConcent from "./components/CookieConsent";
@@ -122,7 +122,7 @@ export default async function RootLayout({
       <body className={`${noto_sans_thai.variable} ${poppins.variable} antialiased`}>
         <ConditionalHeader categories={categories} />
         {children}
-        <Footer categories={categories} />
+        <ConditionalFooter categories={categories} />
         <CookieConcent />
       </body>
     </html>

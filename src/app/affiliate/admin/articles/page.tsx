@@ -49,8 +49,7 @@ function CreateArticleModal({ isOpen, onClose, onSave, editingArticle }: CreateA
     content: '',
     excerpt: '',
     category: '',
-    tags: '',
-    status: 'draft' as 'draft' | 'published' | 'archived'
+    tags: ''
   });
   const [isLoading, setIsLoading] = useState(false);
 
@@ -62,8 +61,7 @@ function CreateArticleModal({ isOpen, onClose, onSave, editingArticle }: CreateA
         content: editingArticle.content,
         excerpt: editingArticle.excerpt,
         category: editingArticle.category,
-        tags: editingArticle.tags.join(', '),
-        status: editingArticle.status
+        tags: editingArticle.tags.join(', ')
       });
     } else {
       setFormData({
@@ -72,8 +70,7 @@ function CreateArticleModal({ isOpen, onClose, onSave, editingArticle }: CreateA
         content: '',
         excerpt: '',
         category: '',
-        tags: '',
-        status: 'draft'
+        tags: ''
       });
     }
   }, [editingArticle, isOpen]);
@@ -82,9 +79,9 @@ function CreateArticleModal({ isOpen, onClose, onSave, editingArticle }: CreateA
   const generateSlug = (title: string): string => {
     return title
       .toLowerCase()
-      .replace(/[^a-z0-9\s-]/g, '') // Remove special characters except spaces and hyphens
-      .replace(/\s+/g, '-') // Replace spaces with hyphens
-      .replace(/-+/g, '-') // Replace multiple hyphens with single hyphen
+      .replaceAll(/[^a-z0-9\s-]/g, '') // Remove special characters except spaces and hyphens
+      .replaceAll(/\s+/g, '-') // Replace spaces with hyphens
+      .replaceAll(/-+/g, '-') // Replace multiple hyphens with single hyphen
       .trim();
   };
 
@@ -137,8 +134,8 @@ function CreateArticleModal({ isOpen, onClose, onSave, editingArticle }: CreateA
 
   if (!isOpen) return null;
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-      <div className="bg-white rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+    <div className="fixed inset-0 bg-white bg-opacity-30 backdrop-blur-md flex items-center justify-center p-4 z-50">
+      <div className="bg-white rounded-2xl shadow-2xl max-w-4xl w-full max-h-[90vh] overflow-y-auto border border-gray-100">
         <div className="p-6 border-b border-yellow-200">
           <h2 className="text-2xl font-bold text-gray-900">
             {editingArticle ? 'แก้ไขบทความ' : 'สร้างบทความใหม่'}
@@ -170,7 +167,7 @@ function CreateArticleModal({ isOpen, onClose, onSave, editingArticle }: CreateA
               type="text"
               value={formData.slug}
               onChange={(e) => {
-                const value = e.target.value.toLowerCase().replace(/[^a-z0-9-]/g, '');
+                const value = e.target.value.toLowerCase().replaceAll(/[^a-z0-9-]/g, '');
                 setFormData({ ...formData, slug: value });
               }}
               className={`w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 ${
@@ -246,35 +243,20 @@ function CreateArticleModal({ isOpen, onClose, onSave, editingArticle }: CreateA
             />
           </div>
 
-          {/* Status */}
-          <div>
-            <label className="block text-sm font-medium text-gray-700 mb-2">
-              สถานะ
-            </label>
-            <select
-              value={formData.status}
-              onChange={(e) => setFormData({ ...formData, status: e.target.value as 'draft' | 'published' | 'archived' })}
-              className="w-full px-4 py-3 border border-yellow-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500"
-            >
-              <option value="draft">ร่าง</option>
-              <option value="published">เผยแพร่</option>
-              <option value="archived">เก็บถาวร</option>
-            </select>
-          </div>
 
           {/* Actions */}
           <div className="flex justify-end space-x-4 pt-6 border-t border-yellow-200">
             <button
               type="button"
               onClick={onClose}
-              className="px-6 py-3 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
+              className="px-6 py-3 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors cursor-pointer"
             >
               ยกเลิก
             </button>
             <button
               type="submit"
               disabled={isLoading}
-              className="px-6 py-3 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+              className="px-6 py-3 bg-yellow-500 text-white rounded-lg hover:bg-yellow-600 focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed transition-colors cursor-pointer"
             >
               {isLoading ? 'กำลังบันทึก...' : (editingArticle ? 'อัปเดต' : 'สร้างบทความ')}
             </button>
@@ -433,9 +415,8 @@ export default function ArticlesPage() {
 
   const deleteFromWordPress = async (wordpressId: number): Promise<void> => {
     try {
-      // Mock WordPress delete - replace with real API call when WordPress is configured
-      console.log('Deleting from WordPress:', wordpressId);
-      // TODO: Implement real WordPress delete API call
+      // Mock WordPress delete - WordPress sync is currently mocked for development
+      console.log('Mock WordPress delete:', wordpressId);
       // await fetch(`${process.env.WORDPRESS_URL}/wp-json/wp/v2/posts/${wordpressId}`, {
       //   method: 'DELETE',
       //   headers: { 'Authorization': `Bearer ${process.env.WORDPRESS_TOKEN}` }
@@ -495,7 +476,7 @@ export default function ArticlesPage() {
             <div className="flex items-center">
               <button
                 onClick={() => router.push('/affiliate/admin/dashboard')}
-                className="mr-4 p-2 text-yellow-600 hover:text-yellow-700 transition-colors"
+                className="mr-4 p-2 text-yellow-600 hover:text-yellow-700 transition-colors cursor-pointer"
               >
                 <ArrowLeft className="h-5 w-5" />
               </button>
@@ -504,7 +485,7 @@ export default function ArticlesPage() {
             </div>
             <button
               onClick={() => setIsModalOpen(true)}
-              className="flex items-center space-x-2 bg-yellow-500 text-white px-4 py-2 rounded-lg hover:bg-yellow-600 transition-colors"
+              className="flex items-center space-x-2 bg-yellow-500 text-white px-4 py-2 rounded-lg hover:bg-yellow-600 transition-colors cursor-pointer"
             >
               <Plus className="h-5 w-5" />
               <span>สร้างบทความ</span>
@@ -572,7 +553,7 @@ export default function ArticlesPage() {
               <p className="text-gray-500">ยังไม่มีบทความ</p>
               <button
                 onClick={() => setIsModalOpen(true)}
-                className="mt-4 bg-yellow-500 text-white px-4 py-2 rounded-lg hover:bg-yellow-600 transition-colors"
+                className="mt-4 bg-yellow-500 text-white px-4 py-2 rounded-lg hover:bg-yellow-600 transition-colors cursor-pointer"
               >
                 สร้างบทความแรก
               </button>
@@ -629,7 +610,7 @@ export default function ArticlesPage() {
                           setEditingArticle(article);
                           setIsModalOpen(true);
                         }}
-                        className="p-2 text-yellow-600 hover:text-yellow-700 hover:bg-yellow-100 rounded-lg transition-colors"
+                        className="p-2 text-yellow-600 hover:text-yellow-700 hover:bg-yellow-100 rounded-lg transition-colors cursor-pointer"
                         title="แก้ไข"
                       >
                         <Edit className="h-4 w-4" />
@@ -638,7 +619,7 @@ export default function ArticlesPage() {
                       {!article.wordpress_synced && article.status === 'published' && (
                         <button
                           onClick={() => syncToWordPress(article)}
-                          className="p-2 text-blue-600 hover:text-blue-700 hover:bg-blue-100 rounded-lg transition-colors"
+                          className="p-2 text-blue-600 hover:text-blue-700 hover:bg-blue-100 rounded-lg transition-colors cursor-pointer"
                           title="Sync ไป WordPress"
                         >
                           <Tag className="h-4 w-4" />
@@ -647,7 +628,7 @@ export default function ArticlesPage() {
                       
                       <button
                         onClick={() => setDeleteConfirm(article.id)}
-                        className="p-2 text-red-600 hover:text-red-700 hover:bg-red-100 rounded-lg transition-colors"
+                        className="p-2 text-red-600 hover:text-red-700 hover:bg-red-100 rounded-lg transition-colors cursor-pointer"
                         title="ลบ"
                       >
                         <Trash2 className="h-4 w-4" />
@@ -674,20 +655,20 @@ export default function ArticlesPage() {
 
       {/* Delete Confirmation */}
       {deleteConfirm && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
-          <div className="bg-white rounded-lg shadow-xl max-w-md w-full p-6">
+        <div className="fixed inset-0 bg-white bg-opacity-30 backdrop-blur-md flex items-center justify-center p-4 z-50">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 border border-gray-100">
             <h3 className="text-lg font-semibold text-gray-900 mb-4">ยืนยันการลบ</h3>
             <p className="text-gray-600 mb-6">คุณแน่ใจหรือไม่ที่จะลบบทความนี้? การกระทำนี้ไม่สามารถย้อนกลับได้</p>
             <div className="flex justify-end space-x-4">
               <button
                 onClick={() => setDeleteConfirm(null)}
-                className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
+                className="px-4 py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors cursor-pointer"
               >
                 ยกเลิก
               </button>
               <button
                 onClick={() => handleDeleteArticle(deleteConfirm)}
-                className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors"
+                className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-colors cursor-pointer"
               >
                 ลบ
               </button>
