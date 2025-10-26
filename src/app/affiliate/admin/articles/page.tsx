@@ -14,6 +14,7 @@ import {
   ArrowLeft
 } from 'lucide-react';
 import { useAuth } from '../hook/useAuth';
+import RichTextEditor from '../../../components/RichTextEditor';
 
 interface Article {
   id: string;
@@ -124,6 +125,7 @@ function CreateArticleModal({ isOpen, onClose, onSave, editingArticle }: CreateA
         wordpress_category_slug: 'chidahp-book-reviewer'
       };
 
+      console.log(articleData, 'articleData');
       await onSave(articleData);
       onClose();
     } catch (error) {
@@ -134,7 +136,6 @@ function CreateArticleModal({ isOpen, onClose, onSave, editingArticle }: CreateA
   };
 
   if (!isOpen) return null;
-
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
       <div className="bg-white rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
@@ -222,13 +223,13 @@ function CreateArticleModal({ isOpen, onClose, onSave, editingArticle }: CreateA
             <label className="block text-sm font-medium text-gray-700 mb-2">
               เนื้อหาบทความ *
             </label>
-            <textarea
-              value={formData.content}
-              onChange={(e) => setFormData({ ...formData, content: e.target.value })}
-              rows={10}
-              className="w-full px-4 py-3 border border-yellow-300 rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500"
-              placeholder="เขียนเนื้อหาบทความที่นี่"
-              required
+            <RichTextEditor
+              key={editingArticle?.id || 'new'}
+              content={formData.content}
+              onChange={(content: string) => setFormData({ ...formData, content })}
+              placeholder="เขียนเนื้อหาบทความที่นี่..."
+              className="w-full"
+              authToken={process.env.WORDPRESS_API_TOKEN}
             />
           </div>
 
@@ -351,6 +352,7 @@ export default function ArticlesPage() {
   const handleUpdateArticle = async (articleData: Partial<Article>) => {
     if (!editingArticle) return;
 
+    console.log(articleData, 'articleData');
     try {
       const response = await fetch(`/api/articles/${editingArticle.id}`, {
         method: 'PUT',

@@ -4,6 +4,7 @@ const nextConfig: NextConfig = {
   env: {
     WPGRAPHQL_URL: process.env.WPGRAPHQL_URL,
     WEB_URL: process.env.WEB_URL,
+    WORDPRESS_API_TOKEN: process.env.WORDPRESS_API_TOKEN,
   },
   images: {
     remotePatterns: [

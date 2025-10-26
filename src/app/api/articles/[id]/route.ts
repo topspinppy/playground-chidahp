@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createSupabaseClient } from '@/lib/supabase';
+import { updateWordPressPost } from '@/lib/wordpress';
 
 // GET /api/articles/[id] - Get single article
 export async function GET(
@@ -37,7 +38,6 @@ export async function PUT(
     const { id } = await params;
     const body = await request.json();
     const { title, slug, content, excerpt, tags, status } = body;
-
     // Validate slug format if provided
     if (slug && !/^[a-z0-9-]+$/.test(slug)) {
       return NextResponse.json(
@@ -48,6 +48,19 @@ export async function PUT(
 
     const supabase = createSupabaseClient();
 
+    // First, get the current article to check if it's synced with WordPress
+    const { data: currentArticle, error: fetchError } = await supabase
+      .from('articles')
+      .select('wordpress_id, wordpress_synced')
+      .eq('id', id)
+      .single();
+
+    if (fetchError) {
+      console.error('Error fetching current article:', fetchError);
+      return NextResponse.json({ error: 'Article not found' }, { status: 404 });
+    }
+
+    // Update article in Supabase first
     const { data: article, error } = await supabase
       .from('articles')
       .update({
@@ -69,6 +82,31 @@ export async function PUT(
     if (error) {
       console.error('Error updating article:', error);
       return NextResponse.json({ error: 'Failed to update article' }, { status: 500 });
+    }
+
+    // If article is synced with WordPress, update it there too
+    if (currentArticle.wordpress_synced && currentArticle.wordpress_id) {
+      try {
+        const wordpressResponse = await updateWordPressPost({
+          post_id: currentArticle.wordpress_id,
+          slug: slug || article.slug,
+          title: title || article.title,
+          content: content || article.content,
+          excerpt: excerpt || article.excerpt || '',
+          tags: tags || article.tags || []
+        });
+
+        if (!wordpressResponse.success) {
+          console.error('Failed to update WordPress post:', wordpressResponse.message);
+          // Don't fail the entire request, just log the error
+          // The article is still updated in Supabase
+        } else {
+          console.log('Successfully updated WordPress post:', currentArticle.wordpress_id);
+        }
+      } catch (error) {
+        console.error('Error updating WordPress post:', error);
+        // Don't fail the entire request, just log the error
+      }
     }
 
     return NextResponse.json({ article });

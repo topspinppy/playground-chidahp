@@ -108,16 +108,6 @@ export default function AdminDashboard() {
             
             <div className="p-6 bg-white rounded-lg shadow border border-yellow-200 text-left opacity-50">
               <div className="flex items-center">
-                <Users className="h-8 w-8 text-gray-400 mr-4" />
-                <div>
-                  <h4 className="font-semibold text-gray-900">จัดการผู้ใช้</h4>
-                  <p className="text-sm text-gray-600">จัดการสมาชิกและสิทธิ์</p>
-                </div>
-              </div>
-            </div>
-            
-            <div className="p-6 bg-white rounded-lg shadow border border-yellow-200 text-left opacity-50">
-              <div className="flex items-center">
                 <Calendar className="h-8 w-8 text-gray-400 mr-4" />
                 <div>
                   <h4 className="font-semibold text-gray-900">รายงาน</h4>
@@ -127,92 +117,6 @@ export default function AdminDashboard() {
             </div>
           </div>
         </div>
-
-        {/* Content */}
-        {activeTab === 'overview' && (
-          <div>
-            <h2 className="text-2xl font-bold text-gray-900 mb-6">ภาพรวมระบบ</h2>
-            
-            {/* Stats Cards */}
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-              <div className="bg-white overflow-hidden shadow rounded-lg border border-yellow-200">
-                <div className="p-5">
-                  <div className="flex items-center">
-                    <div className="flex-shrink-0">
-                      <FileText className="h-6 w-6 text-yellow-500" />
-                    </div>
-                    <div className="ml-5 w-0 flex-1">
-                      <dl>
-                        <dt className="text-sm font-medium text-gray-600 truncate">
-                          บทความทั้งหมด
-                        </dt>
-                        <dd className="text-lg font-medium text-gray-900">
-                          0
-                        </dd>
-                      </dl>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-white overflow-hidden shadow rounded-lg border border-yellow-200">
-                <div className="p-5">
-                  <div className="flex items-center">
-                    <div className="flex-shrink-0">
-                      <Users className="h-6 w-6 text-yellow-500" />
-                    </div>
-                    <div className="ml-5 w-0 flex-1">
-                      <dl>
-                        <dt className="text-sm font-medium text-gray-600 truncate">
-                          ผู้ใช้ทั้งหมด
-                        </dt>
-                        <dd className="text-lg font-medium text-gray-900">
-                          1
-                        </dd>
-                      </dl>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bg-white overflow-hidden shadow rounded-lg border border-yellow-200">
-                <div className="p-5">
-                  <div className="flex items-center">
-                    <div className="flex-shrink-0">
-                      <Calendar className="h-6 w-6 text-yellow-500" />
-                    </div>
-                    <div className="ml-5 w-0 flex-1">
-                      <dl>
-                        <dt className="text-sm font-medium text-gray-600 truncate">
-                          เข้าสู่ระบบล่าสุด
-                        </dt>
-                        <dd className="text-lg font-medium text-gray-900">
-                          วันนี้
-                        </dd>
-                      </dl>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Welcome Message */}
-            <div className="bg-white shadow rounded-lg p-6 border border-yellow-200">
-              <h3 className="text-lg font-medium text-gray-900 mb-4">
-                ยินดีต้อนรับสู่ระบบ Admin
-              </h3>
-              <p className="text-gray-600 mb-4">
-                ระบบนี้พร้อมใช้งานแล้ว คุณสามารถจัดการเนื้อหาและตั้งค่าระบบได้ผ่านเมนูด้านบน
-              </p>
-              <div className="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
-                <p className="text-yellow-800 text-sm">
-                  💡 <strong>หมายเหตุ:</strong> ระบบนี้เป็นเวอร์ชันพื้นฐานที่เหลือแค่การ login และ dashboard 
-                  คุณสามารถพัฒนาต่อได้ตามต้องการ
-                </p>
-              </div>
-            </div>
-          </div>
-        )}
 
         {activeTab === 'settings' && (
           <div>

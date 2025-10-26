@@ -94,3 +94,52 @@ export function mapRoleToWordPress(role: string): string {
   
   return roleMap[role] || 'contributor';
 }
+
+/**
+ * Update post in WordPress via API
+ * @param postData - Post data to update
+ * @returns Promise<WordPressResponse>
+ */
+export async function updateWordPressPost(postData: {
+  post_id: number;
+  title: string;
+  content: string;
+  excerpt: string;
+  tags: string[];
+  slug: string;
+}): Promise<WordPressResponse> {
+  try {
+    console.log('Updating WordPress post:', { post_id: postData.post_id, title: postData.title });
+    
+    const response = await fetch('https://api.playground.chidahp.com/wp-json/chidahp-affiliate/v1/update-post', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${process.env.WORDPRESS_API_TOKEN || 'SKKouBZJHhWOwd4HWbybBv3xZBne9yjk'}`
+      },
+      body: JSON.stringify(postData)
+    });
+
+    console.log('WordPress update API response status:', response.status);
+
+    if (!response.ok) {
+      const errorData = await response.json().catch(() => ({}));
+      console.error('WordPress update API error response:', errorData);
+      throw new Error(`WordPress update API error: ${response.status} - ${errorData.message || response.statusText}`);
+    }
+
+    const result = await response.json();
+    console.log('WordPress update API success response:', result);
+    
+    return {
+      success: true,
+      ...result
+    };
+  } catch (error) {
+    console.error('WordPress update error:', error);
+    return {
+      success: false,
+      message: error instanceof Error ? error.message : 'Unknown error'
+    };
+  }
+}
