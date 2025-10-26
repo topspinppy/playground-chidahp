@@ -21,6 +21,7 @@ const nextConfig: NextConfig = {
         hostname: "secure.gravatar.com"
       }
     ],
+    unoptimized: true,
   }
 };
 
