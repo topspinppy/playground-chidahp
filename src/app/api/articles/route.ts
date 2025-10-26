@@ -27,7 +27,7 @@ export async function GET() {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { title, slug, content, excerpt, tags, status, user_id } = body;
+    const { title, slug, content, excerpt, tags } = body;
 
     // Validate required fields
     if (!title || !content || !slug) {
@@ -95,41 +95,41 @@ export async function POST(request: NextRequest) {
   }
 }
 
-// Function to create post in WordPress
-async function createWordPressPost(postData: {
-  user_id: number;
-  title: string;
-  content: string;
-  excerpt: string;
-  categories: number[];
-  tags: string[];
-}) {
-  try {
-    const response = await fetch(process.env.WORDPRESS_API_URL || 'https://api.playground.chidahp.com/wp-json/chidahp-affiliate/v1/submit-post', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${process.env.WORDPRESS_API_TOKEN || 'SKKouBZJHhWOwd4HWbybBv3xZBne9yjk'}`
-      },
-      body: JSON.stringify(postData)
-    });
+// // Function to create post in WordPress
+// async function createWordPressPost(postData: {
+//   user_id: number;
+//   title: string;
+//   content: string;
+//   excerpt: string;
+//   categories: number[];
+//   tags: string[];
+// }) {
+//   try {
+//     const response = await fetch(process.env.WORDPRESS_API_URL || 'https://api.playground.chidahp.com/wp-json/chidahp-affiliate/v1/submit-post', {
+//       method: 'POST',
+//       headers: {
+//         'Content-Type': 'application/json',
+//         'Authorization': `Bearer ${process.env.WORDPRESS_API_TOKEN || 'SKKouBZJHhWOwd4HWbybBv3xZBne9yjk'}`
+//       },
+//       body: JSON.stringify(postData)
+//     });
 
-    if (!response.ok) {
-      const errorText = await response.text();
-      throw new Error(`WordPress API error: ${response.status} - ${errorText}`);
-    }
+//     if (!response.ok) {
+//       const errorText = await response.text();
+//       throw new Error(`WordPress API error: ${response.status} - ${errorText}`);
+//     }
     
-    const wordpressPost = await response.json();
-    return {
-      success: true,
-      wordpress_id: wordpressPost.data['post_id'],
-      wordpress_data: wordpressPost
-    };
-  } catch (error) {
-    console.error('WordPress API error:', error);
-    return {
-      success: false,
-      error: error instanceof Error ? error.message : 'Unknown error'
-    };
-  }
-}
+//     const wordpressPost = await response.json();
+//     return {
+//       success: true,
+//       wordpress_id: wordpressPost.data['post_id'],
+//       wordpress_data: wordpressPost
+//     };
+//   } catch (error) {
+//     console.error('WordPress API error:', error);
+//     return {
+//       success: false,
+//       error: error instanceof Error ? error.message : 'Unknown error'
+//     };
+//   }
+// }
