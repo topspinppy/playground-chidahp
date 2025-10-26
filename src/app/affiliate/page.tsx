@@ -283,7 +283,7 @@ export default function AffiliatePage() {
                 </svg>
               </div>
               <h4 className="text-lg font-semibold text-gray-900 mb-3">รายได้เสริม</h4>
-              <p className="text-sm text-gray-700">รับค่าคอมมิชชั่นจากการรีวิว</p>
+              <p className="text-sm text-gray-700">รับค่าคอมมิชชั่นจากการรีวิวและเมื่อหนังสือขายได้จากการรีวิวของคุณ</p>
             </div>
           </div>
         </div>
