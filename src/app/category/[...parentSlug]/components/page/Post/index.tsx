@@ -160,7 +160,7 @@ export default async function Post(params: RouteParams) {
       {post.hidefeaturelabel.ishidefeaturelabel === false && post.featuredImage?.node && (
         <div className="mb-8 group">
           <div className="overflow-hidden rounded-xl shadow-lg">
-            <Image
+            <img
               src={post.featuredImage.node.sourceUrl}
               alt={post.featuredImage.node.altText || post.title}
               width={1200}
