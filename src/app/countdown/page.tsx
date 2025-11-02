@@ -21,7 +21,7 @@ export default function CountdownPage() {
     seconds: 0
   })
 
-  const [steps, setSteps] = useState<Step[]>([
+  const [steps] = useState<Step[]>([
     {
       id: 'step_1',
       title: 'ก้าวแรก',
