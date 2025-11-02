@@ -3,12 +3,12 @@
 
 import { useState, useEffect } from 'react'
 
-interface Achievement {
+interface Step {
   id: string
   title: string
   description: string
   icon: string
-  daysThreshold: number
+  stepNumber: number
   unlocked: boolean
   color: string
 }
@@ -21,78 +21,78 @@ export default function CountdownPage() {
     seconds: 0
   })
 
-  const [achievements, setAchievements] = useState<Achievement[]>([
+  const [steps, setSteps] = useState<Step[]>([
     {
-      id: 'first_step',
+      id: 'step_1',
       title: 'ก้าวแรก',
-      description: 'เริ่มต้นการเดินทาง!',
+      description: 'Step 1',
       icon: '🌱',
-      daysThreshold: 155,
-      unlocked: false,
+      stepNumber: 1,
+      unlocked: true,
       color: 'from-green-500 to-emerald-500'
     },
     {
-      id: 'first_100',
-      title: '100 วันมหัศจรรย์',
-      description: 'เริ่มต้นการเดินทางสู่งานหนังสือ!',
-      icon: '🎯',
-      daysThreshold: 100,
-      unlocked: false,
+      id: 'step_2',
+      title: 'Approve หัวข้อผ่าน',
+      description: 'Step 2',
+      icon: '✅',
+      stepNumber: 2,
+      unlocked: true,
       color: 'from-blue-500 to-cyan-500'
     },
     {
-      id: 'quarter_year',
-      title: '3 เดือนแห่งความมุ่งมั่น',
-      description: 'ผ่านมา 3 เดือนแล้ว!',
-      icon: '⭐',
-      daysThreshold: 90,
+      id: 'step_3',
+      title: 'ทีมเขียนทำงาน',
+      description: 'Step 3 (อยู่ที่นี่)',
+      icon: '✍️',
+      stepNumber: 3,
+      unlocked: true,
+      color: 'from-purple-500 to-pink-500'
+    },
+    {
+      id: 'step_4',
+      title: 'อาร์ตไดเริ่มเข้า',
+      description: 'Step 4',
+      icon: '🎨',
+      stepNumber: 4,
       unlocked: false,
       color: 'from-teal-500 to-blue-500'
     },
     {
-      id: 'half_way',
-      title: 'ครึ่งทางแล้ว!',
-      description: 'ผ่านมาครึ่งทางแล้ว เก่งมาก!',
-      icon: '🏆',
-      daysThreshold: 50,
-      unlocked: false,
-      color: 'from-purple-500 to-pink-500'
-    },
-    {
-      id: 'one_month',
-      title: '1 เดือนสุดท้าย',
-      description: 'ใกล้ถึงเป้าหมายแล้ว!',
-      icon: '⚡',
-      daysThreshold: 30,
+      id: 'step_5',
+      title: 'เก็บรายละเอียด',
+      description: 'Step 5',
+      icon: '🔍',
+      stepNumber: 5,
       unlocked: false,
       color: 'from-orange-500 to-red-500'
     },
     {
-      id: 'two_weeks',
-      title: '2 สัปดาห์สุดท้าย',
-      description: 'เตรียมตัวให้พร้อม!',
-      icon: '🔥',
-      daysThreshold: 14,
+      id: 'step_6',
+      title: 'ส่งโรงพิมพ์',
+      description: 'Step 6',
+      icon: '🖨️',
+      stepNumber: 6,
       unlocked: false,
       color: 'from-red-500 to-pink-500'
     },
     {
-      id: 'one_week',
-      title: '1 สัปดาห์สุดท้าย',
-      description: 'เกือบถึงแล้ว!',
-      icon: '💎',
-      daysThreshold: 7,
+      id: 'step_7',
+      title: 'Launchปักธง!!!',
+      description: 'Step 7',
+      icon: '🚀',
+      stepNumber: 7,
       unlocked: false,
       color: 'from-yellow-500 to-orange-500'
     },
     {
-      id: 'final_day',
-      title: 'วันสุดท้าย!',
-      description: 'วันแห่งชัยชนะ!',
-      icon: '👑',
-      daysThreshold: 1,
+      id: 'step_8',
+      title: 'สู่งานหนังสือ',
+      description: 'Step 8',
+      icon: '📚',
+      stepNumber: 8,
       unlocked: false,
-      color: 'from-yellow-400 to-yellow-600'
+      color: 'from-indigo-500 to-purple-500'
     }
   ])
 
@@ -114,22 +114,10 @@ export default function CountdownPage() {
           seconds: Math.floor((distance % (1000 * 60)) / 1000)
         })
 
-        // Check and unlock achievements
-        setAchievements(prevAchievements => 
-          prevAchievements.map(achievement => ({
-            ...achievement,
-            unlocked: daysLeft <= achievement.daysThreshold
-          }))
-        )
+        // Steps are managed manually, no automatic unlocking based on countdown
       } else {
         setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 })
-        // Unlock all achievements when countdown reaches zero
-        setAchievements(prevAchievements => 
-          prevAchievements.map(achievement => ({
-            ...achievement,
-            unlocked: true
-          }))
-        )
+        // Steps are managed manually
       }
     }, 1000)
 
@@ -203,55 +191,57 @@ export default function CountdownPage() {
           </p>
         </div>
 
-        {/* Achievement Badges */}
+        {/* Steps */}
         <div className="max-w-3xl mx-auto mb-6">
           <h2 className="text-lg md:text-xl font-bold text-white mb-4">
-            🏆 Achievement Badges
+            📋 Steps
           </h2>
-          <div className="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-2 md:gap-3">
-            {achievements.map((achievement) => (
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-2 md:gap-3">
+            {steps.map((step) => (
               <div
-                key={achievement.id}
-                className={`relative p-2 md:p-3 rounded-lg border transition-all duration-500 transform ${
-                  achievement.unlocked
-                    ? `bg-gradient-to-br ${achievement.color} border-white/50 shadow-lg scale-105 animate-pulse`
+                key={step.id}
+                className={`relative p-3 md:p-4 rounded-lg border transition-all duration-500 transform ${
+                  step.unlocked
+                    ? `bg-gradient-to-br ${step.color} border-white/50 shadow-lg scale-105 ${
+                        step.stepNumber === 3 ? 'animate-pulse' : ''
+                      }`
                     : 'bg-white/5 border-white/20 opacity-50'
                 }`}
               >
                 <div className="text-center">
                   <div className="text-xl md:text-2xl mb-1">
-                    {achievement.icon}
+                    {step.icon}
+                  </div>
+                  <div className={`text-xs font-bold mb-1 ${
+                    step.unlocked ? 'text-white' : 'text-gray-400'
+                  }`}>
+                    Step {step.stepNumber}
                   </div>
                   <h3 className={`text-xs md:text-sm font-bold mb-1 ${
-                    achievement.unlocked ? 'text-white' : 'text-gray-400'
+                    step.unlocked ? 'text-white' : 'text-gray-400'
                   }`}>
-                    {achievement.title}
+                    {step.title}
                   </h3>
-                  <p className={`text-xs hidden sm:block ${
-                    achievement.unlocked ? 'text-white/90' : 'text-gray-500'
+                  <p className={`text-xs ${
+                    step.unlocked ? 'text-white/90' : 'text-gray-500'
                   }`}>
-                    {achievement.description}
+                    {step.description}
                   </p>
-                  <div className={`text-xs mt-1 font-medium ${
-                    achievement.unlocked ? 'text-white' : 'text-gray-400'
-                  }`}>
-                    {achievement.daysThreshold} วัน
-                  </div>
                 </div>
                 
-                {/* Unlock animation overlay */}
-                {achievement.unlocked && (
+                {/* Active step indicator */}
+                {step.unlocked && step.stepNumber === 3 && (
                   <div className="absolute inset-0 bg-gradient-to-br from-yellow-400/20 to-orange-500/20 rounded-lg animate-ping"></div>
                 )}
               </div>
             ))}
           </div>
           
-          {/* Achievement Stats */}
+          {/* Steps Stats */}
           <div className="mt-4 text-center">
             <div className="inline-flex items-center bg-white/10 backdrop-blur-lg rounded-full px-4 py-2 border border-white/20">
               <span className="text-white font-bold text-sm md:text-base">
-                🎖️ ปลดล็อกแล้ว: {achievements.filter(a => a.unlocked).length}/{achievements.length} เหรียญ
+                📍 สถานะ: {steps.filter(s => s.unlocked).length}/{steps.length} ขั้นตอน
               </span>
             </div>
           </div>
