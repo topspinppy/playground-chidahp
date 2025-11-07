@@ -45,6 +45,9 @@ export async function POST(request: NextRequest) {
 
     // Update last login
     const { supabaseAdmin } = await import('@/lib/supabase');
+    if (!supabaseAdmin) {
+      throw new Error('Supabase admin client is not available');
+    }
     await supabaseAdmin
       .from('users')
       .update({ 

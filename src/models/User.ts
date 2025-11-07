@@ -11,6 +11,9 @@ export interface IUser extends User {
 export class UserModel {
   // Create a new user
   static async create(userData: Omit<UserInsert, 'id' | 'created_at' | 'updated_at'>): Promise<IUser> {
+    if (!supabaseAdmin) {
+      throw new Error('Supabase admin client is not available');
+    }
     // Hash password
     const salt = await bcrypt.genSalt(12);
     const hashedPassword = await bcrypt.hash(userData.password, salt);
@@ -35,6 +38,9 @@ export class UserModel {
 
   // Find user by email
   static async findByEmail(email: string, includePassword = false): Promise<IUser | null> {
+    if (!supabaseAdmin) {
+      throw new Error('Supabase admin client is not available');
+    }
     const { data, error } = await supabaseAdmin
       .from('users')
       .select(includePassword ? '*' : 'id, name, email, role, status, last_login, wordpress_user_id, profile, created_at, updated_at')
@@ -57,6 +63,9 @@ export class UserModel {
 
   // Find user by ID
   static async findById(id: string): Promise<IUser | null> {
+    if (!supabaseAdmin) {
+      throw new Error('Supabase admin client is not available');
+    }
     const { data, error } = await supabaseAdmin
       .from('users')
       .select('id, name, email, role, status, last_login, wordpress_user_id, profile, created_at, updated_at')
@@ -79,6 +88,9 @@ export class UserModel {
 
   // Check if email exists
   static async emailExists(email: string): Promise<boolean> {
+    if (!supabaseAdmin) {
+      throw new Error('Supabase admin client is not available');
+    }
     const { data, error } = await supabaseAdmin
       .from('users')
       .select('id')

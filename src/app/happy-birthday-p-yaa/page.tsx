@@ -239,6 +239,7 @@ export default function HappyBirthdayPYaaPage() {
       setSubmitted(true);
       await fetchWishes();
     } catch (err) {
+      console.log(err);
       setError('เกิดข้อผิดพลาดในการส่งอวยพร กรุณาลองใหม่อีกครั้ง');
     } finally {
       setLoading(false);

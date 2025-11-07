@@ -90,6 +90,9 @@ export interface Category {
 export class ArticleModel {
   // Create a new article
   static async create(articleData: Omit<ArticleInsert, 'id' | 'created_at' | 'updated_at'>): Promise<Article> {
+    if (!supabaseAdmin) {
+      throw new Error('Supabase admin client is not available');
+    }
     const { data, error } = await supabaseAdmin
       .from('articles')
       .insert({
@@ -109,6 +112,9 @@ export class ArticleModel {
 
   // Find article by ID
   static async findById(id: string): Promise<Article | null> {
+    if (!supabaseAdmin) {
+      throw new Error('Supabase admin client is not available');
+    }
     const { data, error } = await supabaseAdmin
       .from('articles')
       .select(`
@@ -131,6 +137,9 @@ export class ArticleModel {
 
   // Find article by slug
   static async findBySlug(slug: string): Promise<Article | null> {
+    if (!supabaseAdmin) {
+      throw new Error('Supabase admin client is not available');
+    }
     const { data, error } = await supabaseAdmin
       .from('articles')
       .select(`
@@ -153,6 +162,9 @@ export class ArticleModel {
 
   // Find article by Chidahp ID
   static async findByChidahpId(chidahpId: number): Promise<Article | null> {
+    if (!supabaseAdmin) {
+      throw new Error('Supabase admin client is not available');
+    }
     const { data, error } = await supabaseAdmin
       .from('articles')
       .select(`
@@ -195,6 +207,9 @@ export class ArticleModel {
       sort_order = 'desc'
     } = options;
 
+    if (!supabaseAdmin) {
+      throw new Error('Supabase admin client is not available');
+    }
     let query = supabaseAdmin
       .from('articles')
       .select(`
@@ -241,6 +256,9 @@ export class ArticleModel {
 
   // Update article
   static async update(id: string, updates: ArticleUpdate): Promise<Article> {
+    if (!supabaseAdmin) {
+      throw new Error('Supabase admin client is not available');
+    }
     const { data, error } = await supabaseAdmin
       .from('articles')
       .update({
@@ -260,6 +278,9 @@ export class ArticleModel {
 
   // Delete article
   static async delete(id: string): Promise<void> {
+    if (!supabaseAdmin) {
+      throw new Error('Supabase admin client is not available');
+    }
     const { error } = await supabaseAdmin
       .from('articles')
       .delete()
@@ -272,6 +293,9 @@ export class ArticleModel {
 
   // Increment view count
   static async incrementViewCount(id: string): Promise<void> {
+    if (!supabaseAdmin) {
+      throw new Error('Supabase admin client is not available');
+    }
     const { error } = await supabaseAdmin
       .from('articles')
       .update({
@@ -287,6 +311,9 @@ export class ArticleModel {
 
   // Get categories
   static async getCategories(): Promise<Category[]> {
+    if (!supabaseAdmin) {
+      throw new Error('Supabase admin client is not available');
+    }
     const { data, error } = await supabaseAdmin
       .from('categories')
       .select('*')
@@ -302,6 +329,9 @@ export class ArticleModel {
 
   // Create category
   static async createCategory(categoryData: Omit<Category, 'id' | 'created_at' | 'updated_at'>): Promise<Category> {
+    if (!supabaseAdmin) {
+      throw new Error('Supabase admin client is not available');
+    }
     const { data, error } = await supabaseAdmin
       .from('categories')
       .insert({
