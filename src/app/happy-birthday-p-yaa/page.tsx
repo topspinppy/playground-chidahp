@@ -233,13 +233,12 @@ export default function HappyBirthdayPYaaPage() {
       if (insertError) {
         throw insertError;
       }
-
+      console.log(data);
       setMessage('');
       setAuthor('');
       setSubmitted(true);
       await fetchWishes();
     } catch (err) {
-      console.error('Error submitting wish:', err);
       setError('เกิดข้อผิดพลาดในการส่งอวยพร กรุณาลองใหม่อีกครั้ง');
     } finally {
       setLoading(false);
