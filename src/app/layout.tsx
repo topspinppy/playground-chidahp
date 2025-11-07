@@ -6,6 +6,7 @@ import ConditionalFooter from "./components/ConditionalFooter";
 import { Noto_Sans_Thai, Poppins } from "next/font/google";
 import Head from "./Header";
 import CookieConcent from "./components/CookieConsent";
+import ConditionalAdSense from "./components/ConditionalAdSense";
 
 const noto_sans_thai = Noto_Sans_Thai({
   variable: "--font-noto-sans-thai",
@@ -112,14 +113,10 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <Head />
-      <script
-        async
-        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-8360416910031647"
-        crossOrigin="anonymous"
-      />
       <link rel="canonical" href="https://chidahp.com/playground" />
 
       <body className={`${noto_sans_thai.variable} ${poppins.variable} antialiased`}>
+        <ConditionalAdSense />
         <ConditionalHeader categories={categories} />
         {children}
         <ConditionalFooter categories={categories} />

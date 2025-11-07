@@ -124,7 +124,7 @@ const QuestionAuth = ({ onSuccess }: { onSuccess: () => void }) => {
             หน้าลับ
           </h1>
           <p className="text-white/80 text-sm">
-            กรุณาตอบคำถามเพื่อเข้าสู่หน้าอวยพร
+            กรุณาตอบคำถามก่อนจ้า
           </p>
         </div>
 
