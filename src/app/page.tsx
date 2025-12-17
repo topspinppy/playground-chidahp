@@ -23,7 +23,7 @@ export default async function HomePage() {
         <FeaturedPost featuredPost={featuredPost} latestPosts={latestPosts} />
         <LatestPosts latestPosts={notLatestPosts} />
         <SeriesSection postSeries={postSeries} />
-        <RoadTo100K />
+        {/* <RoadTo100K /> */}
       </main>
     </div>
   );

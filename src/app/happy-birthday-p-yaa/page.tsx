@@ -233,7 +233,6 @@ export default function HappyBirthdayPYaaPage() {
       if (insertError) {
         throw insertError;
       }
-      console.log(data);
       setMessage('');
       setAuthor('');
       setSubmitted(true);

@@ -1,7 +1,7 @@
 
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 
 interface Step {
   id: string
@@ -13,6 +13,21 @@ interface Step {
   color: string
 }
 
+interface Particle {
+  x: number
+  y: number
+  vx: number
+  vy: number
+  life: number
+  color: string
+}
+
+interface MouseTrail {
+  x: number
+  y: number
+  life: number
+}
+
 export default function CountdownPage() {
   const [timeLeft, setTimeLeft] = useState({
     days: 0,
@@ -20,6 +35,20 @@ export default function CountdownPage() {
     minutes: 0,
     seconds: 0
   })
+
+  const [progress, setProgress] = useState(0)
+  const [particles, setParticles] = useState<Particle[]>([])
+  const [mouseTrail, setMouseTrail] = useState<MouseTrail[]>([])
+  const [clickCount, setClickCount] = useState(0)
+  const [isCelebrationMode, setIsCelebrationMode] = useState(false)
+  const [flipAnimation, setFlipAnimation] = useState({
+    days: false,
+    hours: false,
+    minutes: false,
+    seconds: false
+  })
+  const [clickedSteps, setClickedSteps] = useState<Set<string>>(new Set())
+  const containerRef = useRef<HTMLDivElement>(null)
 
   const [steps] = useState<Step[]>([
     {
@@ -43,7 +72,7 @@ export default function CountdownPage() {
     {
       id: 'step_3',
       title: 'ทีมเขียนทำงาน',
-      description: 'Step 3 (อยู่ที่นี่)',
+      description: 'Step 3',
       icon: '✍️',
       stepNumber: 3,
       unlocked: true,
@@ -55,7 +84,7 @@ export default function CountdownPage() {
       description: 'Step 4',
       icon: '🎨',
       stepNumber: 4,
-      unlocked: false,
+      unlocked: true,
       color: 'from-teal-500 to-blue-500'
     },
     {
@@ -99,30 +128,154 @@ export default function CountdownPage() {
   // Convert Buddhist calendar 2568 to Gregorian calendar 2025
   // March 27, 2568 BE = March 27, 2025 CE
   const targetDate = new Date('2026-03-27T00:00:00').getTime()
+  const startDate = new Date('2025-10-01T00:00:00').getTime()
 
+  // Create confetti particles
+  const createConfetti = (x: number, y: number, count: number = 30) => {
+    const colors = ['#FF6B6B', '#4ECDC4', '#45B7D1', '#FFA07A', '#98D8C8', '#F7DC6F', '#BB8FCE', '#85C1E2']
+    const newParticles: Particle[] = []
+    
+    for (let i = 0; i < count; i++) {
+      newParticles.push({
+        x,
+        y,
+        vx: (Math.random() - 0.5) * 10,
+        vy: (Math.random() - 0.5) * 10 - 5,
+        life: 1,
+        color: colors[Math.floor(Math.random() * colors.length)]
+      })
+    }
+    
+    setParticles(prev => [...prev, ...newParticles])
+  }
+
+  // Update particles animation
+  useEffect(() => {
+    if (particles.length === 0) return
+
+    const interval = setInterval(() => {
+      setParticles(prev => 
+        prev
+          .map(p => ({
+            ...p,
+            x: p.x + p.vx,
+            y: p.y + p.vy,
+            vy: p.vy + 0.3, // gravity
+            life: p.life - 0.02
+          }))
+          .filter(p => p.life > 0 && p.y < window.innerHeight)
+      )
+    }, 16)
+
+    return () => clearInterval(interval)
+  }, [particles.length])
+
+  // Mouse trail effect
+  useEffect(() => {
+    const handleMouseMove = (e: MouseEvent) => {
+      setMouseTrail(prev => {
+        const newTrail = [{ x: e.clientX, y: e.clientY, life: 1 }, ...prev.slice(0, 20)]
+        return newTrail.map((point, i) => ({ ...point, life: 1 - i * 0.05 }))
+      })
+    }
+
+    window.addEventListener('mousemove', handleMouseMove)
+    return () => window.removeEventListener('mousemove', handleMouseMove)
+  }, [])
+
+  // Update mouse trail animation
+  useEffect(() => {
+    if (mouseTrail.length === 0) return
+
+    const interval = setInterval(() => {
+      setMouseTrail(prev => prev.filter(p => p.life > 0))
+    }, 50)
+
+    return () => clearInterval(interval)
+  }, [mouseTrail.length])
+
+  // Countdown timer with flip detection
   useEffect(() => {
     const timer = setInterval(() => {
       const now = Date.now()
       const distance = targetDate - now
+      const totalDuration = targetDate - startDate
+
+      // Calculate progress percentage
+      const progressPercent = Math.max(0, Math.min(100, ((targetDate - now) / totalDuration) * 100))
+      setProgress(progressPercent)
 
       if (distance > 0) {
         const daysLeft = Math.floor(distance / (1000 * 60 * 60 * 24))
-        setTimeLeft({
-          days: daysLeft,
-          hours: Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
-          minutes: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
-          seconds: Math.floor((distance % (1000 * 60)) / 1000)
+        const hoursLeft = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60))
+        const minutesLeft = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60))
+        const secondsLeft = Math.floor((distance % (1000 * 60)) / 1000)
+
+        // Detect changes and trigger flip animations
+        setTimeLeft(prev => {
+          if (prev.days !== daysLeft) setFlipAnimation(flip => ({ ...flip, days: true }))
+          if (prev.hours !== hoursLeft) setFlipAnimation(flip => ({ ...flip, hours: true }))
+          if (prev.minutes !== minutesLeft) setFlipAnimation(flip => ({ ...flip, minutes: true }))
+          if (prev.seconds !== secondsLeft) setFlipAnimation(flip => ({ ...flip, seconds: true }))
+          
+          setTimeout(() => {
+            setFlipAnimation({ days: false, hours: false, minutes: false, seconds: false })
+          }, 600)
+
+          return {
+            days: daysLeft,
+            hours: hoursLeft,
+            minutes: minutesLeft,
+            seconds: secondsLeft
+          }
         })
 
         // Steps are managed manually, no automatic unlocking based on countdown
       } else {
         setTimeLeft({ days: 0, hours: 0, minutes: 0, seconds: 0 })
+        setProgress(0)
         // Steps are managed manually
       }
     }, 1000)
 
     return () => clearInterval(timer)
-  }, [targetDate])
+  }, [targetDate, startDate])
+
+  // Handle countdown card click
+  const handleCardClick = (type: 'days' | 'hours' | 'minutes' | 'seconds', e: React.MouseEvent) => {
+    createConfetti(e.clientX, e.clientY, 20)
+    setClickCount(prev => {
+      const newCount = prev + 1
+      if (newCount >= 10 && newCount % 10 === 0) {
+        setIsCelebrationMode(true)
+        setTimeout(() => setIsCelebrationMode(false), 2000)
+        // Create massive confetti
+        for (let i = 0; i < 5; i++) {
+          setTimeout(() => {
+            createConfetti(window.innerWidth / 2, window.innerHeight / 2, 50)
+          }, i * 100)
+        }
+      }
+      return newCount
+    })
+  }
+
+  // Handle step click
+  const handleStepClick = (stepId: string, e: React.MouseEvent) => {
+    if (clickedSteps.has(stepId)) return
+    
+    setClickedSteps(prev => new Set(prev).add(stepId))
+    createConfetti(e.clientX, e.clientY, 15)
+    
+    // Remove from clicked set after animation
+    setTimeout(() => {
+      setClickedSteps(prev => {
+        const newSet = new Set(prev)
+        newSet.delete(stepId)
+        return newSet
+      })
+    }, 1000)
+  }
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-orange-900 via-yellow-800 to-amber-900 flex items-center justify-center p-4">
@@ -182,7 +335,7 @@ export default function CountdownPage() {
             <div 
               className="bg-gradient-to-r from-orange-500 to-yellow-500 h-full rounded-full transition-all duration-1000 ease-out"
               style={{
-                width: `${Math.max(0, Math.min(100, ((targetDate - Date.now()) / (targetDate - new Date('2024-01-01').getTime())) * 100))}%`
+                width: `${progress}%`
               }}
             ></div>
           </div>

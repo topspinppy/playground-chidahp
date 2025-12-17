@@ -37,7 +37,7 @@ export default function Header(props: IHeaderProps) {
 
   return (
     <>
-      <header className="border-b border-gray-200 sticky top-0 z-50 backdrop-blur-sm bg-white/95 grayscale">
+      <header className="border-b border-gray-200 sticky top-0 z-50 backdrop-blur-sm bg-white/95">
         <div className="max-w-6xl mx-auto px-4 md:px-6">
           {/* Main header */}
           <div className="py-3 md:py-5 flex items-center justify-between">
