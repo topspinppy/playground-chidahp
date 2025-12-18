@@ -1,7 +1,6 @@
 // src/app/page.tsx
 import FeaturedPost from "./components/front/FeaturedPost";
 import { getFeaturedPost, getLatestPosts, getNotLatestPosts, getPostSeries } from "@/lib/api";
-import RoadTo100K from "./components/front/RoadTo100K";
 import LatestPosts from "./components/front/LatestPosts";
 import SeriesSection from "./components/front/SeriesSection";
 import SouthDakotaBanner from "./components/front/SouthDakotaBanner";
