@@ -10,7 +10,7 @@ interface ConditionalFooterProps {
 
 export default function ConditionalFooter({ categories }: ConditionalFooterProps) {
   const pathname = usePathname()
-  const shouldHideFooter = pathname === '/southdakota' || pathname === '/tellme' || pathname === '/countdown' || pathname.includes('/admin/') || pathname === '/happy-birthday-p-yaa'
+  const shouldHideFooter = pathname === '/southdakota' || pathname === '/tellme' || pathname === '/countdown' || pathname.includes('/admin/') || pathname === '/happy-birthday-p-yaa' || pathname === '/merry-christmas' || pathname.includes('/merry-christmas/admin')
   
   if (shouldHideFooter) {
     return null
