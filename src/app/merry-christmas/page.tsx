@@ -1,14 +1,14 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { collection, query, orderBy, limit, onSnapshot } from 'firebase/firestore';
+import { collection, query, orderBy, limit, onSnapshot, Timestamp } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 
 interface DrawResult {
   id: string;
   participantName: string;
   recipientName: string;
-  timestamp: any;
+  timestamp: Timestamp | null;
   drawTime: string;
 }
 

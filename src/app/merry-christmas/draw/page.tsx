@@ -1,14 +1,14 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { collection, query, onSnapshot, orderBy, updateDoc, doc, addDoc, serverTimestamp } from 'firebase/firestore';
+import { collection, query, onSnapshot, orderBy, updateDoc, doc, addDoc, serverTimestamp, Timestamp } from 'firebase/firestore';
 import { db } from '@/lib/firebase';
 import Link from 'next/link';
 
 interface Participant {
   id: string;
   name: string;
-  timestamp: any;
+  timestamp: Timestamp | null;
   hasDrawn: boolean;
 }
 
@@ -18,7 +18,7 @@ interface DrawResult {
   participantName: string;
   recipientId: string;
   recipientName: string;
-  timestamp: any;
+  timestamp: Timestamp | null;
   drawTime: string;
 }
 
@@ -160,7 +160,11 @@ export default function DrawPage() {
     if (validRecipients.length === 0) {
       if (availableRecipients.length === 0 && recentDraws.length > 0) {
         // หาคนแรกที่จับไป
-        const firstDrawer = recentDraws[recentDraws.length - 1]; // คนแรกที่จับ (เรียงจากเก่าไปใหม่)
+        const firstDrawer = recentDraws.at(-1); // คนแรกที่จับ (เรียงจากเก่าไปใหม่)
+        if (!firstDrawer) {
+          alert('เกิดข้อผิดพลาด: ไม่พบข้อมูลการจับฉลากแรก');
+          return;
+        }
         const firstDrawerParticipant = participants.find(p => p.id === firstDrawer.participantId);
         if (firstDrawerParticipant) {
           validRecipients = [firstDrawerParticipant];
@@ -370,10 +374,12 @@ export default function DrawPage() {
               // ให้ได้ของคนแรกที่จับไป (เพื่อให้เป็นวงกลม)
               const isLastPerson = availableRecipients.length === 0 && recentDraws.length > 0;
               if (validRecipients.length === 0 && isLastPerson) {
-                const firstDrawer = recentDraws[recentDraws.length - 1]; // คนแรกที่จับ
-                const firstDrawerParticipant = participants.find(p => p.id === firstDrawer.participantId);
-                if (firstDrawerParticipant) {
-                  validRecipients = [firstDrawerParticipant];
+                const firstDrawer = recentDraws.at(-1); // คนแรกที่จับ
+                if (firstDrawer) {
+                  const firstDrawerParticipant = participants.find(p => p.id === firstDrawer.participantId);
+                  if (firstDrawerParticipant) {
+                    validRecipients = [firstDrawerParticipant];
+                  }
                 }
               }
 

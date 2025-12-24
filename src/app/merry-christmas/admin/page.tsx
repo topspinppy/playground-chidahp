@@ -8,7 +8,7 @@ import Link from 'next/link';
 interface Participant {
   id: string;
   name: string;
-  timestamp: any;
+  timestamp: Timestamp | null;
   hasDrawn: boolean;
 }
 
