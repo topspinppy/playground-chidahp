@@ -5,6 +5,7 @@ import Typewriter from 'typewriter-effect';
 import TrackViewClient from '../components/TrackViewClient';
 import Link from 'next/link';
 import MatrixBackground from './MatrixBackground';
+import Image from 'next/image';
 
 export default function Pangranger2026Page() {
 
@@ -41,47 +42,107 @@ export default function Pangranger2026Page() {
       <MatrixBackground />
 
       {/* Hero Section */}
-      <section className="relative flex flex-col items-center justify-center min-h-screen text-center px-4 z-10 border-b border-[#00FF41]/30">
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,255,65,0.1)_0%,transparent_70%)]" />
+      <section className="relative flex flex-col items-center justify-center min-h-screen text-center px-4 z-10 border-b border-[#00FF41]/30 overflow-hidden">
+        {/* Cinematic Background Image from Cover */}
+        <div className="absolute inset-0 z-0">
+          <Image
+            src="/pangranger-bg.png"
+            alt="Matrix Corridor Background"
+            fill
+            className="object-cover opacity-60 mix-blend-screen"
+            priority
+          />
+          {/* Gradients to blend the image */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-black opacity-80" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black via-transparent to-black opacity-40" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0,255,65,0.2)_0%,transparent_70%)]" />
+        </div>
         
-        <div className="relative z-10 space-y-6">
-          <div className="inline-block px-4 py-1 border border-[#00FF41] text-xs mb-4 animate-pulse">
-            SYSTEM STATUS: OPERATIONAL
+        {/* Characters Running Out (The Pangranger Group) */}
+        <div className="absolute inset-0 z-1 flex items-center justify-center pointer-events-none overflow-hidden">
+          <div className="relative w-full max-w-7xl aspect-video mt-20 md:mt-40 scale-110 md:scale-125">
+            <div className="absolute inset-0 flex items-center justify-center">
+              <Image
+                src="/pangranger-characters-final.png"
+                alt="Pangranger Characters Running"
+                width={1400}
+                height={900}
+                className="object-contain opacity-100 brightness-110 contrast-110 animate-slide-up-fade"
+                style={{
+                  maskImage: 'linear-gradient(to top, transparent 0%, black 25%, black 100%)',
+                  WebkitMaskImage: 'linear-gradient(to top, transparent 0%, black 25%, black 100%)'
+                }}
+              />
+            </div>
+            {/* Ground glow under characters */}
+            <div className="absolute bottom-[15%] left-1/2 -translate-x-1/2 w-2/3 h-32 bg-[#00FF41]/10 blur-[80px] rounded-full" />
+          </div>
+        </div>
+        
+        <div className="relative z-10 space-y-4 md:space-y-6 max-w-5xl mx-auto mt-[-5vh] md:mt-[-8vh]">
+          <div className="inline-block px-4 py-1 border border-[#00FF41] text-[10px] md:text-xs mb-2 animate-pulse tracking-[0.2em] bg-black/50 backdrop-blur-sm">
+            SYSTEM_PROTOCOL: FINAL_BELIEF_TERMINATED
           </div>
           
-          <h1 className="text-4xl md:text-7xl font-bold tracking-tighter mb-4 drop-shadow-[0_0_10px_rgba(0,255,65,0.5)]">
-            <Typewriter
-              options={{
-                strings: ['พังเรนเจอร์ 2026'],
-                autoStart: true,
-                loop: true,
-                delay: 75,
-                deleteSpeed: 50,
-              }}
-            />
-          </h1>
+          <div className="flex flex-col items-center">
+            {/* Main Logo Image - Centered and slightly smaller to not cover characters too much */}
+            <div className="relative group max-w-[75vw] md:max-w-2xl">
+              <div className="absolute -inset-16 bg-[#00FF41]/20 blur-[80px] opacity-30 group-hover:opacity-50 transition-opacity duration-1000 animate-pulse" />
+              <Image
+                src="/pangranger-logo.png"
+                alt="สิ้นสุดทางเชื่อ"
+                width={700}
+                height={350}
+                className="relative z-10 drop-shadow-[0_0_30px_rgba(0,255,65,0.7)] animate-zoom-fade w-full h-auto object-contain brightness-110 contrast-125"
+                priority
+              />
+            </div>
+          </div>
 
-          <p className="text-lg md:text-2xl text-[#00FF41]/80 max-w-3xl mx-auto leading-relaxed">
-            เมื่อสิ่งที่เชื่อมาทั้งชีวิต อาจจะผิดมาตั้งแต่แรก...
-          </p>
+          <div className="relative py-2">
+            <div className="absolute inset-0 bg-black/60 blur-2xl rounded-full" />
+            <p className="relative text-lg md:text-2xl text-[#00FF41] max-w-3xl mx-auto leading-relaxed font-bold drop-shadow-[0_0_10px_rgba(0,255,65,0.5)]">
+              <Typewriter
+                options={{
+                  strings: ['เมื่อสิ่งที่เชื่อมาทั้งชีวิต อาจจะผิดมาตั้งแต่แรก...'],
+                  autoStart: true,
+                  loop: true,
+                  delay: 50,
+                }}
+              />
+            </p>
+          </div>
 
-          <div className="pt-8">
+          <div className="pt-6 flex flex-col md:flex-row items-center justify-center gap-4">
             <a 
               href="#about" 
-              className="px-8 py-3 border border-[#00FF41] hover:bg-[#00FF41] hover:text-black transition-all duration-300 font-bold tracking-widest uppercase text-sm"
+              className="group relative px-8 py-3 border-2 border-[#00FF41] overflow-hidden transition-all duration-300 hover:bg-[#00FF41] hover:text-black bg-black/60 backdrop-blur-md"
             >
-              [ ENTER THE SYSTEM ]
+              <div className="absolute inset-0 w-0 bg-[#00FF41] transition-all duration-300 group-hover:w-full -z-10" />
+              <span className="font-bold tracking-[0.3em] uppercase text-xs md:text-sm">
+                [ เข้าสู่ระบบ ]
+              </span>
+            </a>
+            
+            <a 
+              href="#buy" 
+              className="text-[#00FF41] hover:text-white transition-colors text-xs md:text-sm font-bold tracking-widest uppercase drop-shadow-[0_0_5px_rgba(0,255,65,0.5)] bg-black/40 px-4 py-2 rounded-full backdrop-blur-sm"
+            >
+              -- สั่งจองล่วงหน้า --
             </a>
           </div>
         </div>
+
+        {/* Perspective elements */}
+        <div className="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-black to-transparent z-10" />
       </section>
 
       {/* About Section */}
       <section id="about" className="relative py-24 md:py-36 z-10 border-b border-[#00FF41]/30 bg-black/80">
         <div className="container mx-auto max-w-4xl px-6 md:px-10">
           <div className="border-l-4 border-[#00FF41] pl-6 md:pl-10 space-y-8">
-            <h2 className="text-3xl md:text-5xl font-bold uppercase tracking-widest">
-              &gt; THE STORY
+            <h2 className="text-3xl md:text-5xl font-bold uppercase tracking-widest text-white drop-shadow-[0_0_10px_rgba(0,255,65,0.5)]">
+              &gt; ความจริงที่ถูกซ่อนไว้
             </h2>
             
             <div className="space-y-6 text-lg md:text-xl leading-loose text-[#00FF41]/90">
@@ -109,10 +170,10 @@ export default function Pangranger2026Page() {
       <section id="reviews" className="py-24 z-10 bg-black">
         <div className="container mx-auto px-4 md:px-6">
           <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-[0.2em] mb-4">
-              [ TRANSMISSIONS FROM THE SOURCE ]
+            <h2 className="text-3xl md:text-4xl font-bold uppercase tracking-[0.2em] mb-4 text-[#00FF41] drop-shadow-[0_0_8px_rgba(0,255,65,0.4)]">
+              [ บันทึกจากผู้เข้าชมระบบ ]
             </h2>
-            <p className="text-[#00FF41]/60">REVIEWS COLLECTED FROM THE GRID</p>
+            <p className="text-[#00FF41]/60 tracking-widest uppercase text-xs">REVIEWS COLLECTED FROM THE GRID</p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-6xl mx-auto">
@@ -242,7 +303,7 @@ export default function Pangranger2026Page() {
       </section>
 
       <footer className="py-12 text-center text-[10px] text-[#00FF41]/30 z-10 relative border-t border-[#00FF41]/10 uppercase tracking-widest">
-        © 2026 PANGRANGER SYSTEMS. ALL RIGHTS RESERVED. | v2.0.26-ALPHA
+        © 2026 FINAL BELIEF SYSTEMS. ALL RIGHTS RESERVED. | v2.0.26-ALPHA
       </footer>
 
       <style jsx global>{`
@@ -256,6 +317,20 @@ export default function Pangranger2026Page() {
           50% { clip-path: inset(95% 0 0 0); }
           75% { clip-path: inset(0 0 0 95%); }
           100% { clip-path: inset(0 0 95% 0); }
+        }
+        @keyframes zoomFade {
+          0% { opacity: 0; transform: scale(0.8); }
+          100% { opacity: 1; transform: scale(1); }
+        }
+        @keyframes slideUpFade {
+          0% { opacity: 0; transform: translateY(40px) scale(0.9); }
+          100% { opacity: 0.9; transform: translateY(0) scale(1); }
+        }
+        .animate-zoom-fade {
+          animation: zoomFade 1.5s ease-out forwards;
+        }
+        .animate-slide-up-fade {
+          animation: slideUpFade 2s ease-out 0.5s forwards;
         }
       `}</style>
     </div>
