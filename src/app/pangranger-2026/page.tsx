@@ -177,7 +177,7 @@ export default function Pangranger2026Page() {
                 <div className="space-y-4 text-[#00FF41]/80 text-base md:text-lg leading-relaxed font-light">
                   <p>
                     ช่องทางพิเศษสำหรับ <span className="text-[#00FF41] font-bold">ชาวชูโล่</span> เพื่อสั่งจองผลงานล่าสุด 
-                    <span className="text-white font-bold ml-1">"สิ้นสุดทางเชื่อ"</span> 
+                    <span className="text-white font-bold ml-1">สิ้นสุดทางเชื่อ</span> 
                   </p>
                   <p className="text-sm md:text-base border-l-2 border-[#00FF41]/30 pl-4 py-1 italic">
                     * รับสิทธิ์เข้าถึงเนื้อหาพิเศษและของสมนาคุณ Limited Edition เฉพาะช่วงเวลานี้เท่านั้น
