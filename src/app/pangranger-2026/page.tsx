@@ -1,7 +1,6 @@
 "use client"
 
 import React from 'react';
-import { ChevronDown } from 'lucide-react';
 import Typewriter from 'typewriter-effect';
 import TrackViewClient from '../components/TrackViewClient';
 import Link from 'next/link';
