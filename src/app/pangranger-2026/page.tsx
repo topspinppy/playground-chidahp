@@ -1,6 +1,7 @@
 "use client"
 
 import React from 'react';
+import { ChevronDown } from 'lucide-react';
 import Typewriter from 'typewriter-effect';
 import TrackViewClient from '../components/TrackViewClient';
 import Link from 'next/link';
@@ -85,7 +86,7 @@ export default function Pangranger2026Page() {
             SYSTEM_PROTOCOL: FINAL_BELIEF_TERMINATED
           </div>
           
-          <div className="flex flex-col items-center">
+          <div className="flex flex-col items-center mb-60">
             {/* Main Logo Image - Centered and slightly smaller to not cover characters too much */}
             <div className="relative group max-w-[75vw] md:max-w-2xl">
               <div className="absolute -inset-16 bg-[#00FF41]/20 blur-[80px] opacity-30 group-hover:opacity-50 transition-opacity duration-1000 animate-pulse" />
@@ -97,16 +98,6 @@ export default function Pangranger2026Page() {
                 className="relative z-10 drop-shadow-[0_0_30px_rgba(0,255,65,0.7)] animate-zoom-fade w-full h-auto object-contain brightness-110 contrast-125"
                 priority
               />
-              {/* Small 18+ corner image */}
-              <div className="absolute bottom-[20%] md:bottom-[25%] right-0 z-20 translate-y-2 translate-x-2 md:translate-y-4 md:translate-x-4 animate-zoom-fade" style={{ animationDelay: '0.8s' }}>
-                <Image
-                  src="/final_belief.png"
-                  alt="18+"
-                  width={80}
-                  height={80}
-                  className="w-24 h-24 md:w-20 md:h-20 object-contain opacity-70 group-hover:opacity-100 transition-opacity mix-blend-screen"
-                />
-              </div>
             </div>
           </div>
 
