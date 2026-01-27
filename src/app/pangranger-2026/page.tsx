@@ -100,18 +100,32 @@ export default function Pangranger2026Page() {
             </div>
           </div>
 
-          <div className="relative py-2 px-2">
+          <div className="relative py-2 px-2 sm:px-4">
             <div className="absolute inset-0 bg-black/60 blur-2xl rounded-full" />
-            <p className="relative text-base sm:text-lg md:text-xl lg:text-2xl text-[#00FF41] max-w-3xl mx-auto leading-relaxed sm:leading-relaxed font-bold drop-shadow-[0_0_8px_rgba(0,255,65,0.5)] sm:drop-shadow-[0_0_10px_rgba(0,255,65,0.5)]">
-              <Typewriter
-                options={{
-                  strings: ['เมื่อสิ่งที่เชื่อมาทั้งชีวิต อาจจะผิดมาตั้งแต่แรก...'],
-                  autoStart: true,
-                  loop: true,
-                  delay: 50,
+            <div className="relative min-h-[3rem] sm:min-h-[3.5rem] md:min-h-[4rem] flex items-center justify-center">
+              <p 
+                className="text-base sm:text-lg md:text-xl lg:text-2xl text-[#00FF41] max-w-3xl mx-auto leading-relaxed sm:leading-relaxed font-bold drop-shadow-[0_0_8px_rgba(0,255,65,0.5)] sm:drop-shadow-[0_0_10px_rgba(0,255,65,0.5)] break-words overflow-wrap-anywhere hyphens-none typewriter-ios-fix"
+                style={{
+                  WebkitFontSmoothing: 'antialiased',
+                  MozOsxFontSmoothing: 'grayscale',
+                  textRendering: 'optimizeLegibility',
+                  transform: 'translateZ(0)',
+                  WebkitTransform: 'translateZ(0)',
+                  willChange: 'contents',
                 }}
-              />
-            </p>
+              >
+                <Typewriter
+                  options={{
+                    strings: ['เมื่อสิ่งที่เชื่อมาทั้งชีวิต อาจจะผิดมาตั้งแต่แรก...'],
+                    autoStart: true,
+                    loop: true,
+                    delay: 50,
+                    deleteSpeed: 30,
+                    cursor: '',
+                  }}
+                />
+              </p>
+            </div>
           </div>
 
           <div className="pt-4 sm:pt-6 flex flex-col md:flex-row items-center justify-center gap-3 sm:gap-4">
@@ -399,6 +413,53 @@ export default function Pangranger2026Page() {
         }
         .animate-slide-up-fade {
           animation: slideUpFade 2s ease-out 0.5s forwards;
+        }
+        
+        /* iOS Font Rendering Fixes */
+        @supports (-webkit-touch-callout: none) {
+          .typewriter-ios-fix,
+          .typewriter-ios-fix .Typewriter__wrapper,
+          .typewriter-ios-fix .Typewriter__cursor {
+            -webkit-font-smoothing: antialiased !important;
+            -moz-osx-font-smoothing: grayscale !important;
+            text-rendering: optimizeLegibility !important;
+            transform: translateZ(0) !important;
+            -webkit-transform: translateZ(0) !important;
+            backface-visibility: hidden !important;
+            -webkit-backface-visibility: hidden !important;
+            perspective: 1000px;
+            -webkit-perspective: 1000px;
+          }
+        }
+        
+        /* Typewriter Component iOS Fixes */
+        .Typewriter__wrapper {
+          display: inline-block !important;
+          word-break: break-word !important;
+          overflow-wrap: break-word !important;
+          hyphens: none !important;
+          -webkit-hyphens: none !important;
+          -moz-hyphens: none !important;
+          -ms-hyphens: none !important;
+          white-space: normal !important;
+          line-height: inherit !important;
+        }
+        
+        .Typewriter__cursor {
+          display: none !important;
+        }
+        
+        /* Additional iOS Safari fixes */
+        @supports (-webkit-touch-callout: none) {
+          .typewriter-ios-fix {
+            -webkit-text-size-adjust: 100%;
+            -webkit-tap-highlight-color: transparent;
+          }
+          
+          .typewriter-ios-fix .Typewriter__wrapper span {
+            display: inline-block;
+            vertical-align: baseline;
+          }
         }
       `}</style>
     </div>
