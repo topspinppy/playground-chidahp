@@ -104,9 +104,10 @@ export default function Pangranger2026Page() {
             <div className="absolute inset-0 bg-black/60 blur-2xl rounded-full" />
             <div className="typewriter-thai relative min-h-[3rem] sm:min-h-[3.5rem] md:min-h-[4rem] flex items-center justify-center">
               <p 
-                className="typewriter-thai text-base sm:text-lg md:text-xl lg:text-2xl text-[#00FF41] max-w-3xl mx-auto leading-relaxed font-bold drop-shadow-[0_0_8px_rgba(0,255,65,0.5)] sm:drop-shadow-[0_0_10px_rgba(0,255,65,0.5)] break-words overflow-wrap-anywhere hyphens-none"
+                className="typewriter-thai text-base sm:text-lg md:text-xl lg:text-2xl text-[#9cffb5] max-w-3xl mx-auto font-bold drop-shadow-[0_0_8px_rgba(0,255,65,0.5)] sm:drop-shadow-[0_0_10px_rgba(0,255,65,0.5)] break-words overflow-wrap-anywhere hyphens-none"
                 style={{
                   fontFamily: 'var(--font-noto-sans-thai), "Noto Sans Thai", system-ui, sans-serif',
+                  lineHeight: 1.75,
                   WebkitFontSmoothing: 'antialiased',
                   MozOsxFontSmoothing: 'grayscale',
                   textRendering: 'optimizeLegibility',
@@ -115,16 +116,7 @@ export default function Pangranger2026Page() {
                   willChange: 'contents',
                 }}
               >
-                <Typewriter
-                  options={{
-                    strings: ['เมื่อสิ่งที่เชื่อมาทั้งชีวิต อาจจะผิดมาตั้งแต่แรก...'],
-                    autoStart: true,
-                    loop: true,
-                    delay: 50,
-                    deleteSpeed: 30,
-                    cursor: '|',
-                  }}
-                />
+                <p>เมื่อสิ่งที่เชื่อมาทั้งชีวิต อาจจะผิดมาตั้งแต่แรก...</p>
               </p>
             </div>
           </div>
@@ -134,7 +126,7 @@ export default function Pangranger2026Page() {
               href="https://chidahp.page365.net/products/81069622" 
               className="relative z-20 inline-flex items-center justify-center min-h-[48px] sm:min-h-[52px] px-8 sm:px-10 py-4 border-2 border-[#00FF41] bg-black/60 backdrop-blur-md w-full sm:w-auto sm:min-w-[200px] hover:bg-[#00FF41] hover:text-black text-[#00FF41] touch-manipulation cursor-pointer"
             >
-              <span className="font-bold tracking-[0.2em] sm:tracking-[0.3em] uppercase text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl">
+              <span className="font-bold tracking-tight uppercase text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl">
                 [ สั่งจอง คลิก! ]
               </span>
             </a>
@@ -419,6 +411,14 @@ export default function Pangranger2026Page() {
         .typewriter-thai .Typewriter__wrapper,
         .typewriter-thai .Typewriter__wrapper span {
           font-family: var(--font-noto-sans-thai), "Noto Sans Thai", -apple-system, BlinkMacSystemFont, sans-serif !important;
+          line-height: 1.75 !important;
+        }
+        
+        /* Thai: ป้องกันสระลอย/ฟอนต์จม - ให้มีที่ว่างสำหรับสระบนล่าง */
+        .typewriter-thai .Typewriter__wrapper {
+          line-height: 1.75 !important;
+          padding-top: 0.15em;
+          padding-bottom: 0.15em;
         }
         
         /* iOS Font Rendering Fixes */
