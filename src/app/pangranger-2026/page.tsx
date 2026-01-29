@@ -102,10 +102,11 @@ export default function Pangranger2026Page() {
 
           <div className="relative py-2 px-2 sm:px-4">
             <div className="absolute inset-0 bg-black/60 blur-2xl rounded-full" />
-            <div className="noto-sans-thai relative min-h-[3rem] sm:min-h-[3.5rem] md:min-h-[4rem] flex items-center justify-center">
+            <div className="typewriter-thai relative min-h-[3rem] sm:min-h-[3.5rem] md:min-h-[4rem] flex items-center justify-center">
               <p 
-                className="text-base sm:text-lg md:text-xl lg:text-2xl text-[#00FF41] max-w-3xl mx-auto leading-relaxed sm:leading-relaxed font-bold drop-shadow-[0_0_8px_rgba(0,255,65,0.5)] sm:drop-shadow-[0_0_10px_rgba(0,255,65,0.5)] break-words overflow-wrap-anywhere hyphens-none d"
+                className="typewriter-thai text-base sm:text-lg md:text-xl lg:text-2xl text-[#00FF41] max-w-3xl mx-auto leading-relaxed font-bold drop-shadow-[0_0_8px_rgba(0,255,65,0.5)] sm:drop-shadow-[0_0_10px_rgba(0,255,65,0.5)] break-words overflow-wrap-anywhere hyphens-none"
                 style={{
+                  fontFamily: 'var(--font-noto-sans-thai), "Noto Sans Thai", system-ui, sans-serif',
                   WebkitFontSmoothing: 'antialiased',
                   MozOsxFontSmoothing: 'grayscale',
                   textRendering: 'optimizeLegibility',
@@ -415,14 +416,23 @@ export default function Pangranger2026Page() {
           animation: slideUpFade 2s ease-out 0.5s forwards;
         }
         
+        /* Typewriter: Noto Sans Thai for Thai text (especially iOS) */
+        .typewriter-thai,
+        .typewriter-thai .Typewriter__wrapper,
+        .typewriter-thai .Typewriter__wrapper span {
+          font-family: var(--font-noto-sans-thai), "Noto Sans Thai", -apple-system, BlinkMacSystemFont, sans-serif !important;
+        }
+        
         /* iOS Font Rendering Fixes */
         @supports (-webkit-touch-callout: none) {
-          .typewriter-ios-fix,
-          .typewriter-ios-fix .Typewriter__wrapper,
-          .typewriter-ios-fix .Typewriter__cursor {
+          .typewriter-thai,
+          .typewriter-thai .Typewriter__wrapper,
+          .typewriter-thai .Typewriter__wrapper *,
+          .typewriter-thai .Typewriter__cursor {
             -webkit-font-smoothing: antialiased !important;
             -moz-osx-font-smoothing: grayscale !important;
             text-rendering: optimizeLegibility !important;
+            font-family: var(--font-noto-sans-thai), "Noto Sans Thai", -apple-system, BlinkMacSystemFont, sans-serif !important;
             transform: translateZ(0) !important;
             -webkit-transform: translateZ(0) !important;
             backface-visibility: hidden !important;
@@ -430,36 +440,29 @@ export default function Pangranger2026Page() {
             perspective: 1000px;
             -webkit-perspective: 1000px;
           }
+          .typewriter-thai {
+            -webkit-text-size-adjust: 100%;
+            -webkit-tap-highlight-color: transparent;
+          }
+          .typewriter-thai .Typewriter__wrapper span {
+            display: inline;
+            vertical-align: baseline;
+          }
         }
         
-        /* Typewriter Component iOS Fixes */
+        /* Typewriter Component layout */
         .Typewriter__wrapper {
           display: inline-block !important;
           word-break: break-word !important;
           overflow-wrap: break-word !important;
           hyphens: none !important;
           -webkit-hyphens: none !important;
-          -moz-hyphens: none !important;
-          -ms-hyphens: none !important;
           white-space: normal !important;
           line-height: inherit !important;
         }
         
         .Typewriter__cursor {
-          display: none !important;
-        }
-        
-        /* Additional iOS Safari fixes */
-        @supports (-webkit-touch-callout: none) {
-          .typewriter-ios-fix {
-            -webkit-text-size-adjust: 100%;
-            -webkit-tap-highlight-color: transparent;
-          }
-          
-          .typewriter-ios-fix .Typewriter__wrapper span {
-            display: inline-block;
-            vertical-align: baseline;
-          }
+          font-family: inherit !important;
         }
       `}</style>
     </div>
