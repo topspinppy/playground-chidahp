@@ -129,13 +129,12 @@ export default function Pangranger2026Page() {
             </div>
           </div>
 
-          <div className="pt-4 sm:pt-6 flex flex-col md:flex-row items-center justify-center gap-3 sm:gap-4">
+          <div className="relative z-20 pt-4 sm:pt-6 flex flex-col md:flex-row items-center justify-center gap-3 sm:gap-4">
             <a 
-              href="#pre-launch" 
-              className="group relative px-6 sm:px-8 py-2.5 sm:py-3 border-2 border-[#00FF41] overflow-hidden transition-all duration-300 hover:bg-[#00FF41] hover:text-black bg-black/60 backdrop-blur-md w-full sm:w-auto"
+              href="https://chidahp.page365.net/products/81069622" 
+              className="relative z-20 inline-flex items-center justify-center min-h-[48px] sm:min-h-[52px] px-8 sm:px-10 py-4 border-2 border-[#00FF41] bg-black/60 backdrop-blur-md w-full sm:w-auto sm:min-w-[200px] hover:bg-[#00FF41] hover:text-black text-[#00FF41] touch-manipulation cursor-pointer"
             >
-              <div className="absolute inset-0 w-0 bg-[#00FF41] transition-all duration-300 group-hover:w-full -z-10" />
-              <span className="font-bold tracking-[0.2em] sm:tracking-[0.3em] uppercase text-[10px] sm:text-xs md:text-sm">
+              <span className="font-bold tracking-[0.2em] sm:tracking-[0.3em] uppercase text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl">
                 [ สั่งจอง คลิก! ]
               </span>
             </a>
@@ -143,17 +142,16 @@ export default function Pangranger2026Page() {
         </div>
 
         {/* Perspective elements */}
-        <div className="absolute bottom-0 left-0 w-full h-24 sm:h-32 bg-gradient-to-t from-black to-transparent z-10" />
+        <div className="absolute bottom-0 left-0 w-full h-24 sm:h-32 bg-gradient-to-t from-black to-transparent z-5 pointer-events-none" />
       </section>
 
-      <section id="pre-launch" className="py-12 sm:py-16 md:py-20 lg:py-32 z-10 border-b border-[#00FF41]/30 relative overflow-hidden">
+      {/* <section id="pre-launch" className="py-12 sm:py-16 md:py-20 lg:py-32 z-10 border-b border-[#00FF41]/30 relative overflow-hidden">
         <div className="absolute inset-0 bg-[#00FF41]/5 animate-pulse opacity-30" />
         <div className="container mx-auto max-w-4xl px-4 sm:px-6 relative z-10">
           <div className="border border-[#00FF41]/40 p-5 sm:p-6 md:p-8 lg:p-12 bg-black/80 backdrop-blur-md relative overflow-hidden group">
-            {/* Scanning line effect */}
+
             <div className="absolute top-0 left-0 w-full h-[2px] bg-[#00FF41]/20 animate-[scan_3s_linear_infinite] pointer-events-none" />
             
-            {/* Corner Accents */}
             <div className="absolute top-0 left-0 w-3 h-3 sm:w-4 sm:h-4 border-t-2 border-l-2 border-[#00FF41]" />
             <div className="absolute top-0 right-0 w-3 h-3 sm:w-4 sm:h-4 border-t-2 border-r-2 border-[#00FF41]" />
             <div className="absolute bottom-0 left-0 w-3 h-3 sm:w-4 sm:h-4 border-b-2 border-l-2 border-[#00FF41]" />
@@ -198,7 +196,7 @@ export default function Pangranger2026Page() {
                       [ CLICK_HERE ]
                     </span>
                     {/* Glow effect on hover */}
-                    <div className="absolute inset-0 bg-[#00FF41] blur-xl opacity-0 group-hover:opacity-20 transition-opacity" />
+                    {/* <div className="absolute inset-0 bg-[#00FF41] blur-xl opacity-0 group-hover:opacity-20 transition-opacity" />
                   </a>
                 </div>
               </div>
@@ -211,8 +209,8 @@ export default function Pangranger2026Page() {
             <span className="whitespace-nowrap">TIMESTAMP: 2026.01.25.13.00</span>
           </div>
         </div>
-      </section>
-      
+      </section> */}
+
       {LAUNCH && (
         <>
           {/* About Section */}
