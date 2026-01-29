@@ -1,7 +1,7 @@
 "use client"
 
 import React from 'react';
-import Typewriter from 'typewriter-effect';
+// import Typewriter from 'typewriter-effect';
 import TrackViewClient from '../components/TrackViewClient';
 import Link from 'next/link';
 import MatrixBackground from './MatrixBackground';
