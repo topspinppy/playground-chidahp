@@ -102,9 +102,9 @@ export default function Pangranger2026Page() {
 
           <div className="relative py-2 px-2 sm:px-4">
             <div className="absolute inset-0 bg-black/60 blur-2xl rounded-full" />
-            <div className="relative min-h-[3rem] sm:min-h-[3.5rem] md:min-h-[4rem] flex items-center justify-center">
+            <div className="noto-sans-thai relative min-h-[3rem] sm:min-h-[3.5rem] md:min-h-[4rem] flex items-center justify-center">
               <p 
-                className="text-base sm:text-lg md:text-xl lg:text-2xl text-[#00FF41] max-w-3xl mx-auto leading-relaxed sm:leading-relaxed font-bold drop-shadow-[0_0_8px_rgba(0,255,65,0.5)] sm:drop-shadow-[0_0_10px_rgba(0,255,65,0.5)] break-words overflow-wrap-anywhere hyphens-none typewriter-ios-fix"
+                className="text-base sm:text-lg md:text-xl lg:text-2xl text-[#00FF41] max-w-3xl mx-auto leading-relaxed sm:leading-relaxed font-bold drop-shadow-[0_0_8px_rgba(0,255,65,0.5)] sm:drop-shadow-[0_0_10px_rgba(0,255,65,0.5)] break-words overflow-wrap-anywhere hyphens-none d"
                 style={{
                   WebkitFontSmoothing: 'antialiased',
                   MozOsxFontSmoothing: 'grayscale',
@@ -121,7 +121,7 @@ export default function Pangranger2026Page() {
                     loop: true,
                     delay: 50,
                     deleteSpeed: 30,
-                    cursor: '',
+                    cursor: '|',
                   }}
                 />
               </p>
@@ -135,7 +135,7 @@ export default function Pangranger2026Page() {
             >
               <div className="absolute inset-0 w-0 bg-[#00FF41] transition-all duration-300 group-hover:w-full -z-10" />
               <span className="font-bold tracking-[0.2em] sm:tracking-[0.3em] uppercase text-[10px] sm:text-xs md:text-sm">
-                [ เข้าสู่ระบบ ]
+                [ สั่งจอง คลิก! ]
               </span>
             </a>
           </div>
@@ -162,7 +162,7 @@ export default function Pangranger2026Page() {
               <div className="relative w-24 h-24 sm:w-32 sm:h-32 md:w-48 md:h-48 flex-shrink-0">
                 <div className="absolute inset-0 bg-[#00FF41]/20 rounded-full blur-2xl animate-pulse" />
                 <Image
-                  src="/chulo-logo.png"
+                  src="/chidahp.png"
                   alt="Chidahp Logo"
                   width={200}
                   height={200}
@@ -187,7 +187,7 @@ export default function Pangranger2026Page() {
                 
                 <div className="pt-3 sm:pt-4">
                   <a 
-                    href="https://chidahp.page365.net/products/79228651" 
+                    href="https://chidahp.page365.net/products/81069622" 
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-block group relative px-6 sm:px-8 md:px-10 py-3 sm:py-4 overflow-hidden w-full sm:w-auto text-center"
@@ -361,7 +361,7 @@ export default function Pangranger2026Page() {
                 
                 <div className="flex flex-col items-center space-y-4 sm:space-y-6">
                   <a 
-                    href="https://chidahp.page365.net/products/79228651" 
+                    href="https://chidahp.page365.net/products/81069622" 
                     target="_blank" 
                     rel="noopener noreferrer" 
                     className="group relative px-6 sm:px-8 md:px-12 py-4 sm:py-5 overflow-hidden w-full sm:w-auto"
