@@ -10,8 +10,8 @@ import dynamic from "next/dynamic";
 import TrackViewClient from "@/app/components/TrackViewClient";
 import WordPressContent from "@/app/components/WordPressContent";
 import WarningComponent from "@/app/components/front/WarningComponent";
-import SouthDakotaAds from "@/app/components/front/SouthDakotaAds";
 import AdvertisementSection from "@/app/components/AdvertisementSection";
+import CategoryAd from "../../CategoryAd";
 
 const SeriesNavigator = dynamic(() => import("../../../../../components/front/SeriesNavigator"), {
   ssr: true,
@@ -181,9 +181,7 @@ export default async function Post(params: RouteParams) {
         />
       </div>
 
-      {parentSlug.some(slug => slug.includes('southdakota')) && (
-        <SouthDakotaAds />
-      )}
+      <CategoryAd parentSlug={parentSlug} />
 
       {/* Tags */}
       <div className="mb-8">
