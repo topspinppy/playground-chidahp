@@ -4,7 +4,7 @@ import { getFirestore } from "firebase/firestore";
 
 
 const firebaseConfig = {
-  apiKey: "AIzaSyC-XU9ZZkCCQZ1bcGCmcQicGkVLFpXWav0",
+  apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
   authDomain: "tellme-chidahp.firebaseapp.com",
   projectId: "tellme-chidahp",
   storageBucket: "tellme-chidahp.firebasestorage.app",
