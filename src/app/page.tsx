@@ -3,7 +3,6 @@ import FeaturedPost from "./components/front/FeaturedPost";
 import { getFeaturedPost, getLatestPosts, getNotLatestPosts, getPostSeries } from "@/lib/api";
 import LatestPosts from "./components/front/LatestPosts";
 import SeriesSection from "./components/front/SeriesSection";
-import SouthDakotaBanner from "./components/front/SouthDakotaBanner";
 import AdvertisementSection from "./components/AdvertisementSection";
 
 export const dynamic = 'force-dynamic';
