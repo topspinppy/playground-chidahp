@@ -17,7 +17,7 @@ export default async function HomePage() {
   return (
     <div>
       <AdvertisementSection adSlot="4577743133" isCloseText={true}  />
-      <SouthDakotaBanner />
+      {/* <SouthDakotaBanner /> */}
       <main className="max-w-6xl mx-auto px-4 py-10 space-y-16 mb-0">
         <FeaturedPost featuredPost={featuredPost} latestPosts={latestPosts} />
         <LatestPosts latestPosts={notLatestPosts} />
