@@ -7,10 +7,6 @@ export default function ConditionalAdSense() {
   const pathname = usePathname()
   
   useEffect(() => {
-    // ไม่โหลด AdSense script สำหรับหน้า /happy-birthday-p-yaa
-    if (pathname === '/happy-birthday-p-yaa') {
-      return
-    }
 
     // ตรวจสอบว่า script ยังไม่ได้ถูกโหลด
     if (document.querySelector('script[src*="adsbygoogle.js"]')) {
